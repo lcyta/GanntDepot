@@ -1,12 +1,13 @@
-import streamlit as st 
+import streamlit as st  
 from app.core.project_manager import load_projects, save_project, delete_project, rename_project
 from app.core.task_manager import load_tasks
-from app.core.scheduler import adjust_task_schedule  # <- IMPORTANTE
+from app.core.scheduler import adjust_task_schedule
 from app.views.task_view import view_tasks
 from app.views.gantt_view import view_projects_gantt
 from app.views.gantt_tasks_view import view_tasks_gantt
 from app.views.responsibles_view import view_responsibles
 from app.views.calendar_view import view_calendar
+from app.views.responsible_calendar_view import view_responsible_calendar  # <-- NUEVO
 
 def show_dashboard():
     st.sidebar.title("📁 Proyectos")
@@ -20,7 +21,8 @@ def show_dashboard():
     st.session_state.setdefault("current_project", None)
     st.session_state.setdefault("tasks", [])
     st.session_state.setdefault("task_changed", False)
-    st.session_state.setdefault("custom_holidays", [])  # <- para el calendario
+    st.session_state.setdefault("custom_holidays", [])
+    st.session_state.setdefault("calendar_dirty", False)  # 🔁 Asegurarse que esté
 
     # Vistas especiales desde el sidebar
     if st.sidebar.checkbox("📅 Ver Gantt global de proyectos"):
@@ -35,6 +37,10 @@ def show_dashboard():
         view_calendar()
         return
 
+    if st.sidebar.checkbox("📅 Ver calendario por responsable"):  # <-- NUEVO
+        view_responsible_calendar()
+        return
+
     # Gestión de proyectos
     projects = load_projects()
 
@@ -46,15 +52,19 @@ def show_dashboard():
 
     selected_project = st.sidebar.selectbox("Seleccioná un proyecto", projects) if projects else None
 
+    # 🔁 Inicialización al cambiar de proyecto
     if selected_project != st.session_state.current_project:
         st.session_state.current_project = selected_project
-
-        # Cargar y AJUSTAR tareas con feriados y fines de semana
         raw_tasks = load_tasks(selected_project)
-        feriados = st.session_state.get("custom_holidays", [])
-        st.session_state.tasks = adjust_task_schedule(raw_tasks, holidays=feriados)
-
+        st.session_state.tasks = adjust_task_schedule(raw_tasks)
         st.session_state.task_changed = False
+        st.session_state.calendar_dirty = False
+
+    # 🔁 Recalcular si se modificó el calendario
+    elif st.session_state.get("calendar_dirty") and selected_project:
+        raw_tasks = load_tasks(selected_project)
+        st.session_state.tasks = adjust_task_schedule(raw_tasks)
+        st.session_state.calendar_dirty = False
 
     if selected_project:
         page = st.sidebar.radio("Ir a:", ("Gestor de tareas", "Diagrama Gantt"))
@@ -84,30 +94,12 @@ def show_dashboard():
                     st.session_state.confirm_delete_project = False
                     st.rerun()
 
-            if st.session_state.editing_project == selected_project:
-                st.info(f"Renombrar proyecto: **{selected_project}**")
-                new_name = st.text_input("Nuevo nombre del proyecto", value=selected_project)
-                col_confirm = st.columns([1, 1, 4, 1, 1])
-                if col_confirm[1].button("✔️", key="confirm_rename_project"):
-                    if rename_project(selected_project, new_name):
-                        st.success(f"Proyecto renombrado a '{new_name}'")
-                        st.session_state.current_project = new_name
-                        st.session_state.editing_project = None
-                        st.rerun()
-                    else:
-                        st.error("No se pudo renombrar el proyecto.")
-                if col_confirm[3].button("◀️", key="cancel_rename_project"):
-                    st.session_state.editing_project = None
-                    st.rerun()
-
             if st.session_state.task_changed:
                 raw_tasks = load_tasks(selected_project)
-                feriados = st.session_state.get("custom_holidays", [])
-                st.session_state.tasks = adjust_task_schedule(raw_tasks, holidays=feriados)
+                st.session_state.tasks = adjust_task_schedule(raw_tasks)
                 st.session_state.task_changed = False
 
             view_tasks(st.session_state.tasks, selected_project)
-
         else:
             view_tasks_gantt(st.session_state.tasks, selected_project)
     else:

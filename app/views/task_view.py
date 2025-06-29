@@ -1,18 +1,31 @@
 import streamlit as st
 from app.core.responsibles_manager import load_responsibles
-from app.core.task_manager import save_task
+from app.core.task_manager import save_task, delete_task_by_index
 from app.models.task import Task
-from app.utils.deletion_utils import delete_task_by_index
+from datetime import datetime, date
+from app.core.task_manager import load_tasks
+
+def safe_date(dt):
+    if isinstance(dt, datetime):
+        return dt.date()
+    elif isinstance(dt, date):
+        return dt
+    else:
+        try:
+            return datetime.strptime(str(dt), "%Y-%m-%d").date()
+        except:
+            return None
 
 def view_tasks(tasks, project_name):
     st.header("📋 Gestor de Tareas")
-
+    tasks = load_tasks(project_name)
     responsibles = load_responsibles()
     responsibles_list = [r["name"] for r in responsibles] if responsibles else []
 
     if not responsibles_list:
         st.warning("⚠️ No hay responsables registrados. Por favor, agregá responsables antes de crear tareas.")
 
+    # 📌 Formulario de nueva tarea
     with st.expander("➕ Crear nueva tarea"):
         title = st.text_input("Título")
         owner = st.selectbox("Responsable", options=responsibles_list) if responsibles_list else None
@@ -34,8 +47,7 @@ def view_tasks(tasks, project_name):
         st.info("No hay tareas todavía.")
         return
 
-    tasks = sorted(tasks, key=lambda t: t.owner)
-
+    # 📌 Mostrar tareas tal como están (ya están ajustadas)
     col1, col2, col3, col4, col5, col6 = st.columns([3, 3, 2, 2, 2, 0.5])
     col1.markdown("**Responsable**")
     col2.markdown("**Título**")
@@ -48,12 +60,17 @@ def view_tasks(tasks, project_name):
         st.session_state.task_to_delete = None
 
     for idx, task in enumerate(tasks):
+        start_date = safe_date(task.start)
+        end_date = safe_date(task.end)
+
+        duracion = (end_date - start_date).days + 1 if start_date and end_date else "N/A"
+
         col1, col2, col3, col4, col5, col6 = st.columns([3, 3, 2, 2, 2, 0.5])
         col1.markdown(task.owner)
         col2.markdown(task.title)
-        col3.markdown(str(task.start.date()))
-        col4.markdown(str(task.end.date()))
-        col5.markdown(f"{(task.end.date() - task.start.date()).days + 1} días")
+        col3.markdown(str(start_date) if start_date else "Fecha inválida")
+        col4.markdown(str(end_date) if end_date else "Fecha inválida")
+        col5.markdown(f"{duracion} días" if duracion != "N/A" else "Duración inválida")
 
         if st.session_state.task_to_delete == idx:
             st.warning(f"¿Confirmás eliminar la tarea **{task.title}**?")

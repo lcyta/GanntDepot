@@ -1,5 +1,5 @@
 import os
-from data_manager import PROJECTS_FILE, get_file_path, load_projects
+from data_manager import PROJECTS_FILE, get_file_path
 
 def delete_project(project_name):
     # Eliminar archivo de tareas
