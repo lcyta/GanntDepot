@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import pandas as pd
 from app.models.task import Task
-#from app.core.responsible_calendar_controller import obtener_calendario_responsable
+#from app.core.responsible_calendar_logic import obtener_calendario_responsable
 
 def next_business_day(d, holidays):
     while d.weekday() >= 5 or d in holidays:  # 5 = sábado, 6 = domingo
@@ -11,7 +11,7 @@ def next_business_day(d, holidays):
 def adjust_task_schedule(tasks: list[Task]) -> list[Task]:
     from datetime import datetime, timedelta
     import pandas as pd
-    from app.core.responsible_calendar_controller import obtener_calendario_responsable
+    from app.core.calendar.calendar_logic import obtener_calendario_responsable
 
     def next_business_day(d, holidays):
         while d.weekday() >= 5 or d in holidays:
