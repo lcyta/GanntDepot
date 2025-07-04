@@ -5,6 +5,11 @@
   },
   "frank": {
     "base": "China",
-    "extras": []
+    "extras": [
+      [
+        "2025-07-03",
+        "dsa"
+      ]
+    ]
   }
 }

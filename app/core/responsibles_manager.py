@@ -1,48 +1,45 @@
 import os
 import pandas as pd
 from app.core.data_manager import DATA_DIR
-from app.core.responsible_calendar_controller import asignar_base_responsable
+from app.core.responsible_calendar_controller import (
+    asignar_base_responsable,
+    cargar_calendarios_responsables,
+    guardar_calendarios_responsables,
+)
 
 FILE_PATH = os.path.join(DATA_DIR, "responsibles.csv")
 
-
 def load_responsibles():
+    """Carga la lista de responsables desde CSV."""
     if not os.path.exists(FILE_PATH):
         return []
     df = pd.read_csv(FILE_PATH)
     return df.to_dict("records")
 
-
 def save_responsible(name, location, factory):
-    df = pd.DataFrame([{
-        "name": name,
-        "location": location,
-        "factory": factory
-    }])
-    if os.path.exists(FILE_PATH):
-        existing_df = pd.read_csv(FILE_PATH)
-        combined = pd.concat([existing_df, df], ignore_index=True)
-    else:
-        combined = df
-    combined.drop_duplicates(subset=["name"], inplace=True)
-    combined.to_csv(FILE_PATH, index=False)
+    """Guarda un responsable, evitando duplicados, y asigna calendario base."""
+    df_new = pd.DataFrame([{"name": name, "location": location, "factory": factory}])
 
-    # Asignar calendario base automáticamente
+    if os.path.exists(FILE_PATH):
+        df_existing = pd.read_csv(FILE_PATH)
+        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+    else:
+        df_combined = df_new
+
+    df_combined.drop_duplicates(subset=["name"], inplace=True)
+    df_combined.to_csv(FILE_PATH, index=False)
+
     if location in ["Argentina", "EEUU", "China"]:
         asignar_base_responsable(name, location)
 
-
-# ✅ ESTA FUNCIÓN VA AFUERA DEL BLOQUE ANTERIOR (misma indentación que `save_responsible`)
 def delete_responsible_by_name(name):
+    """Elimina un responsable y su calendario, si existe."""
     if not os.path.exists(FILE_PATH):
         return
 
     df = pd.read_csv(FILE_PATH)
     df = df[df["name"] != name]
     df.to_csv(FILE_PATH, index=False)
-
-    # Eliminar también su calendario si existe
-    from app.core.responsible_calendar_controller import cargar_calendarios_responsables, guardar_calendarios_responsables
 
     calendarios = cargar_calendarios_responsables()
     if name in calendarios:
