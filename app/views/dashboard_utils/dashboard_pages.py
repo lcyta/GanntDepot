@@ -1,5 +1,5 @@
 import streamlit as st
-from app.views.task_view import view_tasks
+from app.views.task_views_operations.task_view import view_tasks
 from app.views.gantt_view import view_projects_gantt
 from app.views.gantt_tasks_view import view_tasks_gantt
 

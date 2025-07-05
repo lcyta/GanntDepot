@@ -1,7 +1,7 @@
 from app.core.project_manager import load_projects, rename_project, delete_project
 from app.core.task_manager import load_tasks
 from app.core.scheduler import adjust_task_schedule
-from app.views.project_edit_view import create_project  # si usas esta función
+from app.views.project_utils.project_actions import handle_project_creation  # ⬅️ IMPORT CORRECTO
 
 class DashboardController:
     def __init__(self, session_state):
@@ -22,6 +22,9 @@ class DashboardController:
             "calendar_dirty": False,
             "vista_general": None,
             "view_fake_project": False,
+            "vista_proyecto": None,  # si lo usás para navegación
+            "imagenes_proyecto_bytes": [],
+            "imagen_index": 0,
         }
         for k, v in defaults.items():
             self.state.setdefault(k, v)
@@ -30,7 +33,7 @@ class DashboardController:
         return load_projects()
 
     def create_project(self, name):
-        create_project(name)
+        handle_project_creation(name)
 
     def select_project(self, project_name):
         if project_name != self.state.current_project:

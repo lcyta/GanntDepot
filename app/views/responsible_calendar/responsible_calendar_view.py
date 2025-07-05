@@ -1,0 +1,25 @@
+import streamlit as st
+from app.core.responsibles_manager import load_responsibles
+from app.core.calendar.calendar_logic import obtener_calendario_responsable
+from app.views.responsible_calendar.feriados_table import mostrar_feriados_responsable
+from app.views.responsible_calendar.feriado_individual import manejar_feriado_individual
+from app.views.responsible_calendar.feriado_rango import manejar_rango_feriados
+
+
+def view_responsible_calendar():
+    st.subheader("📅 Calendario de feriados por responsable")
+
+    responsables = load_responsibles()
+    if not responsables:
+        st.warning("No hay responsables registrados.")
+        return
+
+    nombres = [r["name"] for r in responsables]
+    selected_name = st.selectbox("👤 Elegí un responsable", nombres)
+    if not selected_name:
+        return
+
+    feriados = obtener_calendario_responsable(selected_name)
+    mostrar_feriados_responsable(selected_name, feriados)
+    manejar_feriado_individual(selected_name, feriados)
+    manejar_rango_feriados(selected_name)
