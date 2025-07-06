@@ -1,6 +1,6 @@
 import streamlit as st
 from app.core.responsibles_manager import load_responsibles
-from app.core.task_manager import load_tasks
+from app.core.task.task_manager import load_tasks
 from app.views.task_views_operations.crear_tarea import crear_nueva_tarea
 from app.views.task_views_operations.modificar_tarea import modificar_tarea
 from app.views.task_views_operations.mostrar_tareas import mostrar_tareas_existentes

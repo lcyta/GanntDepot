@@ -1,6 +1,6 @@
 import streamlit as st
 from app.models.task import Task
-from app.core.task_manager import save_task
+from app.core.task.task_manager import save_task
 
 def crear_nueva_tarea(project_name, responsibles_list):
     with st.expander("➕ Crear nueva tarea", expanded=False):

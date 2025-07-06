@@ -1,5 +1,5 @@
 import streamlit as st
-from app.core.task_manager import save_all_tasks, delete_task_by_index
+from app.core.task.task_manager import save_all_tasks, delete_task_by_index
 from app.core.scheduler import adjust_task_schedule
 
 def modificar_tarea(tasks, project_name, responsibles_list):

@@ -1,5 +1,5 @@
 # app/core/calendar/updater.py
-from app.core.task_manager import load_tasks, save_all_tasks, load_tasks_by_responsible
+from app.core.task.task_manager import load_tasks, save_all_tasks, load_tasks_by_responsible
 from app.core.scheduler import adjust_task_schedule
 
 def update_tasks_for_responsible(owner_name):

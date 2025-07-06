@@ -1,5 +1,5 @@
 import streamlit as st
-from app.core.task_manager import save_all_tasks
+from app.core.task.task_manager import save_all_tasks
 from app.core.scheduler import adjust_task_schedule
 
 def reordenar_tareas(tasks, project_name):

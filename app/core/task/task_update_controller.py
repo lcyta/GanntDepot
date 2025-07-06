@@ -1,4 +1,4 @@
-from app.core.task_manager import load_tasks_by_responsible, save_all_tasks
+from app.core.task.task_manager import load_tasks_by_responsible, save_all_tasks
 from app.core.scheduler import adjust_task_schedule
 from collections import defaultdict
 

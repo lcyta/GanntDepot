@@ -1,6 +1,6 @@
 import streamlit as st
 import plotly.figure_factory as ff
-from app.core.task_manager import load_tasks
+from app.core.task.task_manager import load_tasks
 from datetime import timedelta
 
 def view_projects_gantt(project_list):
