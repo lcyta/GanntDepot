@@ -2,26 +2,27 @@ import os
 import pandas as pd
 from app.core.data_manager import get_file_path, list_project_files
 
-def load_raw_tasks(project_name):
-    file_path = get_file_path(project_name)
-    if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
-        return pd.DataFrame()  # Siempre dataframe (vacío si no existe)
-
+def load_tasks_csv(project_name: str) -> pd.DataFrame:
+    path = get_file_path(project_name)
+    if not os.path.exists(path) or os.path.getsize(path) == 0:
+        return pd.DataFrame()
     try:
-        return pd.read_csv(file_path)
+        return pd.read_csv(path)
     except Exception as e:
         print(f"[ERROR] Cargando tareas: {e}")
         return pd.DataFrame()
 
-def save_tasks_dataframe(project_name, df: pd.DataFrame):
-    file_path = get_file_path(project_name)
-    df.to_csv(file_path, index=False)
+def save_tasks_csv(project_name: str, df: pd.DataFrame):
+    path = get_file_path(project_name)
+    df.to_csv(path, index=False)
 
-def delete_task_by_index(project_name, idx):
-    df = load_raw_tasks(project_name)
-    if not df.empty and 0 <= idx < len(df):
-        df = df.drop(df.index[idx]).reset_index(drop=True)
-        save_tasks_dataframe(project_name, df)
-
-def list_all_project_files():
+def list_all_project_files() -> list[str]:
     return list_project_files()
+
+def delete_task_by_index(project_name: str, idx: int):
+    df = load_tasks_csv(project_name)
+    if idx < 0 or idx >= len(df):
+        print(f"[WARN] Índice {idx} fuera de rango para eliminar tarea")
+        return
+    df = df.drop(df.index[idx])
+    save_tasks_csv(project_name, df)

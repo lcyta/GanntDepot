@@ -1,7 +1,7 @@
 import os
 from app.core.task.task_manager import load_tasks, save_all_tasks
-from app.core.scheduler import adjust_task_schedule
 from app.core.responsibles_manager import load_responsibles
+from app.core.scheduler import adjust_task_schedule
 from app.core.data_manager import DATA_DIR
 
 def recalcular_tareas_responsables_por_pais(pais):

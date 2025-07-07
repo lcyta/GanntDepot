@@ -1,0 +1,37 @@
+from app.models.task import Task
+from datetime import timedelta, datetime, date
+from typing import Callable, List
+
+def adjust_task_schedule(tasks: List[Task], get_feriados_func: Callable[[str], List]) -> List[Task]:
+    from app.utils.dates import next_business_day, calcular_rango_habil
+    
+    tasks_by_owner = {}
+    for t in tasks:
+        tasks_by_owner.setdefault(t.owner, []).append(t)
+
+    adjusted = []
+    for owner, owner_tasks in tasks_by_owner.items():
+        feriados = {f[0] for f in get_feriados_func(owner)}
+        cursor = None
+
+        for t in owner_tasks:
+            duracion = t.days or 1
+
+            if isinstance(t.start, datetime):
+                base = t.start.date()
+            elif isinstance(t.start, date):
+                base = t.start
+            else:
+                base = datetime.today().date()
+
+            cursor = next_business_day(cursor or base, feriados)
+
+            inicio, fin = calcular_rango_habil(cursor, duracion, feriados)
+
+            t.start = inicio
+            t.end = fin
+
+            cursor = next_business_day(fin + timedelta(days=1), feriados)
+            adjusted.append(t)
+
+    return adjusted

@@ -1,9 +1,9 @@
 from datetime import datetime, date
 from app.core.holiday_data import FERIADOS_PREDETERMINADOS
 from app.core.calendar.data_manager import cargar_calendarios_responsables,  guardar_calendarios_responsables
-from app.core.calendar.calendar_updater import update_tasks_for_responsible
+#from app.core.calendar.calendar_updater import update_tasks_for_responsible
 
-def obtener_calendario_responsable(nombre):
+def get_feriados_for_owner(nombre):
     data = cargar_calendarios_responsables()
     info = data.get(nombre)
     if info is None:
@@ -73,3 +73,23 @@ def eliminar_rango_feriados_responsable(nombre, fechas):
         if len(data[nombre]["extras"]) != len(originales):
             guardar_calendarios_responsables(data)
             update_tasks_for_responsible(nombre)
+
+def obtener_calendario_responsable(nombre):
+    data = cargar_calendarios_responsables()
+    info = data.get(nombre)
+    if info is None:
+        return []
+
+    base = info.get("base")
+    extras = info.get("extras", [])
+    base_dates = FERIADOS_PREDETERMINADOS.get(base, []) if base else []
+
+    extra_dates = []
+    for d, desc in extras:
+        try:
+            d_date = datetime.strptime(d, "%Y-%m-%d").date() if isinstance(d, str) else d
+            extra_dates.append((d_date, desc))
+        except Exception:
+            continue
+
+    return base_dates + extra_dates
