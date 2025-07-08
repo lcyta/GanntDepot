@@ -1,6 +1,6 @@
 from collections import defaultdict
-from app.core.task.task_manager import load_tasks_by_responsible, save_all_tasks
 from app.core.scheduler import adjust_task_schedule
+from app.core.task.task_manager import load_tasks_by_responsible, save_all_tasks
 
 def update_tasks_for_responsible(owner_name: str):
     tasks = load_tasks_by_responsible(owner_name)
@@ -8,8 +8,6 @@ def update_tasks_for_responsible(owner_name: str):
     if not tasks:
         print(f"[LOG] No se encontraron tareas para responsable {owner_name}")
         return
-
-    print(f"[LOG] {len(tasks)} tareas encontradas para responsable {owner_name}")
 
     tasks_por_proyecto = defaultdict(list)
     for task in tasks:
@@ -22,3 +20,4 @@ def update_tasks_for_responsible(owner_name: str):
         tareas_ajustadas = adjust_task_schedule(tareas)
         save_all_tasks(proyecto, tareas_ajustadas)
         print(f"[LOG] Proyecto '{proyecto}' actualizado")
+

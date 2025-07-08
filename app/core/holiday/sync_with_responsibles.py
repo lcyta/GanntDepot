@@ -1,4 +1,4 @@
-from app.core.task.task_utils import recalcular_tareas_responsables_por_pais
+from app.core.task.recalculo_por_pais import recalcular_tareas_responsables_por_pais
 from app.core.responsibles_manager import load_responsibles
 from app.core.calendar.calendar_logic import (
     agregar_feriado_responsable,

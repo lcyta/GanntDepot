@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import pandas as pd
 from datetime import date, timedelta
 from app.core.calendar.calendar_logic import (
@@ -22,7 +22,7 @@ def manejar_rango_feriados(nombre):
                 fechas = pd.date_range(start, end).to_pydatetime().tolist()
                 datos = [(f.date(), desc_rango.strip()) for f in fechas]
                 agregar_rango_feriados_responsable(nombre, datos)
-                st.success(f"Rango agregado de {start.date()} a {end.date()}")
+                st.success(f"Agregado: {start.strftime('%Y-%m-%d')} a {end.strftime('%Y-%m-%d')}")
                 st.rerun()
             else:
                 st.warning("Rango inválido o descripción vacía.")
@@ -41,7 +41,7 @@ def manejar_rango_feriados(nombre):
                 start, end = sorted(rango_elim)
                 fechas_a_eliminar = pd.date_range(start, end).to_pydatetime().tolist()
                 eliminar_rango_feriados_responsable(nombre, [f.date() for f in fechas_a_eliminar])
-                st.success(f"Feriados eliminados entre {start.date()} y {end.date()}")
-                st.rerun()
+                st.success(f"Feriados eliminados entre {start.strftime('%Y-%m-%d')} y {end.strftime('%Y-%m-%d')}")
+                st.experimental_rerun()
             else:
                 st.warning("Seleccioná un rango válido.")

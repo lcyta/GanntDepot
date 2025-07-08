@@ -1,7 +1,8 @@
 from datetime import datetime, date
 from app.core.holiday_data import FERIADOS_PREDETERMINADOS
-from app.core.calendar.data_manager import cargar_calendarios_responsables,  guardar_calendarios_responsables
-#from app.core.calendar.calendar_updater import update_tasks_for_responsible
+from app.core.calendar.data_manager import cargar_calendarios_responsables, guardar_calendarios_responsables
+from app.core.event_bus import publish
+
 
 def get_feriados_for_owner(nombre):
     data = cargar_calendarios_responsables()
@@ -23,11 +24,14 @@ def get_feriados_for_owner(nombre):
 
     return base_dates + extra_dates
 
+
 def asignar_base_responsable(nombre, base):
     data = cargar_calendarios_responsables()
     data.setdefault(nombre, {"base": base, "extras": []})
     data[nombre]["base"] = base
     guardar_calendarios_responsables(data)
+    publish("feriado_modificado", {"owner": nombre})
+
 
 def agregar_feriado_responsable(nombre, fecha, descripcion):
     data = cargar_calendarios_responsables()
@@ -37,7 +41,8 @@ def agregar_feriado_responsable(nombre, fecha, descripcion):
     if [fecha_str, descripcion] not in data[nombre]["extras"]:
         data[nombre]["extras"].append([fecha_str, descripcion])
         guardar_calendarios_responsables(data)
-        update_tasks_for_responsible(nombre)
+        publish("feriado_modificado", {"owner": nombre})
+
 
 def eliminar_feriado_responsable(nombre, fecha):
     data = cargar_calendarios_responsables()
@@ -47,7 +52,8 @@ def eliminar_feriado_responsable(nombre, fecha):
         data[nombre]["extras"] = [f for f in originales if f[0] != fecha_str]
         if len(data[nombre]["extras"]) != len(originales):
             guardar_calendarios_responsables(data)
-            update_tasks_for_responsible(nombre)
+            publish("feriado_modificado", {"owner": nombre})
+
 
 def agregar_rango_feriados_responsable(nombre, fechas_con_nombre):
     data = cargar_calendarios_responsables()
@@ -62,7 +68,8 @@ def agregar_rango_feriados_responsable(nombre, fechas_con_nombre):
 
     if nuevos:
         guardar_calendarios_responsables(data)
-        update_tasks_for_responsible(nombre)
+        publish("feriado_modificado", {"owner": nombre})
+
 
 def eliminar_rango_feriados_responsable(nombre, fechas):
     data = cargar_calendarios_responsables()
@@ -72,7 +79,8 @@ def eliminar_rango_feriados_responsable(nombre, fechas):
         data[nombre]["extras"] = [f for f in originales if f[0] not in fechas_str]
         if len(data[nombre]["extras"]) != len(originales):
             guardar_calendarios_responsables(data)
-            update_tasks_for_responsible(nombre)
+            publish("feriado_modificado", {"owner": nombre})
+
 
 def obtener_calendario_responsable(nombre):
     data = cargar_calendarios_responsables()
