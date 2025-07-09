@@ -12,7 +12,10 @@ from app.views.dashboard_utils.dashboard_pages import (
 )
 from app.views.dashboard_utils.dashboard_utils import sync_project_selection
 from app.views.project_utils.project_edit_view import view_project_creation
-from app.views.dashboard_utils.dashboard_router import render_general_view  # Importamos aquí la función para vistas generales
+from app.views.dashboard_utils.dashboard_router import (
+    render_general_view,
+)  # Importamos aquí la función para vistas generales
+
 
 def show_dashboard():
     controller = DashboardController(st.session_state)
@@ -37,8 +40,17 @@ def show_dashboard():
         render_general_view(controller)  # Acá delegamos la lógica de esas vistas
     else:
         page_dispatch = {
-            "Gestor de tareas": lambda: page_gestor_tareas(controller, selected_project),
+            "Gestor de tareas": lambda: page_gestor_tareas(
+                controller, selected_project
+            ),
             "Diagrama Gantt": lambda: page_diagrama_gantt(controller, selected_project),
-            "Diagrama Gantt global de proyectos": lambda: page_diagrama_gantt_global(projects),
+            "Diagrama Gantt global de proyectos": lambda: page_diagrama_gantt_global(
+                projects
+            ),
         }
-        page_dispatch.get(page, lambda: st.info("No hay proyectos creados. Usá el formulario en la barra lateral."))()
+        page_dispatch.get(
+            page,
+            lambda: st.info(
+                "No hay proyectos creados. Usá el formulario en la barra lateral."
+            ),
+        )()

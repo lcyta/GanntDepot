@@ -1,5 +1,6 @@
 from datetime import datetime, date
 
+
 def safe_date(dt):
     if isinstance(dt, datetime):
         return dt.date()
@@ -10,6 +11,7 @@ def safe_date(dt):
             return datetime.strptime(str(dt), "%Y-%m-%d").date()
         except:
             return None
+
 
 def calcular_duracion_real(start, end):
     start_date = safe_date(start)

@@ -3,9 +3,9 @@ from datetime import datetime, date, timedelta
 from typing import Callable, List
 from app.models.task import Task
 
+
 def adjust_task_schedule(
-    tasks: List[Task],
-    get_feriados_func: Callable[[str], List[tuple]]
+    tasks: List[Task], get_feriados_func: Callable[[str], List[tuple]]
 ) -> List[Task]:
     tasks_by_owner = {}
     for t in tasks:
@@ -18,11 +18,13 @@ def adjust_task_schedule(
 
         for t in owner_tasks:
             duracion = t.days or 1
-            base = (
-                t.start.date() if isinstance(t.start, datetime)
-                else t.start if isinstance(t.start, date)
-                else datetime.today().date()
-            )
+
+            if isinstance(t.start, datetime):
+                base = t.start.date()
+            elif isinstance(t.start, date):
+                base = t.start
+            else:
+                base = datetime.today().date()
 
             cursor = next_business_day(cursor or base, feriados)
             inicio, fin = calcular_rango_habil(cursor, duracion, feriados)

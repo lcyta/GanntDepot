@@ -3,8 +3,9 @@ import pandas as pd
 from datetime import date, timedelta
 from app.core.holiday.manager_holiday_controller import (
     agregar_rango_feriados,
-    eliminar_feriado
+    eliminar_feriado,
 )
+
 
 def gestionar_rango_feriados(pais):
     with st.expander("📅 Agregar / ❌ Eliminar rango de feriados"):
@@ -13,9 +14,11 @@ def gestionar_rango_feriados(pais):
         rango = st.date_input(
             "Rango de fechas",
             value=(date.today(), date.today() + timedelta(days=1)),
-            key=f"rango_{pais}"
+            key=f"rango_{pais}",
         )
-        nombre_rango = st.text_input("Nombre para todos los días", key=f"rango_nombre_{pais}")
+        nombre_rango = st.text_input(
+            "Nombre para todos los días", key=f"rango_nombre_{pais}"
+        )
 
         if st.button("Agregar rango", key=f"btn_rango_{pais}"):
             if isinstance(rango, tuple) and len(rango) == 2 and nombre_rango.strip():
@@ -33,7 +36,7 @@ def gestionar_rango_feriados(pais):
         rango_a_eliminar = st.date_input(
             "Rango a eliminar",
             value=(date.today(), date.today() + timedelta(days=1)),
-            key=f"rango_eliminar_{pais}"
+            key=f"rango_eliminar_{pais}",
         )
 
         if st.button("Eliminar rango", key=f"btn_eliminar_rango_fechas_{pais}"):

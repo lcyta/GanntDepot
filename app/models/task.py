@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime, timedelta
 
+
 class Task:
     def __init__(self, title, owner, days, start=None, end=None, id=None):
         self.id = id or str(uuid.uuid4())

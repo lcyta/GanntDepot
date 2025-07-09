@@ -1,6 +1,7 @@
 import streamlit as st
 from app.core.project_manager import save_project
 
+
 def handle_project_creation(new_project_name):
     save_project(new_project_name.strip())
     st.session_state.current_project = new_project_name.strip()

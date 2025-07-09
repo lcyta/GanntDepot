@@ -1,5 +1,5 @@
-from app.core.calendar.calendar_logic import get_feriados_for_owner
-from app.core.task.task_scheduler import adjust_task_schedule as _adjust
+from app.core.calendar.logic import get_feriados_for_owner
+from app.core.scheduler import adjust_task_schedule as _adjust
 from app.models.task import Task
 from typing import List
 

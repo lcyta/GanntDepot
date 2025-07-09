@@ -1,5 +1,6 @@
 import os
 from data_manager import PROJECTS_FILE, get_file_path
+from app.core.project_manager import load_projects
 
 def delete_project(project_name):
     # Eliminar archivo de tareas
@@ -12,6 +13,7 @@ def delete_project(project_name):
     projects = [p for p in projects if p != project_name]
     with open(PROJECTS_FILE, "w") as f:
         f.write("\n".join(projects))
+
 
 def rename_project(old_name, new_name):
     projects = load_projects()

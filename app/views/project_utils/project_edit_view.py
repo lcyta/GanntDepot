@@ -1,7 +1,11 @@
 import streamlit as st
 from app.views.project_utils.project_objective import render_project_objectives
-from app.views.project_utils.project_photos import render_photo_uploader, render_photo_slider
+from app.views.project_utils.project_photos import (
+    render_photo_uploader,
+    render_photo_slider,
+)
 from app.views.project_utils.project_team import render_project_team
+
 
 def view_project_creation():
     st.title(f"🎨 Proyecto: {st.session_state.current_project}")

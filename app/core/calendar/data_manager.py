@@ -16,4 +16,3 @@ def cargar_calendarios_responsables():
 def guardar_calendarios_responsables(data):
     with open(FILE, "w") as f:
         json.dump(data, f, indent=2, default=str)
-

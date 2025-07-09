@@ -1,7 +1,12 @@
-from app.core.project_manager import load_projects, rename_project, delete_project
+from app.core.project_manager import (
+    load_projects, rename_project, delete_project
+)
 from app.core.task.task_manager import load_tasks
 from app.core.scheduler import adjust_task_schedule
-from app.views.project_utils.project_actions import handle_project_creation  # ⬅️ IMPORT CORRECTO
+from app.views.project_utils.project_actions import (
+    handle_project_creation,
+)  # ⬅️ IMPORT CORRECTO
+
 
 class DashboardController:
     def __init__(self, session_state):

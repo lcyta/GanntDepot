@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+
 def mostrar_feriados_responsable(nombre, feriados):
     with st.expander(f"📋 Ver feriados de {nombre}", expanded=True):
         if feriados:

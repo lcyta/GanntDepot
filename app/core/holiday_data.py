@@ -18,5 +18,5 @@ FERIADOS_PREDETERMINADOS = {
         (date(2025, 2, 1), "Año Nuevo Chino (aproximado)"),
         (date(2025, 5, 1), "Día del Trabajo"),
         (date(2025, 10, 1), "Día Nacional de China"),
-    ]
+    ],
 }

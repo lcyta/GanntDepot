@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def sidebar_project_management(controller, projects):
     with st.sidebar.expander("📝 Gestor de proyectos", expanded=True):
         new_project = st.text_input("Crear nuevo proyecto")
@@ -10,6 +11,7 @@ def sidebar_project_management(controller, projects):
         if not controller.state.view_fake_project and projects:
             return st.selectbox("Seleccioná un proyecto", projects)
     return None
+
 
 def sidebar_general_views(controller):
     with st.sidebar.expander("🔍 Vistas generales", expanded=False):
@@ -23,6 +25,7 @@ def sidebar_general_views(controller):
             ),
             index=0,
         )
+
 
 def sidebar_project_navigation(selected_project, projects):
     opciones_nav = []

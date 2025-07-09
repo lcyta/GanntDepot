@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+
 def next_business_day(start_date, holidays):
     current = start_date
     while True:
@@ -7,6 +8,7 @@ def next_business_day(start_date, holidays):
             current += timedelta(days=1)
         else:
             return current
+
 
 def calcular_rango_habil(start_date, duration, holidays):
     current = start_date

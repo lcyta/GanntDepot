@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from app.core.holiday.manager_holiday_controller import obtener_feriados
 
+
 def mostrar_tabla_feriados(pais):
     feriados = obtener_feriados(pais)
     with st.expander(f"📅 Ver feriados de {pais}", expanded=True):

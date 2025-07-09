@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def render_project_objectives():
     with st.expander("📌 Objetivos del proyecto", expanded=True):
         col1, col2 = st.columns(2)
