@@ -9,4 +9,4 @@ def render_project_objectives():
             st.text_input("👤 Dueño del proyecto")
             st.text_input("📍 Lugar")
             st.number_input("📏 Metros cuadrados", min_value=0)
-            st.text_input("🏘️ Localidad")
+            st.text_input("🌍 Localidad")
