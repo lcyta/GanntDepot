@@ -21,6 +21,7 @@ def sidebar_general_views(controller):
                 "Ninguna",
                 "👥 Gestionar responsables",
                 "📆 Calendario laboral",
+                "🗂️ Gestión de proyectos", 
                # "📅 Calendario por responsable",
             ),
             index=0,

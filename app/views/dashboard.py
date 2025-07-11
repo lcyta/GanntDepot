@@ -35,7 +35,7 @@ def show_dashboard():
     if controller.state.vista_general in [
         "👥 Gestionar responsables",
         "📆 Calendario laboral",
-        "📅 Calendario por responsable",
+        "🗂️ Gestión de proyectos",
     ]:
         render_general_view(controller)  # Acá delegamos la lógica de esas vistas
     else:
