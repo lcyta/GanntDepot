@@ -26,7 +26,7 @@ def gestionar_rango_feriados(pais):
                 fechas = pd.date_range(start, end).to_pydatetime().tolist()
                 datos = [(f.date(), nombre_rango.strip()) for f in fechas]
                 agregar_rango_feriados(pais, datos)
-                st.success(f"Agregado: {start.date()} a {end.date()}")
+                st.success(f"Agregado: {start.strftime('%Y-%m-%d')} a {end.strftime('%Y-%m-%d')}")
                 st.rerun()
             else:
                 st.warning("Seleccioná un rango válido y escribí un nombre.")
@@ -45,7 +45,7 @@ def gestionar_rango_feriados(pais):
                 fechas_a_borrar = pd.date_range(start, end).to_pydatetime().tolist()
                 for f in fechas_a_borrar:
                     eliminar_feriado(pais, f.date())
-                st.success(f"Feriados eliminados entre {start.date()} y {end.date()}")
+                st.success(f"Feriados eliminados entre {start.strftime('%Y-%m-%d')} y {end.strftime('%Y-%m-%d')}")
                 st.rerun()
             else:
                 st.warning("Seleccioná un rango válido de fechas para eliminar.")

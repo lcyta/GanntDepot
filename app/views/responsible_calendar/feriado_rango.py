@@ -24,7 +24,7 @@ def ui_agregar_rango(nombre):
             st.success(
                 f"Agregado: {fechas[0].strftime('%Y-%m-%d')} a {fechas[-1].strftime('%Y-%m-%d')}"
             )
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.warning("Rango inválido o descripción vacía.")
 
@@ -43,7 +43,7 @@ def ui_eliminar_rango(nombre):
             st.success(
                 f"Feriados eliminados entre {fechas[0].strftime('%Y-%m-%d')} y {fechas[-1].strftime('%Y-%m-%d')}"
             )
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.warning("Seleccioná un rango válido.")
 
