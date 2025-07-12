@@ -1,6 +1,6 @@
 import streamlit as st
 from app.views.responsible_calendar.responsible_calendar_view import view_responsible_calendar
-from app.views.responsibles_view import view_responsibles
+from app.views.responsibles_view.responsibles_view import view_responsibles
 
 
 def general_responsibles_view():
