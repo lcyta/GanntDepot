@@ -29,7 +29,7 @@ def generar_datos_ficticios(projects):
 def view_project_list():
     print("[DEBUG] Entrando a view_project_list()")  # 🔍 Este mensaje se verá en la terminal
 
-    st.subheader("🗂️ Lista de Proyectos")
+    st.subheader("📁 Lista de Proyectos")
 
     projects = load_projects()
     if not projects:
@@ -52,7 +52,7 @@ def view_project_list():
             else:
                 st.error("⚠️ No se pudo renombrar el proyecto.")
 
-        if col3.button("🗑️", key=f"delete_btn_{i}"):
+        if col3.button("✖️", key=f"delete_btn_{i}"):
             delete_project(project)
             st.warning(f"🚫 Proyecto eliminado: **{project}**")
             st.rerun()

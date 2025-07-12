@@ -1,5 +1,12 @@
 import streamlit as st
 
+# Definí las vistas generales en un diccionario para no duplicar
+GENERAL_VIEWS_KEYS = [
+    "👥 Gestionar responsables",
+    "📆 Calendario laboral",
+    #"📅 Calendario por responsable",
+    "📁 Gestión de proyectos",
+]
 
 def sidebar_project_management(controller, projects):
     with st.sidebar.expander("📝 Gestor de proyectos", expanded=True):
@@ -17,13 +24,7 @@ def sidebar_general_views(controller):
     with st.sidebar.expander("🔍 Vistas generales", expanded=False):
         controller.state.vista_general = st.radio(
             "Seleccioná una vista general",
-            options=(
-                "Ninguna",
-                "👥 Gestionar responsables",
-                "📆 Calendario laboral",
-                "🗂️ Gestión de proyectos", 
-               # "📅 Calendario por responsable",
-            ),
+            options=["Ninguna"] + GENERAL_VIEWS_KEYS,
             index=0,
         )
 
