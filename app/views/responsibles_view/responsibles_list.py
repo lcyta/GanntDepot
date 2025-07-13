@@ -1,5 +1,6 @@
 import streamlit as st
 from app.core.responsibles_controller import get_responsibles, handle_delete_responsible
+from app.views.responsibles_view.responsible_row import mostrar_responsable
 
 def mostrar_lista_responsables():
     if "responsible_to_delete" not in st.session_state:
