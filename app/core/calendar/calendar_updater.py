@@ -55,13 +55,17 @@ def agregar_rango_feriados_responsable(nombre, fechas_con_nombre):
         guardar_calendarios_responsables(data)
         publish("feriado_modificado", {"owner": nombre})
 
+def fechas_a_str(fechas):
+    return {f.isoformat() if isinstance(f, date) else str(f) for f in fechas}
 
 def eliminar_rango_feriados_responsable(nombre, fechas):
     data = cargar_calendarios_responsables()
-    if nombre in data:
-        fechas_str = [f.isoformat() if isinstance(f, date) else str(f) for f in fechas]
-        originales = data[nombre]["extras"]
-        data[nombre]["extras"] = [f for f in originales if f[0] not in fechas_str]
-        if len(data[nombre]["extras"]) != len(originales):
-            guardar_calendarios_responsables(data)
-            publish("feriado_modificado", {"owner": nombre})
+    if nombre not in data:
+        return
+    fechas_str = fechas_a_str(fechas)
+    originales = data[nombre]["extras"]
+    nuevos_extras = [f for f in originales if f[0] not in fechas_str]
+    if len(nuevos_extras) != len(originales):
+        data[nombre]["extras"] = nuevos_extras
+        guardar_calendarios_responsables(data)
+        publish("feriado_modificado", {"owner": nombre})
