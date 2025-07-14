@@ -60,12 +60,28 @@ def fechas_a_str(fechas):
 
 def eliminar_rango_feriados_responsable(nombre, fechas):
     data = cargar_calendarios_responsables()
-    if nombre not in data:
+    if not _responsable_existente(data, nombre):
         return
-    fechas_str = fechas_a_str(fechas)
+
     originales = data[nombre]["extras"]
-    nuevos_extras = [f for f in originales if f[0] not in fechas_str]
-    if len(nuevos_extras) != len(originales):
-        data[nombre]["extras"] = nuevos_extras
-        guardar_calendarios_responsables(data)
-        publish("feriado_modificado", {"owner": nombre})
+    fechas_str = fechas_a_str(fechas)
+    nuevos_extras = _filtrar_extras(originales, fechas_str)
+
+    if _sin_cambios(originales, nuevos_extras):
+        return
+
+    _actualizar_calendario(data, nombre, nuevos_extras)
+
+def _responsable_existente(data, nombre):
+    return nombre in data
+
+def _filtrar_extras(originales, fechas_str):
+    return [f for f in originales if f[0] not in fechas_str]
+
+def _sin_cambios(originales, nuevos_extras):
+    return len(originales) == len(nuevos_extras)
+
+def _actualizar_calendario(data, nombre, nuevos_extras):
+    data[nombre]["extras"] = nuevos_extras
+    guardar_calendarios_responsables(data)
+    publish("feriado_modificado", {"owner": nombre})
