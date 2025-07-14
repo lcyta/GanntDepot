@@ -1,25 +1,17 @@
-from collections import defaultdict
-from app.core.scheduler import adjust_task_schedule
-from app.core.task.task_manager import (
-    load_tasks_by_responsible, save_all_tasks
-)
+# app/core/task/task_update_controller.py
+from app.core.task.task_manager import load_tasks_by_responsible
+from app.core.task.task_grouping_service import agrupar_tareas_por_proyecto
+from app.core.task.task_update_service import actualizar_tareas_por_proyecto
 
 
-def update_tasks_for_responsible(owner_name: str):
+def update_tasks_for_responsible(owner_name: str, get_feriados_func=None):
     tasks = load_tasks_by_responsible(owner_name)
 
     if not tasks:
         print(f"[LOG] No se encontraron tareas para responsable {owner_name}")
         return
 
-    tasks_por_proyecto = defaultdict(list)
-    for task in tasks:
-        if not hasattr(task, "project_name") or not task.project_name:
-            print(f"[WARN] Tarea sin proyecto: {task.title}")
-            continue
-        tasks_por_proyecto[task.project_name].append(task)
+    tareas_por_proyecto = agrupar_tareas_por_proyecto(tasks)
 
-    for proyecto, tareas in tasks_por_proyecto.items():
-        tareas_ajustadas = adjust_task_schedule(tareas)
-        save_all_tasks(proyecto, tareas_ajustadas)
-        print(f"[LOG] Proyecto '{proyecto}' actualizado")
+    for proyecto, tareas in tareas_por_proyecto.items():
+        actualizar_tareas_por_proyecto(proyecto, tareas, get_feriados_func)
