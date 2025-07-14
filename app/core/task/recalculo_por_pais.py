@@ -42,25 +42,38 @@ def reemplazar_tareas_de_responsable(tasks, nombre, nuevas_tareas):
     return [t for t in tasks if t.owner != nombre] + nuevas_tareas
 
 
-def recalcular_tareas_responsables_por_pais(pais):
-    print(f"[LOG] Iniciando recalculo para país: {pais}")
+def obtener_responsables_por_pais(pais):
     responsibles = filtrar_responsables_por_pais(pais)
-
     if not responsibles:
-        print("[LOG] No hay responsables para el país.")
+        print(f"[LOG] No hay responsables para el país: {pais}")
+    return responsibles
+
+def obtener_archivos_tasks(data_dir):
+    return [
+        f for f in os.listdir(data_dir)
+        if f.endswith("_tasks.csv") and f != "responsibles.csv"
+    ]
+
+def procesar_archivos_por_responsables(archivos, responsibles):
+    procesados = 0
+    modificados = 0
+    for archivo in archivos:
+        project_name = archivo.replace("_tasks.csv", "")
+        fue_modificado = procesar_proyecto_para_responsables(project_name, responsibles)
+        procesados += 1
+        if fue_modificado:
+            modificados += 1
+    return procesados, modificados
+
+def recalcular_tareas_responsables_por_pais(pais, data_dir=DATA_DIR):
+    print(f"[LOG] Iniciando recalculo para país: {pais}")
+    responsibles = obtener_responsables_por_pais(pais)
+    if not responsibles:
         return
 
-    archivos_procesados = 0
-    archivos_modificados = 0
-
-    for archivo in os.listdir(DATA_DIR):
-        if archivo.endswith("_tasks.csv") and archivo != "responsibles.csv":
-            project_name = archivo.replace("_tasks.csv", "")
-            fue_modificado = procesar_proyecto_para_responsables(project_name, responsibles)
-            archivos_procesados += 1
-            if fue_modificado:
-                archivos_modificados += 1
+    archivos = obtener_archivos_tasks(data_dir)
+    procesados, modificados = procesar_archivos_por_responsables(archivos, responsibles)
 
     print(
-        f"[LOG] Recalculo finalizado. Proyectos procesados: {archivos_procesados}, modificados: {archivos_modificados}"
+        f"[LOG] Recalculo finalizado. Proyectos procesados: {procesados}, modificados: {modificados}"
     )

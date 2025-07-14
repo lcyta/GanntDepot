@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime
 from app.core.calendar.calendar_repository import (
     cargar_calendarios_responsables)
 from app.core.holiday_data import FERIADOS_PREDETERMINADOS
