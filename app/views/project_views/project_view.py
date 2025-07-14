@@ -29,31 +29,33 @@ def generar_datos_ficticios(projects):
 def view_project_list():
     print("[DEBUG] Entrando a view_project_list()")  # 🔍 Este mensaje se verá en la terminal
 
-    st.subheader("📁 Lista de Proyectos")
+    st.subheader("📁 Gestión de Proyectos")
 
-    projects = load_projects()
-    if not projects:
-        st.info("No hay proyectos creados todavía.")
-        return
+    with st.expander("📁 Gestión de Proyectos", expanded=False):
+        projects = load_projects()
+        if not projects:
+            st.info("No hay proyectos creados todavía.")
+            return
 
-    datos = generar_datos_ficticios(projects)
-    st.dataframe(datos, use_container_width=True)
+        datos = generar_datos_ficticios(projects)
+        st.dataframe(datos, use_container_width=True)
 
     st.markdown("### ✏️ Editar o eliminar proyectos")
-    for i, project in enumerate(projects):
-        col1, col2, col3 = st.columns([4, 3, 1])
-        col1.markdown(f"**📁 {project}**")
+    with st.expander("✏️ Editar o eliminar proyectos", expanded=False):
+        for i, project in enumerate(projects):
+            col1, col2, col3 = st.columns([4, 3, 1])
+            col1.markdown(f"**📁 {project}**")
 
-        new_name = col2.text_input("Renombrar", value=project, key=f"rename_input_{i}")
-        if col2.button("✏️ Renombrar", key=f"rename_btn_{i}") and new_name != project:
-            if rename_project(project, new_name):
-                st.success(f"✅ Proyecto renombrado a **{new_name}**")
+            new_name = col2.text_input("Renombrar", value=project, key=f"rename_input_{i}")
+            if col2.button("✏️ Renombrar", key=f"rename_btn_{i}") and new_name != project:
+                if rename_project(project, new_name):
+                    st.success(f"✅ Proyecto renombrado a **{new_name}**")
+                    st.rerun()
+                else:
+                    st.error("⚠️ No se pudo renombrar el proyecto.")
+
+            if col3.button("✖️", key=f"delete_btn_{i}"):
+                delete_project(project)
+                st.warning(f"🚫 Proyecto eliminado: **{project}**")
                 st.rerun()
-            else:
-                st.error("⚠️ No se pudo renombrar el proyecto.")
-
-        if col3.button("✖️", key=f"delete_btn_{i}"):
-            delete_project(project)
-            st.warning(f"🚫 Proyecto eliminado: **{project}**")
-            st.rerun()
             

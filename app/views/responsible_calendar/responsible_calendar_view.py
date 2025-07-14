@@ -6,7 +6,7 @@ from app.views.responsible_calendar.feriado_individual import manejar_feriado_in
 from app.views.responsible_calendar.feriado_rango import manejar_rango_feriados
 
 def view_responsible_calendar():
-    with st.expander("📅 Calendario de feriados por responsable", expanded=True):
+    with st.expander("📅 Calendario de feriados por responsable", expanded=False):
 
         responsables = load_responsibles()
         if not responsables:
