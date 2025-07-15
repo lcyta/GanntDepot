@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 from app.core.project_manager import load_projects, rename_project, delete_project
 
+
 # Generador de datos ficticios
 def generar_datos_ficticios(projects):
     localidades = ["Buenos Aires", "Córdoba", "Rosario", "Mendoza", "La Plata", "Salta"]
@@ -27,17 +28,22 @@ def generar_datos_ficticios(projects):
 
 
 def view_project_list():
-    print("[DEBUG] Entrando a view_project_list()")  # 🔍 Este mensaje se verá en la terminal
-
     st.subheader("📁 Gestión de Proyectos")
 
-    with st.expander("📁 Gestión de Proyectos", expanded=False):
-        projects = load_projects()
-        if not projects:
-            st.info("No hay proyectos creados todavía.")
-            return
+    projects = load_projects()
+    if not projects:
+        st.info("No hay proyectos creados todavía.")
+        return
 
+    # ✅ Guardar los datos en session_state para reutilizar en otras vistas
+    if "datos_proyectos" not in st.session_state:
         datos = generar_datos_ficticios(projects)
+        st.session_state.datos_proyectos = {item["Proyecto"]: item for item in datos}
+    else:
+        # Reutilizar los existentes y filtrar solo los proyectos activos
+        datos = [st.session_state.datos_proyectos[n] for n in projects if n in st.session_state.datos_proyectos]
+
+    with st.expander("📁 Lista Gestión de Proyectos", expanded=False):
         st.dataframe(datos, use_container_width=True)
 
     st.markdown("### ✏️ Editar o eliminar proyectos")
@@ -49,6 +55,10 @@ def view_project_list():
             new_name = col2.text_input("Renombrar", value=project, key=f"rename_input_{i}")
             if col2.button("✏️ Renombrar", key=f"rename_btn_{i}") and new_name != project:
                 if rename_project(project, new_name):
+                    # Actualizar la clave en los datos ficticios también
+                    if project in st.session_state.datos_proyectos:
+                        st.session_state.datos_proyectos[new_name] = st.session_state.datos_proyectos.pop(project)
+                        st.session_state.datos_proyectos[new_name]["Proyecto"] = new_name
                     st.success(f"✅ Proyecto renombrado a **{new_name}**")
                     st.rerun()
                 else:
@@ -56,6 +66,17 @@ def view_project_list():
 
             if col3.button("✖️", key=f"delete_btn_{i}"):
                 delete_project(project)
+                st.session_state.datos_proyectos.pop(project, None)  # También lo eliminamos de los datos ficticios
                 st.warning(f"🚫 Proyecto eliminado: **{project}**")
                 st.rerun()
-            
+
+    st.markdown("### 📁 Lista de proyectos")
+    with st.expander("📁 Lista de proyectos (seleccionable)", expanded=False):
+        selected_project = st.selectbox("Seleccioná un proyecto para ver detalles", projects)
+        st.markdown(f"**Proyecto seleccionado:** `{selected_project}`")
+
+        if "datos_proyectos" in st.session_state and selected_project in st.session_state.datos_proyectos:
+            detalle = st.session_state.datos_proyectos[selected_project]
+            st.dataframe([detalle], use_container_width=True)
+        else:
+            st.info("No se encontraron detalles del proyecto.")
