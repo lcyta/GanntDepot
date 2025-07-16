@@ -20,8 +20,9 @@ def view_tasks(tasks, project_name):
         )
 
     # Mostrar UI para crear, modificar, mostrar y reordenar tareas
-    crear_nueva_tarea(project_name, responsibles_list)
-    modificar_tarea(tasks, project_name, responsibles_list)
-    mostrar_tareas_existentes(tasks)
-    reordenar_tareas(tasks, project_name)
-    acciones_en_lote(tasks, project_name, responsibles_list)
+    with st.expander("📑 Gestionar Tareas", expanded=True):
+        crear_nueva_tarea(project_name, responsibles_list)
+        modificar_tarea(tasks, project_name, responsibles_list)
+        mostrar_tareas_existentes(tasks)
+        reordenar_tareas(tasks, project_name)
+        acciones_en_lote(tasks, project_name, responsibles_list)
