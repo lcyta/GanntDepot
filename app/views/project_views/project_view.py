@@ -16,7 +16,18 @@ def view_project_list():
     datos = [st.session_state.datos_proyectos[n] for n in projects if n in st.session_state.datos_proyectos]
 
     with st.expander("📁 Lista Gestión de Proyectos", expanded=False):
-        st.dataframe(datos, use_container_width=True)
+        with st.expander("📁 Lista Gestión de Proyectos", expanded=False):
+            st.dataframe(datos, use_container_width=True)
+            
+        with st.expander("📁 Lista de proyectos (seleccionable)", expanded=False):
+            selected_project = st.selectbox("Seleccioná un proyecto para ver detalles", projects)
+            st.markdown(f"**Proyecto seleccionado:** `{selected_project}`")
+
+            if selected_project in st.session_state.datos_proyectos:
+                detalle = st.session_state.datos_proyectos[selected_project]
+                st.dataframe([detalle], use_container_width=True)
+            else:
+                st.info("No se encontraron detalles del proyecto.")
 
     st.markdown("### ✏️ Editar o eliminar proyectos")
     with st.expander("✏️ Editar o eliminar proyectos", expanded=False):
@@ -42,15 +53,5 @@ def view_project_list():
                 st.warning(f"🚫 Proyecto eliminado: **{project}**")
                 st.rerun()
 
-    st.markdown("### 📁 Lista de proyectos")
-    with st.expander("📁 Lista de proyectos (seleccionable)", expanded=False):
-        selected_project = st.selectbox("Seleccioná un proyecto para ver detalles", projects)
-        st.markdown(f"**Proyecto seleccionado:** `{selected_project}`")
-
-        if selected_project in st.session_state.datos_proyectos:
-            detalle = st.session_state.datos_proyectos[selected_project]
-            st.dataframe([detalle], use_container_width=True)
-        else:
-            st.info("No se encontraron detalles del proyecto.")
 
     render_project_image_uploader(selected_project)

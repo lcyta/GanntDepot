@@ -1,5 +1,8 @@
 import streamlit as st
 from app.core.responsibles_controller import get_responsibles, handle_update_responsible_full
+from app.core.holiday_data import FERIADOS_PREDETERMINADOS
+
+country_list = list(FERIADOS_PREDETERMINADOS.keys())
 
 def editar_responsable_view():
     with st.expander("👥 Editar Responsables", expanded=False):
@@ -9,6 +12,7 @@ def editar_responsable_view():
             return
 
         nombres = [r["name"] for r in responsibles]
+        st.markdown("### 👤 Selecciona un responsable")
         selected_name = st.selectbox("Selecciona un responsable para editar", nombres)
 
         selected = next((r for r in responsibles if r["name"] == selected_name), None)
@@ -21,8 +25,8 @@ def editar_responsable_view():
 
             new_location = st.selectbox(
                 "Nuevo país",
-                ["Argentina", "China", "EE.UU."],
-                index=["Argentina", "China", "EE.UU."].index(selected["location"]) if selected["location"] in ["Argentina", "China", "EE.UU."] else 0
+                country_list,
+                index=country_list.index(selected["location"]) if selected["location"] in country_list else 0
             )
             new_factory = st.selectbox(
                 "Nueva fábrica/sede",
