@@ -1,88 +1,4 @@
 {
-  "Argentina": [
-    [
-      "2025-01-01",
-      "Año Nuevo"
-    ],
-    [
-      "2025-03-24",
-      "Día de la Memoria"
-    ],
-    [
-      "2025-04-02",
-      "Malvinas"
-    ],
-    [
-      "2025-05-25",
-      "Revolución de Mayo"
-    ],
-    [
-      "2025-06-20",
-      "Paso a la Inmortalidad de Belgrano"
-    ]
-  ],
-  "EEUU": [
-    [
-      "2025-01-01",
-      "New Year's Day"
-    ],
-    [
-      "2025-07-04",
-      "Independence Day"
-    ],
-    [
-      "2025-11-27",
-      "Thanksgiving"
-    ],
-    [
-      "2025-12-25",
-      "Christmas"
-    ]
-  ],
-  "China": [
-    [
-      "2025-02-01",
-      "Año Nuevo Chino (aproximado)"
-    ],
-    [
-      "2025-05-01",
-      "Día del Trabajo"
-    ],
-    [
-      "2025-10-01",
-      "Día Nacional de China"
-    ]
-  ],
-  "Francia": [
-    [
-      "2025-07-19",
-      "Dia de la Patria"
-    ]
-  ],
-  "Alemania": [
-    [
-      "2025-07-01",
-      "Dia Salchichca"
-    ]
-  ],
-  "germania": [
-    [
-      "2025-07-19",
-      "fdsa"
-    ]
-  ],
-  "Hlanda": [
-    [
-      "2025-07-19",
-      "tulipan"
-    ]
-  ],
-  "Mexico": [
-    [
-      "2025-07-19",
-      "Taquitus"
-    ]
-  ],
   "peru": [
     [
       "2025-07-19",
@@ -95,28 +11,10 @@
       "Dia Ricardo"
     ]
   ],
-  "Noruega": [
-    [
-      "2025-07-20",
-      "dia delpescado Artesnal"
-    ]
-  ],
-  "san luis": [
-    [
-      "2025-07-20",
-      "chaya"
-    ]
-  ],
   "Salta": [
     [
       "2025-07-20",
       "Empanada"
-    ]
-  ],
-  "Santiago": [
-    [
-      "2025-07-20",
-      "Amalia"
     ]
   ]
 }

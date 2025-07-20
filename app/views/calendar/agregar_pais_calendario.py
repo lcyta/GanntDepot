@@ -15,7 +15,7 @@ def guardar_feriados(data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 def vista_agregar_pais():
-    with st.expander("Agregar Nuevo País"):
+    with st.expander("### 🌍 Agregar Nuevo País"):
         st.markdown("### 🌍 Agregar un nuevo país y feriados")
         
         nuevo_pais = st.text_input("Nombre del nuevo país")

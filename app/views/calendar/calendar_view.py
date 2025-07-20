@@ -5,6 +5,7 @@ from app.views.calendar.tabla_feriados import mostrar_tabla_feriados
 from app.views.calendar.feriado_individual import gestionar_feriado_individual
 from app.views.calendar.feriado_rango import gestionar_rango_feriados
 from app.views.calendar.agregar_pais_calendario import vista_agregar_pais
+from app.views.calendar.eliminar_pais import vista_eliminar_pais
 
 def cargar_nombres_paises(path='data/feriados_predefinidos.json'):
     try:
@@ -37,6 +38,9 @@ def view_calendar():
     pais = st.selectbox("🌍 Elegí un país", nombres_paises, index=index_predeterminado)
 
     mostrar_tabla_feriados(pais)
-    gestionar_feriado_individual(pais)
-    gestionar_rango_feriados(pais)
-    vista_agregar_pais()
+    with st.expander(" Gestion Feriados"):
+        gestionar_feriado_individual(pais)
+        gestionar_rango_feriados(pais)
+    with st.expander("🌍 Gestion de calendarios"):
+        vista_agregar_pais()
+        vista_eliminar_pais(pais) 
