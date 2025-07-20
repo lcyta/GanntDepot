@@ -1,5 +1,8 @@
 import streamlit as st
-from app.core.holiday_data import FERIADOS_PREDETERMINADOS
+import json
+from datetime import datetime
+from pathlib import Path
+
 from app.core.holiday.sync_with_responsibles import (
     sync_agregar_feriado,
     sync_agregar_rango,
@@ -8,14 +11,30 @@ from app.core.holiday.sync_with_responsibles import (
 )
 
 KEY = "holiday_calendars"
+FERIADOS_PATH = Path("data/feriados_predefinidos.json")
+
+def cargar_feriados_predefinidos():
+    if not FERIADOS_PATH.exists():
+        return {}
+
+    with open(FERIADOS_PATH, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    feriados = {}
+    for pais, fechas in raw.items():
+        feriados[pais] = [
+            (datetime.strptime(fecha, "%Y-%m-%d").date(), nombre)
+            for fecha, nombre in fechas
+        ]
+    return feriados
 
 
 def inicializar_calendarios():
     if KEY not in st.session_state:
         st.session_state[KEY] = {}
-    for pais, feriados in FERIADOS_PREDETERMINADOS.items():
-        if pais not in st.session_state[KEY]:
-            st.session_state[KEY][pais] = list(feriados)
+        feriados_predef = cargar_feriados_predefinidos()
+        for pais, feriados in feriados_predef.items():
+            st.session_state[KEY][pais] = feriados
 
 
 def obtener_feriados(pais):
