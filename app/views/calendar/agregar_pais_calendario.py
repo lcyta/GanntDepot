@@ -57,4 +57,5 @@ def vista_agregar_pais():
                         guardar_feriados(data)
                         st.success(f"Feriados para '{nuevo_pais}' guardados correctamente.")
                         st.session_state["feriados_temporales"] = []
+                        st.session_state["pais_seleccionado"] = nuevo_pais
                         st.rerun()

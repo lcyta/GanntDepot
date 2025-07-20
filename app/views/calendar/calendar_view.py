@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from app.core.holiday.manager_holiday_controller import inicializar_calendarios
+from app.core.holiday.manager_holiday_controller import inicializar_calendarios,cargar_feriados_predefinidos, KEY
 from app.views.calendar.tabla_feriados import mostrar_tabla_feriados
 from app.views.calendar.feriado_individual import gestionar_feriado_individual
 from app.views.calendar.feriado_rango import gestionar_rango_feriados
@@ -17,14 +17,25 @@ def cargar_nombres_paises(path='data/feriados_predefinidos.json'):
 
 def view_calendar():
     st.subheader("📆 Calendario laboral por país")
-    inicializar_calendarios()
+
+    # Si ya existe la sesión, forzamos la recarga de los feriados del archivo JSON
+    if KEY in st.session_state:
+        feriados_predef_actualizados = cargar_feriados_predefinidos()
+        for pais, feriados in feriados_predef_actualizados.items():
+            st.session_state[KEY][pais] = feriados
+    else:
+        inicializar_calendarios()
 
     nombres_paises = cargar_nombres_paises()
     if not nombres_paises:
         st.warning("No hay países disponibles para mostrar.")
         return
 
-    pais = st.selectbox("🌍 Elegí un país", nombres_paises)
+    pais_predeterminado = st.session_state.get("pais_seleccionado", nombres_paises[0])
+    index_predeterminado = nombres_paises.index(pais_predeterminado) if pais_predeterminado in nombres_paises else 0
+
+    pais = st.selectbox("🌍 Elegí un país", nombres_paises, index=index_predeterminado)
+
     mostrar_tabla_feriados(pais)
     gestionar_feriado_individual(pais)
     gestionar_rango_feriados(pais)
