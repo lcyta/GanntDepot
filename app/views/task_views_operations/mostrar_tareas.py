@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from app.utils.date_utils import calcular_duracion_real
+from app.utils.date_utils import calcular_duracion_real,calcular_duracion_transcurrida
 from datetime import datetime, date
 
 
@@ -22,13 +22,15 @@ def mostrar_tareas_existentes(tasks):
         data = []
         for task in tasks:
             duracion_real = calcular_duracion_real(task.start, task.end)
+            duracion_transcurrida = calcular_duracion_transcurrida(task.start)
             data.append({
                 "Responsable": task.owner,
                 "Título": task.title,
                 "Inicio": format_date(task.start),
                 "Fin": format_date(task.end),
                 "Duración real": f"{duracion_real} días" if duracion_real is not None else "Inválido",
-                "Duración estimada": f"{task.days} días"
+                "Duración estimada": f"{task.days} días",
+                "Duración transcurrida": f"{duracion_transcurrida} días" if duracion_transcurrida is not None else "Inválido"
             })
 
         # Creamos un DataFrame y lo mostramos

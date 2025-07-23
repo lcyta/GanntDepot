@@ -19,3 +19,16 @@ def calcular_duracion_real(start, end):
     if start_date and end_date:
         return (end_date - start_date).days + 1
     return None
+
+def calcular_duracion_transcurrida(start_date):
+    """
+    Calcula la cantidad de días transcurridos desde la fecha de inicio hasta hoy.
+    Si la fecha de inicio es futura, devuelve 0.
+    """
+    if not start_date:
+        return None
+    
+    hoy = datetime.today().date()
+    inicio = start_date.date() if isinstance(start_date, datetime) else start_date
+    
+    return max((hoy - inicio).days, 0)
