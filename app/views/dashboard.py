@@ -1,4 +1,5 @@
 import streamlit as st
+from app.views.gantt.view_hover import view_hover_main
 from app.core.dashboard_controller import DashboardController
 from app.views.dashboard_utils.dashboard_sidebar import (
     sidebar_project_management,
@@ -49,3 +50,5 @@ def show_dashboard():
         page,
         lambda: st.info("No hay proyectos creados. Usá el formulario en la barra lateral."),
     )()
+
+    view_hover_main()
