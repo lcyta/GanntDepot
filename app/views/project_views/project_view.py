@@ -5,7 +5,7 @@ from app.views.project_views.project_image_uploader import render_project_image_
 from app.core.project_manager import load_projects, rename_project, delete_project
 
 def view_project_list():
-    st.subheader("📁 Gestión de Proyectos")
+    st.subheader("📝 Gestión de Proyectos")
 
     projects = load_projects()
     if not projects:
@@ -19,7 +19,7 @@ def view_project_list():
         with st.expander("📁 Lista Gestión de Proyectos", expanded=False):
             st.dataframe(datos, use_container_width=True)
             
-        with st.expander("📁 Lista de proyectos (seleccionable)", expanded=False):
+        with st.expander("📋 Lista de proyectos (seleccionable)", expanded=False):
             selected_project = st.selectbox("Seleccioná un proyecto para ver detalles", projects)
             st.markdown(f"**Proyecto seleccionado:** `{selected_project}`")
 
