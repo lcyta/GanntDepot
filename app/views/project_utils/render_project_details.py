@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import io
-from app.views.project_utils.extras_view import render_extras_view
+from app.views.project_utils.extras.extras_view import render_extras_view
 
 def render_project_details(selected_project):
     if "datos_proyectos" in st.session_state and selected_project in st.session_state.datos_proyectos:
@@ -29,7 +29,7 @@ def render_project_details(selected_project):
                         st.info("📭 No hay imágenes cargadas para este proyecto.")
             
             with st.expander("📦 Extras", expanded=False):    
-                render_extras_view()
+                render_extras_view(selected_project)
 
     else:
         st.info("ℹ️ No se encontraron datos para este proyecto.")
