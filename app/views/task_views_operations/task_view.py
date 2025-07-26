@@ -1,4 +1,5 @@
 import streamlit as st
+from app.views.gantt.view_hover import view_hover_main
 #from app.core.task.task_manager import load_tasks
 from app.core.responsibles_manager import load_responsibles
 from app.views.task_views_operations.crear_tarea import crear_nueva_tarea
@@ -26,3 +27,4 @@ def view_tasks(tasks, project_name):
         mostrar_tareas_existentes(tasks)
         reordenar_tareas(tasks, project_name)
         acciones_en_lote(tasks, project_name, responsibles_list)
+        view_hover_main()
