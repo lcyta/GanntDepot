@@ -1,22 +1,22 @@
 import uuid
 from datetime import datetime, timedelta
 
-
 class Task:
-    def __init__(self, title, owner, days, start=None, end=None, id=None):
+    def __init__(self, title, owner, days, start=None, end=None, id=None, riesgo=None, tipo=None, estado=None):
         self.id = id or str(uuid.uuid4())
         self.title = title
         self.owner = owner
-        self.days = int(days)  # duración original fija
+        self.days = int(days)
 
-        # Start puede venir None, en ese caso usamos hoy
+        self.riesgo = riesgo
+        self.tipo = tipo
+        self.estado = estado
+
         self.start = start or datetime.today()
 
-        # Solo calculamos end si NO viene dado
         if end is not None:
             self.end = end
         else:
-            # Calculamos end solo si no se pasó explícitamente
             self.end = self.start + timedelta(days=self.days - 1)
 
     def to_dict(self):
@@ -26,5 +26,8 @@ class Task:
             "owner": self.owner,
             "start": self.start.strftime("%Y-%m-%d"),
             "end": self.end.strftime("%Y-%m-%d"),
-            "days": self.days,  # recomendación: guardá days también en el CSV
+            "days": self.days,
+            "estado": self.estado,
+            "riesgo": self.riesgo,
+            "tipo": self.tipo,
         }

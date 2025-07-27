@@ -20,6 +20,9 @@ def from_dataframe(df: pd.DataFrame) -> List[Task]:
                 else None
             ),
             days=int(row.get("days", 1)),
+            estado=row.get("estado"),
+            riesgo=row.get("riesgo"),
+            tipo=row.get("tipo")
         )
         tasks.append(task)
     return tasks

@@ -29,7 +29,10 @@ def mostrar_tareas_existentes(tasks):
                 "Fin": format_date(task.end),
                 "Duración estimada": f"{task.days} días",
                 "Duración real": f"{duracion_real} días" if duracion_real is not None else "Inválido",
-                "Duración transcurrida": f"{duracion_transcurrida} días" if duracion_transcurrida is not None else "Inválido"
+                "Duración transcurrida": f"{duracion_transcurrida} días" if duracion_transcurrida is not None else "Inválido",
+                "Tipo": task.tipo,
+                "Estado": task.estado,
+                "Riesgo": task.riesgo
             })
 
         # Creamos un DataFrame y lo mostramos
