@@ -39,3 +39,4 @@ def view_hover(df):
     )
 
     st.plotly_chart(fig, use_container_width=True)
+    

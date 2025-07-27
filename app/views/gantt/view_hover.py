@@ -22,21 +22,25 @@ def cargar_datos():
     }
     return pd.DataFrame(data)
 
-def view_hover_main():
+def view_hover_main(df_tareas):
     with st.expander("💡 Analisis"):
-        df_tareas = cargar_datos()
+        #df_tareas = cargar_datos()
         
         with st.expander("📊 Promedio de Desviación por Responsable"):
-            view_desviacion_por_responsable(df_tareas)
+            pass
+            #view_desviacion_por_responsable(df_tareas)
             
         with st.expander("🔎 Vista de Tareas con Hover"):
-            view_hover(df_tareas)
+            pass
+            #view_hover(df_tareas)
 
         with st.expander("📈 Curva de Rendimiento Acumulada"):
             view_curva_rendimiento(df_tareas)
 
         with st.expander("🔄 Correlacion"):
-            view_correlacion(df_tareas)
+            pass
+            #view_correlacion(df_tareas)
 
         with st.expander("❗ Ranking de tareas más problemáticas"):
-            view_ranking_problemas(df_tareas)
+            pass
+            #view_ranking_problemas(df_tareas)
