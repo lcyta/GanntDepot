@@ -1,0 +1,17 @@
+*- Consultar los 20 primeros Radon 
+
+radon cc app/ --min A -s | ForEach-Object {
+    if ($_ -match '\((\d+)\)$') {
+        $score = [int]$matches[1]
+        [pscustomobject]@{
+            Line     = $_
+            Score    = $score
+        }
+    }
+} | Sort-Object -Property Score -Descending | Select-Object -First 20 | ForEach-Object {
+    $_.Line
+}
+
+
+
+////////////////////////////////
