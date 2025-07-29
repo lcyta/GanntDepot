@@ -1,5 +1,5 @@
 import streamlit as st
-from app.core.dashboard_controller import DashboardController
+from app.core.controllers.dashboard_controller import DashboardController
 from app.views.dashboard_utils.dashboard_sidebar import (
     sidebar_project_management,
     sidebar_general_views,
