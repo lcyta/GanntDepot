@@ -15,3 +15,26 @@ radon cc app/ --min A -s | ForEach-Object {
 
 
 ////////////////////////////////
+
+
+lista de scrtips con mas lineas
+
+Get-ChildItem -Recurse -Include *.py -Path app | ForEach-Object {
+    $lineCount = (Get-Content $_.FullName).Count
+    if ($lineCount -gt 50) {
+        [PSCustomObject]@{
+            File       = $_.FullName
+            LineCount  = $lineCount
+        }
+    }
+} | Sort-Object LineCount -Descending | Format-Table -AutoSize
+
+
+
+
+///////////////////////////////////////////
+
+eliminar py cache
+
+
+Get-ChildItem -Path . -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
