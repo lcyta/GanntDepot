@@ -41,38 +41,35 @@ def manejar_eliminacion(i, project):
         st.warning(f"🚫 Proyecto eliminado: **{project}**")
         st.rerun()
 
+def render_fila_proyecto(i, project):
+    col1, col2, col3 = st.columns([4, 3, 1])
+    col1.markdown(f"**📁 {project}**")
+
+    with col2:
+        new_name = st.text_input("Renombrar", value=project, key=f"rename_input_{i}")
+        if st.button("✏️ Renombrar", key=f"rename_btn_{i}") and new_name != project:
+            if rename_project(project, new_name):
+                if project in st.session_state.datos_proyectos:
+                    st.session_state.datos_proyectos[new_name] = st.session_state.datos_proyectos.pop(project)
+                    st.session_state.datos_proyectos[new_name]["Proyecto"] = new_name
+                st.success(f"✅ Proyecto renombrado a **{new_name}**")
+                st.rerun()
+            else:
+                st.error("⚠️ No se pudo renombrar el proyecto.")
+
+    with col3:
+        if st.button("✖️", key=f"delete_btn_{i}"):
+            delete_project(project)
+            st.session_state.datos_proyectos.pop(project, None)
+            st.session_state.imagenes_proyectos.pop(project, None)
+            st.warning(f"🚫 Proyecto eliminado: **{project}**")
+            st.rerun()
+
 def editar_eliminar_proyectos(projects):
     st.markdown("### ✏️ Editar o eliminar proyectos")
     with st.expander("✏️ Editar o eliminar proyectos", expanded=False):
         for i, project in enumerate(projects):
-            col1, col2, col3 = st.columns([4, 3, 1])
-            col1.markdown(f"**📁 {project}**")
-
-            # Pasamos col2 y col3 a funciones manejadoras
-            # Necesitamos pasar las columnas como argumentos o replicar la UI
-            # Para simplicidad, pasamos las columnas como argumentos
-
-            # Manejar renombrado en col2
-            with col2:
-                new_name = st.text_input("Renombrar", value=project, key=f"rename_input_{i}")
-                if st.button("✏️ Renombrar", key=f"rename_btn_{i}") and new_name != project:
-                    if rename_project(project, new_name):
-                        if project in st.session_state.datos_proyectos:
-                            st.session_state.datos_proyectos[new_name] = st.session_state.datos_proyectos.pop(project)
-                            st.session_state.datos_proyectos[new_name]["Proyecto"] = new_name
-                        st.success(f"✅ Proyecto renombrado a **{new_name}**")
-                        st.rerun()
-                    else:
-                        st.error("⚠️ No se pudo renombrar el proyecto.")
-
-            # Manejar eliminación en col3
-            with col3:
-                if st.button("✖️", key=f"delete_btn_{i}"):
-                    delete_project(project)
-                    st.session_state.datos_proyectos.pop(project, None)
-                    st.session_state.imagenes_proyectos.pop(project, None)
-                    st.warning(f"🚫 Proyecto eliminado: **{project}**")
-                    st.rerun()
+            render_fila_proyecto(i, project)
 
 def view_project_list():
     st.subheader("📝 Gestión de Proyectos")
