@@ -15,7 +15,7 @@ def crear_nueva_tarea(project_name, responsibles_list):
         # Nuevos campos con selección
         tipo = st.text_input("Tipo de Tarea")
         riesgo = st.selectbox("Riesgo", options=["Bajo", "Medio", "Alto"])
-        estado = st.selectbox("Estado", options=[ "En curso"])
+        estado = st.selectbox("Estado", options=[ "En curso" , "Terminado" , "En Espera" ])
 
         if st.button("Agregar tarea"):
             if not title:
