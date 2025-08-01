@@ -1,20 +1,40 @@
 import streamlit as st
-import plotly.figure_factory as ff
-from app.views.gantt.gantt_controller import obtener_datos_gantt
+import plotly.express as px
+from app.views.gantt.gantt_controller import obtener_dataframe_proyectos
 
 def view_projects_gantt(project_list):
     st.subheader("📅 Diagrama Gantt de todos los proyectos")
 
-    gantt_data = obtener_datos_gantt(project_list)
+    df = obtener_dataframe_proyectos(project_list)
 
-    if not gantt_data:
-        st.info("No hay tareas en ningún proyecto.")
+    if df.empty:
+        st.info("No hay proyectos en estado Pendiente o En progreso.")
         return
 
-    fig = ff.create_gantt(
-        gantt_data,
-        index_col="Resource",
-        show_colorbar=True,
-        group_tasks=True
+    fig = px.timeline(
+        df,
+        x_start="Inicio",
+        x_end="Fin",
+        y="Proyecto",
+        color="Estado",
+        hover_data={
+            "Responsable": True,
+            "Cliente": True,
+            "Localidad": True,
+            "Metros²": True,
+            "Duración estimada": True,
+            "Estado": True,
+            "Inicio": False,
+            "Fin": False,
+            "Proyecto": False,
+        }
     )
+
+    fig.update_yaxes(autorange="reversed")
+    fig.update_layout(
+        height=600,
+        margin=dict(l=20, r=20, t=40, b=20),
+        xaxis_title="Fechas de ejecución"
+    )
+
     st.plotly_chart(fig, use_container_width=True)
