@@ -5,6 +5,10 @@ import plotly.graph_objects as go
 def view_curva_rendimiento(df: pd.DataFrame):
     st.subheader("📈 Curva de Rendimiento - Planificada vs Transcurrida")
 
+    if df is None or df.empty:
+        st.warning("No hay tareas para mostrar.")
+        return
+
     df_sorted = df.copy()
 
     # Extraer números de días desde strings tipo "3 días"

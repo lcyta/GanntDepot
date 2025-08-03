@@ -1,22 +1,21 @@
-import random
-from datetime import datetime, timedelta
+import os
+from app.core.data_manager import PROJECTS_FILE, cargar_datos_guardados_proyectos
 
-def generar_datos_iniciales(projects):
-    localidades = ["Buenos Aires", "Córdoba", "Rosario", "Mendoza", "La Plata", "Salta"]
-    clientes = ["Cliente A", "Cliente B", "Cliente C", "Cliente D"]
-    estados = ["En progreso", "Finalizado", "Pendiente"]
-    responsables = ["Juan", "Ana", "Luis", "Marta", "Carlos", "Lucía", "Pedro", "Sofía"]
+def cargar_lista_proyectos():
+    """
+    Lee el archivo projects_list.txt y devuelve la lista de proyectos (nombres).
+    """
+    if not os.path.exists(PROJECTS_FILE):
+        return []
+    with open(PROJECTS_FILE, "r", encoding="utf-8") as f:
+        proyectos = [line.strip() for line in f if line.strip()]
+    return proyectos
 
-    datos = []
-    for nombre in projects:
-        datos.append({
-            "Proyecto": nombre,
-            "Cliente": random.choice(clientes),
-            "Responsable": random.choice(responsables),
-            "Localidad": random.choice(localidades),
-            "Metros²": random.randint(100, 2000),
-            "Inicio": (datetime.today() - timedelta(days=random.randint(10, 100))).date(),
-            "Duración estimada (días)": random.choice([60, 90, 120]),
-            "Estado": random.choice(estados)
-        })
-    return {item["Proyecto"]: item for item in datos}
+def generar_datos_iniciales():
+    """
+    Carga la lista de proyectos y luego carga los datos guardados de cada proyecto.
+    Retorna un diccionario con la info de todos los proyectos.
+    """
+    proyectos = cargar_lista_proyectos()
+    datos = cargar_datos_guardados_proyectos(proyectos)
+    return datos
