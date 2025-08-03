@@ -36,3 +36,4 @@ def load_tasks_by_responsible(owner_name: str) -> List[Task]:
 
 def delete_task_by_index(project_name: str, idx: int):
     task_repository.delete_task_by_index(project_name, idx)
+

@@ -1,11 +1,19 @@
 import streamlit as st
+import pandas as pd
 from app.views.project_views.project_image_uploader import render_project_image_uploader
 from app.core.project_manager import load_projects, rename_project, delete_project
+from app.core.data_manager import  guardar_datos_proyecto
 
 def mostrar_tabla_proyectos(projects):
     datos = [st.session_state.datos_proyectos[n] for n in projects if n in st.session_state.datos_proyectos]
     with st.expander("📁 Lista Gestión de Proyectos", expanded=False):
-        st.dataframe(datos, use_container_width=True)
+        if datos:
+            df = pd.DataFrame(datos)
+            if 'Inicio' in df.columns:
+                df['Inicio'] = df['Inicio'].astype(str)
+            st.dataframe(df, use_container_width=True)
+        else:
+            st.info("No hay datos para mostrar.")
 
 def mostrar_detalles_proyecto(projects):
     selected_project = None
@@ -14,7 +22,10 @@ def mostrar_detalles_proyecto(projects):
         st.markdown(f"**Proyecto seleccionado:** `{selected_project}`")
         if selected_project in st.session_state.datos_proyectos:
             detalle = st.session_state.datos_proyectos[selected_project]
-            st.dataframe([detalle], use_container_width=True)
+            df = pd.DataFrame([detalle])
+            if 'Inicio' in df.columns:
+                df['Inicio'] = df['Inicio'].astype(str)
+            st.dataframe(df, use_container_width=True)
         else:
             st.info("No se encontraron detalles del proyecto.")
     return selected_project
@@ -116,30 +127,34 @@ def editar_eliminar_proyectos(projects):
                 "Responsable": responsable,
                 "Cliente": cliente,
                 "Localidad": localidad,
-                "Metros²": f"{metros} m²",
-                "Inicio": fecha_inicio,
-                "Duración estimada": f"{duracion} días",
+                "Metros²": metros,
+                "Inicio": str(fecha_inicio),  # mejor guardar como str para evitar errores
+                "Duración estimada (días)": duracion,  # mejor guardar como número directamente
                 "Estado": estado
             }
 
             if nuevo_nombre != selected_project:
                 if rename_project(selected_project, nuevo_nombre):
+                    # Actualizar clave en sesión
                     st.session_state.datos_proyectos.pop(selected_project)
                     st.session_state.datos_proyectos[nuevo_nombre] = actualizado
+
+                    # Aquí deberías guardar detalles actualizados en persistencia, ejemplo:
+                    guardar_datos_proyecto(nuevo_nombre, actualizado)
+                    # O actualizar archivo directamente según tu lógica de persistencia
+                    
                     st.success(f"✅ Proyecto renombrado a **{nuevo_nombre}** y actualizado.")
                     st.rerun()
                 else:
                     st.error("⚠️ No se pudo renombrar el proyecto.")
             else:
+                # Si no renombró, solo actualizamos detalles
                 st.session_state.datos_proyectos[nuevo_nombre] = actualizado
-                st.success("✅ Proyecto actualizado correctamente.")
 
-        if eliminar:
-            delete_project(selected_project)
-            st.session_state.datos_proyectos.pop(selected_project, None)
-            st.session_state.imagenes_proyectos.pop(selected_project, None)
-            st.warning(f"❌ Proyecto eliminado: **{selected_project}**")
-            st.rerun()
+                # Guardar detalles también para persistencia
+                guardar_datos_proyecto(nuevo_nombre, actualizado)
+                st.success("✅ Proyecto actualizado correctamente.")
+                st.rerun()
 
 def view_project_list():
     st.subheader("📝 Gestión de Proyectos")
