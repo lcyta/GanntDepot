@@ -10,10 +10,10 @@ GENERAL_VIEWS_KEYS = [
 
 def sidebar_project_management(controller, projects):
     with st.sidebar.expander("📝 Gestor de proyectos", expanded=True):
-        new_project = st.text_input("Crear nuevo proyecto")
-        if st.button("Crear proyecto") and new_project.strip():
-            controller.create_project(new_project)
-            st.experimental_rerun()
+        if st.button("Crear proyecto"):
+            controller.state.view_fake_project = True
+            st.session_state.current_project = ""
+            st.rerun()
 
         if not controller.state.view_fake_project and projects:
             return st.selectbox("Seleccioná un proyecto", projects)
