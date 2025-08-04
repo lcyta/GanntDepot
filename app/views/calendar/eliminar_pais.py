@@ -29,7 +29,7 @@ def eliminar_pais(pais_a_eliminar, data):
 
         nuevos_paises = list(data.keys())
         st.session_state["pais_seleccionado"] = nuevos_paises[0] if nuevos_paises else None
-        st.experimental_rerun()
+        st.rerun()
     else:
         st.warning(f"El país '{pais_a_eliminar}' no fue encontrado.")
 

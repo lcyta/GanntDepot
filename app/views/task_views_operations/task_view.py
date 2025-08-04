@@ -15,7 +15,7 @@ def view_tasks(tasks, project_name):
     if st.session_state.get("task_changed", False):
         st.session_state["tasks"] = load_tasks(project_name)
         st.session_state["task_changed"] = False
-        st.experimental_rerun()
+        st.rerun()
 
     # Ahora reasignamos tasks al estado actualizado
     if "tasks" in st.session_state:

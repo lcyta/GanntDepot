@@ -38,3 +38,8 @@ eliminar py cache
 
 
 Get-ChildItem -Path . -Recurse -Directory -Filter "__pycache__" | Remove-Item -Recurse -Force
+
+
+///////////////////////////////////////  grep /////
+
+Get-ChildItem -Recurse -Include *.py | Select-String 'st\.experimental_rerun\(\)'

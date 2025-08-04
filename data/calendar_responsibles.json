@@ -986,6 +986,10 @@
       [
         "2025-07-14",
         "hoy"
+      ],
+      [
+        "2025-08-05",
+        "sssa"
       ]
     ]
   },
@@ -1001,8 +1005,13 @@
     "base": "EEUU",
     "extras": []
   },
-  "FabiTuviEEUU54": {
-    "base": "EEUU",
-    "extras": []
+  "FabiTuviEEUU5469": {
+    "base": "China",
+    "extras": [
+      [
+        "2025-08-05",
+        "sssa"
+      ]
+    ]
   }
 }

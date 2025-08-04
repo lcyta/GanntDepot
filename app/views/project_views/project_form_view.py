@@ -45,7 +45,7 @@ def editar_eliminar_proyectos(projects):
             with col1:
                 guardar = st.form_submit_button("💾 Guardar cambios")
             with col2:
-                eliminar = st.form_submit_button("🗑️ Eliminar proyecto")
+                eliminar = st.form_submit_button("✖️ Eliminar proyecto")
 
         if guardar:
             actualizado = {

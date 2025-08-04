@@ -37,7 +37,7 @@ def editar_responsable(selected):
             new_factory=new_factory
         )
         st.success("Responsable actualizado correctamente.")
-        st.experimental_rerun()
+        st.rerun()
 
 def editar_responsable_view():
     with st.expander("👥 Editar Responsables", expanded=False):
