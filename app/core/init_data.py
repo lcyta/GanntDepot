@@ -11,11 +11,11 @@ def cargar_lista_proyectos():
         proyectos = [line.strip() for line in f if line.strip()]
     return proyectos
 
-def generar_datos_iniciales():
+def generar_datos_iniciales(project_list=None):
     """
-    Carga la lista de proyectos y luego carga los datos guardados de cada proyecto.
-    Retorna un diccionario con la info de todos los proyectos.
+    Carga los datos guardados de los proyectos.
+    Si recibe project_list, usa esa lista; si no, carga todos desde PROJECTS_FILE.
     """
-    proyectos = cargar_lista_proyectos()
-    datos = cargar_datos_guardados_proyectos(proyectos)
-    return datos
+    if project_list is None:
+        project_list = cargar_lista_proyectos()
+    return cargar_datos_guardados_proyectos(project_list)

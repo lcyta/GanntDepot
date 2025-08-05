@@ -8,7 +8,7 @@ def view_projects_gantt(project_list):
     df = obtener_dataframe_proyectos(project_list)
 
     if df.empty:
-        st.info("No hay proyectos en estado Pendiente o En progreso.")
+        st.info("No hay proyectos registrados.")
         return
 
     fig = px.timeline(
