@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 import os
-from app.core.holiday.manager_holiday_controller import KEY
+from app.core.holiday.holiday_service import KEY
 
 FERIADOS_FILE = os.path.join("data", "feriados_predefinidos.json")
 

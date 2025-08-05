@@ -1,5 +1,5 @@
 import pandas as pd
-from app.core.holiday.manager_holiday_controller import (
+from app.core.holiday.holiday_service import (
     agregar_rango_feriados,
     eliminar_feriado,
 )

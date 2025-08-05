@@ -1,6 +1,7 @@
 import streamlit as st
 import json
-from app.core.holiday.manager_holiday_controller import inicializar_calendarios,cargar_feriados_predefinidos, KEY
+from app.core.holiday.manager_holiday_controller import cargar_feriados_predefinidos
+from app.core.holiday.holiday_service import inicializar_calendarios, KEY
 from app.views.calendar.tabla_feriados import mostrar_tabla_feriados
 from app.views.calendar.feriado_individual import gestionar_feriado_individual
 from app.views.calendar.feriado_rango import gestionar_rango_feriados
