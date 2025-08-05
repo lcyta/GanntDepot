@@ -1,5 +1,6 @@
 from app.core.data_access.responsible_repository import ResponsibleRepository
 from app.core.calendar.calendar_service import CalendarService
+import pandas as pd
 
 _repo = ResponsibleRepository()
 _calendar = CalendarService()

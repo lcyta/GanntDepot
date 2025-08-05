@@ -1,44 +1,7 @@
 import streamlit as st
-import json
-import os
-
-FERIADOS_FILE = os.path.join("data", "feriados_predefinidos.json")
-
-def cargar_feriados():
-    if os.path.exists(FERIADOS_FILE):
-        with open(FERIADOS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-def guardar_feriados(data):
-    with open(FERIADOS_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
-def formulario_agregar_feriado():
-    with st.form("form_feriados"):
-        fecha = st.date_input("Fecha del feriado")
-        nombre = st.text_input("Nombre del feriado")
-        agregar = st.form_submit_button("Agregar feriado a la lista")
-        if agregar:
-            if fecha and nombre:
-                st.session_state.setdefault("feriados_temporales", []).append((str(fecha), nombre))
-                st.success(f"Feriado '{nombre}' agregado.")
-            else:
-                st.error("Por favor completá ambos campos.")
-
-def mostrar_feriados_temporales():
-    if "feriados_temporales" in st.session_state and st.session_state["feriados_temporales"]:
-        st.markdown("#### 🗓️ Feriados agregados temporalmente:")
-        for i, (f, n) in enumerate(st.session_state["feriados_temporales"]):
-            st.markdown(f"- {f}: {n}")
-
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("Limpiar feriados temporales"):
-                st.session_state["feriados_temporales"] = []
-        with col2:
-            return st.button("Guardar país y feriados")
-    return False
+from app.views.calendar.data_manager import cargar_feriados, guardar_feriados
+from app.views.calendar.feriado_form import formulario_agregar_feriado
+from app.views.calendar.feriados_temporales import mostrar_feriados_temporales
 
 def vista_agregar_pais():
     with st.expander("### 🌍 Agregar Nuevo País"):
@@ -61,4 +24,4 @@ def vista_agregar_pais():
                 st.success(f"Feriados para '{nuevo_pais}' guardados correctamente.")
                 st.session_state["feriados_temporales"] = []
                 st.session_state["pais_seleccionado"] = nuevo_pais
-                st.rerun()
+                st.rerun()  # En vez de st.rerun() que está deprecado

@@ -1008,5 +1008,9 @@
   "FabiTuviEEUU5469s": {
     "base": "China",
     "extras": []
+  },
+  "Siselu": {
+    "base": "EEUU",
+    "extras": []
   }
 }
