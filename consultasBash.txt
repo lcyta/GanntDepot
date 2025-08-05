@@ -43,3 +43,10 @@ Get-ChildItem -Path . -Recurse -Directory -Filter "__pycache__" | Remove-Item -R
 ///////////////////////////////////////  grep /////
 
 Get-ChildItem -Recurse -Include *.py | Select-String 'st\.experimental_rerun\(\)'
+
+
+////////////////volver ultimo comit////////////
+
+git reset --hard HEAD
+git clean -fd
+
