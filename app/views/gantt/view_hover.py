@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from app.views.gantt.gantt_hover import view_hover  # <- este import está OK si el archivo existe
-from app.views.gantt.curva_rendimiento import view_curva_rendimiento
+from app.views.gantt.curva.curva_rendimiento import view_curva_rendimiento
 from app.views.gantt.gantt_correlacion import view_correlacion
 from app.views.gantt.ranking_problemas import view_ranking_problemas
 from app.views.gantt.desviacion_por_responsable import view_desviacion_por_responsable
