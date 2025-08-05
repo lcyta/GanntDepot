@@ -1,65 +1,50 @@
-from data.responsible_repository import (
-    load_responsibles_df,
-    save_responsibles_df
-)
-from app.core.calendar.calendar_updater import (
-    asignar_base_responsable,
-    cargar_calendarios_responsables,
-    guardar_calendarios_responsables,
-)
+import pandas as pd
+from app.core.data_access.responsible_repository import ResponsibleRepository
+from app.core.calendar.calendar_service import CalendarService
 
 class ResponsibleService:
-    def get_all(self):
-        df = load_responsibles_df()
+    def __init__(self,
+                 repository: ResponsibleRepository = None,
+                 calendar_service: CalendarService = None):
+        self.repository = repository or ResponsibleRepository()
+        self.calendar_service = calendar_service or CalendarService()
+
+    def load_responsibles(self):
+        df = self.repository.load_all()
         return df.to_dict("records")
 
-    def save(self, name, location, factory):
-        df = load_responsibles_df()
-        df_new = {"name": name, "location": location, "factory": factory}
-        df = pd.concat([df, pd.DataFrame([df_new])], ignore_index=True)
-        df.drop_duplicates(subset=["name"], inplace=True)
-        save_responsibles_df(df)
+    def save_responsible(self, name: str, location: str, factory: str):
+        df = self.repository.load_all()
+        df_new = pd.DataFrame([{"name": name, "location": location, "factory": factory}])
+        df_combined = pd.concat([df, df_new], ignore_index=True)
+        df_combined.drop_duplicates(subset=["name"], inplace=True)
+        self.repository.save_all(df_combined)
+        self.calendar_service.assign_base_if_needed(name, location)
 
-        if location in ["Argentina", "EEUU", "China"]:
-            asignar_base_responsable(name, location)
-
-    def delete(self, name):
-        df = load_responsibles_df()
+    def delete_responsible_by_name(self, name: str):
+        df = self.repository.load_all()
         df = df[df["name"] != name]
-        save_responsibles_df(df)
+        self.repository.save_all(df)
+        self.calendar_service.remove_calendar_if_exists(name)
 
-        calendarios = cargar_calendarios_responsables()
-        if name in calendarios:
-            del calendarios[name]
-            guardar_calendarios_responsables(calendarios)
-
-    def update(self, name, new_location, new_factory):
-        df = load_responsibles_df()
+    def update_responsible(self, name: str, new_location: str, new_factory: str):
+        df = self.repository.load_all()
         if name not in df["name"].values:
             return
         df.loc[df["name"] == name, "location"] = new_location
         df.loc[df["name"] == name, "factory"] = new_factory
-        save_responsibles_df(df)
+        self.repository.save_all(df)
+        self.calendar_service.assign_base_if_needed(name, new_location)
 
-        if new_location in ["Argentina", "EEUU", "China"]:
-            asignar_base_responsable(name, new_location)
-
-    def rename(self, old_name, new_name, new_location, new_factory):
-        df = load_responsibles_df()
+    def update_responsible_name(self, old_name: str, new_name: str, new_location: str, new_factory: str):
+        df = self.repository.load_all()
         if old_name not in df["name"].values:
             return
-
         df.loc[df["name"] == old_name, "name"] = new_name
         df.loc[df["name"] == new_name, "location"] = new_location
         df.loc[df["name"] == new_name, "factory"] = new_factory
         df.drop_duplicates(subset=["name"], keep="last", inplace=True)
-        save_responsibles_df(df)
-
-        if new_location in ["Argentina", "EEUU", "China"]:
-            asignar_base_responsable(new_name, new_location)
-
+        self.repository.save_all(df)
+        self.calendar_service.assign_base_if_needed(new_name, new_location)
         if old_name != new_name:
-            calendarios = cargar_calendarios_responsables()
-            if old_name in calendarios:
-                del calendarios[old_name]
-                guardar_calendarios_responsables(calendarios)
+            self.calendar_service.remove_calendar_if_exists(old_name)
