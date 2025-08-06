@@ -1,0 +1,7 @@
+digraph "classes_gantt_app" {
+rankdir=BT
+charset="utf-8"
+"app.core.calendar.calendar_service.CalendarService" [color="black", fontcolor="black", label=<{CalendarService|<br ALIGN="LEFT"/>|assign_base_if_needed(name, location)<br ALIGN="LEFT"/>remove_calendar_if_exists(name)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"app.core.holiday.holiday_controller.HolidayController" [color="black", fontcolor="black", label=<{HolidayController|pais<br ALIGN="LEFT"/>|agregar_feriado(fecha, descripcion)<br ALIGN="LEFT"/>eliminar_feriado(feriados, seleccionado)<br ALIGN="LEFT"/>obtener_feriados()<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"app.models.task.Task" [color="black", fontcolor="black", label=<{Task|days : int<br ALIGN="LEFT"/>end<br ALIGN="LEFT"/>estado : NoneType<br ALIGN="LEFT"/>id : str<br ALIGN="LEFT"/>owner<br ALIGN="LEFT"/>riesgo : NoneType<br ALIGN="LEFT"/>start<br ALIGN="LEFT"/>tipo : NoneType<br ALIGN="LEFT"/>title<br ALIGN="LEFT"/>|to_dict()<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+}

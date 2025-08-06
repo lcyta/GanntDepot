@@ -1,0 +1,83 @@
+@startuml
+skinparam classAttributeIconSize 0
+package "./app/core" {
+}
+package "./app/core.calendar" {
+class calendar_service {
+  +CalendarService
+}
+}
+package "./app/core.controllers" {
+class dashboard_controller {
+  +DashboardController
+}
+}
+package "./app/core.data_access" {
+class responsible_repository {
+  +ResponsibleRepository
+}
+}
+package "./app/core.gantt" {
+}
+package "./app/core.holiday" {
+class holiday_controller {
+  +HolidayController
+}
+}
+package "./app/core.services" {
+class project_service {
+  +ProjectService
+}
+class responsible_service {
+  +ResponsibleService
+}
+}
+package "./app/core.state" {
+class session_state_handler {
+  +SessionStateHandler
+}
+}
+package "./app/core.task" {
+}
+package "./app/core.task.recalculo" {
+}
+package "./app/forms" {
+}
+package "./app/models" {
+class task {
+  +Task
+}
+}
+package "./app/services" {
+class project_service {
+  +ProjectService
+}
+class task_service {
+  +TaskService
+}
+}
+package "./app/utils" {
+}
+package "./app/views" {
+}
+package "./app/views.calendar" {
+}
+package "./app/views.dashboard_utils" {
+}
+package "./app/views.gantt" {
+}
+package "./app/views.gantt.curva" {
+}
+package "./app/views.project_utils" {
+}
+package "./app/views.project_utils.extras" {
+}
+package "./app/views.project_views" {
+}
+package "./app/views.responsibles_view" {
+}
+package "./app/views.responsible_calendar" {
+}
+package "./app/views.task_views_operations" {
+}
+@enduml
