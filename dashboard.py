@@ -33,7 +33,7 @@ def show_dashboard():
     sync_project_selection(controller, selected_project)
     #render_extras_view(selected_project)
     # Delegamos en router si hay una vista general activa
-    if controller.state.vista_general and controller.state.vista_general != "Ninguna":
+    if controller.state.vista_general and controller.state.vista_general != "Volver":
         render_general_view(controller)
         return
 

@@ -24,7 +24,7 @@ def sidebar_general_views(controller):
     with st.sidebar.expander("🔍 Vistas generales", expanded=False):
         controller.state.vista_general = st.radio(
             "Seleccioná una vista general",
-            options=["Ninguna"] + GENERAL_VIEWS_KEYS,
+            options=["Volver"] + GENERAL_VIEWS_KEYS,
             index=0,
         )
 
