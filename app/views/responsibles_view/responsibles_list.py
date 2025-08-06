@@ -9,7 +9,7 @@ def mostrar_lista_responsables():
         st.info("No hay responsables registrados.")
         return
 
-    with st.expander("👥 Lista", expanded=False):
+    with st.expander("📝 Lista", expanded=False):
         # Convertir a DataFrame para mostrarlo como tabla
         df = pd.DataFrame(responsibles)
         df = df[["name", "location", "factory"]]  # Asegurarse de mostrar solo estas columnas

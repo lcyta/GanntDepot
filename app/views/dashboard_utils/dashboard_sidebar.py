@@ -4,7 +4,6 @@ import streamlit as st
 GENERAL_VIEWS_KEYS = [
     "👥 Gestionar responsables",
     "📆 Calendario laboral",
-    #"📅 Calendario por responsable",
     "📁 Gestión de proyectos",
 ]
 
@@ -29,7 +28,10 @@ def sidebar_general_views(controller):
         )
 
 
-def sidebar_project_navigation(selected_project, projects):
+def sidebar_project_navigation(selected_project, projects, creating_project):
+    if creating_project:
+        return None  # No mostrar opciones de navegación de proyecto al crear uno nuevo
+
     opciones_nav = []
     if selected_project:
         opciones_nav.extend(["Gestor de tareas", "Diagrama Gantt"])

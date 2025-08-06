@@ -17,7 +17,7 @@ def view_tasks_gantt(tasks, project_name):
     with st.expander("🎛️ Filtros y opciones de visualización", expanded=True):
         estados = st.multiselect("Filtrar por estado", options=["Todos"] + estados_unicos, default=["Todos"])
         tipos = st.multiselect("Filtrar por tipo", options=["Todos"] + tipos_unicos, default=["Todos"])
-        color_opcion = st.selectbox("🎨 Colorear por", ["Tipo", "Riesgo", "Estado"])
+       # color_opcion = st.selectbox("🎨 Colorear por", ["Tipo", "Riesgo", "Estado"])
         vista = st.radio("📐 Elegí cómo querés ver el Gantt:", ["Por tarea", "Por responsable"], horizontal=True)
 
     estados_filtrados = estados_unicos if "Todos" in estados else estados

@@ -33,5 +33,5 @@ def gestionar_tareas(tasks, project_name, responsibles_list):
         reordenar_tareas(tasks, project_name)
         acciones_en_lote(tasks, project_name, responsibles_list)
 
-        if df_tareas is not None and not df_tareas.empty:
-            view_hover_main(df_tareas)
+        #if df_tareas is not None and not df_tareas.empty:
+          #  view_hover_main(df_tareas)

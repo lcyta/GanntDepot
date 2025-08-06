@@ -17,5 +17,5 @@ def view_project_list():
     selected_project = mostrar_detalles_proyecto(projects)
     editar_eliminar_proyectos(projects)
 
-    if selected_project:
-        render_project_image_uploader(selected_project)
+    #if selected_project:
+     #   render_project_image_uploader(selected_project)

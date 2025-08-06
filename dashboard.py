@@ -19,11 +19,12 @@ def show_dashboard():
     controller = DashboardController(st.session_state)
     st.sidebar.title("📁 Proyectos")
 
-    # Sidebar: proyectos, vistas generales, navegación
     projects = controller.get_projects()
     selected_project = sidebar_project_management(controller, projects)
     sidebar_general_views(controller)
-    page = sidebar_project_navigation(selected_project, projects)
+
+    # Paso el estado de creación para controlar la navegación
+    page = sidebar_project_navigation(selected_project, projects, controller.state.view_fake_project)
 
     # Si está creando un nuevo proyecto
     if controller.state.view_fake_project:
@@ -31,7 +32,7 @@ def show_dashboard():
         return
 
     sync_project_selection(controller, selected_project)
-    #render_extras_view(selected_project)
+
     # Delegamos en router si hay una vista general activa
     if controller.state.vista_general and controller.state.vista_general != "Volver":
         render_general_view(controller)

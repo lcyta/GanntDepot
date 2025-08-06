@@ -39,7 +39,7 @@ def view_calendar():
     pais = st.selectbox("🌍 Elegí un país", nombres_paises, index=index_predeterminado)
 
     mostrar_tabla_feriados(pais)
-    with st.expander(" Gestion Feriados"):
+    with st.expander("⛱️ Gestion Feriados"):
         gestionar_feriado_individual(pais)
         gestionar_rango_feriados(pais)
     with st.expander("🌍 Gestion de calendarios"):

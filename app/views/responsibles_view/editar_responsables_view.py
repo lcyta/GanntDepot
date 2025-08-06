@@ -40,7 +40,7 @@ def editar_responsable(selected):
         st.rerun()
 
 def editar_responsable_view():
-    with st.expander("👥 Editar Responsables", expanded=False):
+    with st.expander("🔧 Editar Responsables", expanded=False):
         responsibles = get_responsibles()
         if not responsibles:
             st.info("No hay responsables para editar.")

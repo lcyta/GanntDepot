@@ -19,7 +19,14 @@ def view_project_creation():
     # Paso 1: Confirmar nombre del proyecto si no está seteado aún
     if not st.session_state.get("current_project"):
         nombre_nuevo = st.text_input("Nombre del nuevo proyecto", key="nombre_nuevo")
-        if st.button("Confirmar nombre"):
+
+        col1, col2 = st.columns([1,1])
+        with col1:
+            confirmar = st.button("Confirmar nombre")
+        with col2:
+            volver = st.button("Volver")
+
+        if confirmar:
             if nombre_nuevo.strip() == "":
                 st.error("El nombre del proyecto no puede estar vacío.")
             else:
@@ -35,6 +42,12 @@ def view_project_creation():
                     "Duración estimada (días)": 0,
                 }
                 st.rerun()
+
+        if volver:
+            st.session_state.view_fake_project = False
+            st.session_state.current_project = None
+            st.rerun()
+
         return
 
     # Paso 2: Mostrar formulario
