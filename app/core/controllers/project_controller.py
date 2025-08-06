@@ -19,6 +19,6 @@ def manejar_eliminacion(i, project):
     if col3.button("✖️", key=f"delete_btn_{i}"):
         delete_project(project)
         st.session_state.datos_proyectos.pop(project, None)
-        st.session_state.imagenes_proyectos.pop(project, None)
+        #st.session_state.imagenes_proyectos.pop(project, None)
         st.warning(f"🚫 Proyecto eliminado: **{project}**")
         st.rerun()

@@ -29,7 +29,7 @@ def save_project_changes(proyecto_original, actualizado):
 def delete_existing_project(nombre_proyecto):
     delete_project(nombre_proyecto)
     st.session_state.datos_proyectos.pop(nombre_proyecto, None)
-    st.session_state.imagenes_proyectos.pop(nombre_proyecto, None)
+    #st.session_state.imagenes_proyectos.pop(nombre_proyecto, None)
     st.warning(f"🚫 Proyecto eliminado: **{nombre_proyecto}**")
     st.rerun()
 

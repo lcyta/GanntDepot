@@ -8,7 +8,8 @@ def page_gestor_tareas(controller, selected_project):
     col_title, col_edit, col_delete = st.columns([5, 1, 1])
     col_title.title(f"Proyecto: {selected_project}")
 
-    render_project_details(selected_project)
+    with st.expander("📋 Información del Proyecto", expanded=False):
+        render_project_details(selected_project)
 
     if controller.state.task_changed:
         controller.reload_tasks()

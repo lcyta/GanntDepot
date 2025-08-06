@@ -6,7 +6,7 @@ def init_project_images_state():
 
 def save_uploaded_images(selected_project, uploaded_files):
     imagenes_bytes = [img.read() for img in uploaded_files[:10]]
-    st.session_state.imagenes_proyectos[selected_project] = imagenes_bytes
+    #st.session_state.imagenes_proyectos[selected_project] = imagenes_bytes
     st.success(f"✅ {len(imagenes_bytes)} imagen(es) guardada(s) para el proyecto **{selected_project}**.")
 
 def show_saved_images(selected_project):

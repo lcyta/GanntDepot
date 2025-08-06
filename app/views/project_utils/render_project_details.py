@@ -33,15 +33,14 @@ def render_project_extras(selected_project):
         render_extras_view(selected_project)
 
 
-def render_project_details(selected_project):
+def render_project_details(selected_project): 
     """Vista principal para mostrar detalles de un proyecto."""
     if "datos_proyectos" in st.session_state and selected_project in st.session_state.datos_proyectos:
         detalle = st.session_state.datos_proyectos[selected_project]
-        imagenes = st.session_state.imagenes_proyectos.get(selected_project, [])
 
-        # Cada sección en su propio expander (sin anidamiento)
-        render_project_info(detalle)
-        render_project_images(imagenes)
-        render_project_extras(selected_project)
+        with st.container():
+            render_project_info(detalle)
+            render_project_extras(selected_project)
+
     else:
         st.info("ℹ️ No se encontraron datos para este proyecto.")
