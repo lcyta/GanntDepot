@@ -6,6 +6,11 @@ def render_extras_view(project_name):
 
     accesorios = load_accessories(project_name)
 
+    render_accessories_list(project_name, accesorios)
+    render_add_accessory_form(project_name)
+    
+
+def render_accessories_list(project_name, accesorios):
     with st.expander("📋 Lista de Accesorios", expanded=bool(accesorios)):
         if not accesorios:
             st.info("No hay accesorios para este proyecto aún.")
@@ -17,8 +22,9 @@ def render_extras_view(project_name):
                 st.markdown(f"  - 📝 Notas: {accesorio['Notas']}")
                 if st.button(f"Eliminar {accesorio['Nombre']}", key=f"del_{accesorio['Nombre']}"):
                     delete_accessory(project_name, accesorio['Nombre'])
-                    st.rerun()
+                    st.rerun()  # Mejor usar experimental_rerun()
 
+def render_add_accessory_form(project_name):
     with st.expander("➕ Agregar nuevo accesorio", expanded=False):
         with st.form("form_nuevo_accesorio"):
             nombre = st.text_input("📋 Nombre del accesorio")
