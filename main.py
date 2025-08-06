@@ -1,4 +1,4 @@
-from app.views.dashboard import show_dashboard
+from dashboard import show_dashboard
 from app.core.init_events import register_event_handlers
 from app.core.project_manager import load_projects
 import streamlit as st
