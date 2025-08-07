@@ -1,8 +1,7 @@
-from app.core.calendar.services import (
-    set_base_responsable,
-    add_feriado_responsable,
-    remove_feriado_responsable,
-)
+from app.core.calendar.services import set_base_responsable
+from app.core.calendar.remove_holiday import remove_feriado_responsable
+from app.core.calendar.add_holiday import add_feriado_responsable
+
 
 from app.core.calendar.services_rango import (
     add_rango_feriados_responsable,
