@@ -1,6 +1,6 @@
 import streamlit as st 
 from app.core.responsibles_manager import load_responsibles
-from app.core.calendar.calendar_logic import get_feriados_for_owner
+from app.core.calendar.feriado_service import get_feriados_for_owner
 from app.views.responsible_calendar.feriados_table import mostrar_feriados_responsable
 from app.views.responsible_calendar.feriado_individual import manejar_feriado_individual
 from app.views.responsible_calendar.feriado_rango import manejar_rango_feriados

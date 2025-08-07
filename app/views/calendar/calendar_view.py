@@ -6,7 +6,7 @@ from app.views.calendar.tabla_feriados import mostrar_tabla_feriados
 from app.views.calendar.feriado_individual import gestionar_feriado_individual
 from app.views.calendar.feriado_rango import gestionar_rango_feriados
 from app.views.calendar.agregar_pais_calendario import vista_agregar_pais
-from app.views.calendar.eliminar_pais import vista_eliminar_pais
+from app.views.calendar.vista_eliminar_pais import vista_eliminar_pais
 
 def cargar_nombres_paises(path='data/feriados_predefinidos.json'):
     try:
