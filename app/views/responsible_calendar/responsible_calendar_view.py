@@ -3,7 +3,7 @@ from app.core.responsibles_manager import load_responsibles
 from app.core.calendar.feriado_service import get_feriados_for_owner
 from app.views.responsible_calendar.feriados_table import mostrar_feriados_responsable
 from app.views.responsible_calendar.feriado_individual import manejar_feriado_individual
-from app.views.responsible_calendar.feriado_rango import manejar_rango_feriados
+from app.views.responsible_calendar.manejar_rango_feriados import manejar_rango_feriados
 
 def view_responsible_calendar():
     with st.expander("📅 Calendario de feriados por responsable", expanded=False):
