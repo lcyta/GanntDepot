@@ -1,30 +1,29 @@
 import os
 from app.core.data_manager import PROJECTS_FILE, get_file_path
+from app.core.project_repository import (
+    read_projects_file,
+    write_projects_file,
+    delete_file,
+    rename_file
+)
+from app.core.data_manager import get_file_path
 
 
 def load_projects():
-    if not os.path.exists(PROJECTS_FILE):
-        return []
-    with open(PROJECTS_FILE, "r") as f:
-        return [line.strip() for line in f if line.strip()]
+    return read_projects_file()
 
 
 def save_project(name):
     projects = load_projects()
     if name not in projects:
         projects.append(name)
-        with open(PROJECTS_FILE, "w") as f:
-            f.write("\n".join(projects))
+        write_projects_file(projects)
 
 
 def delete_project(project_name):
-    path = get_file_path(project_name)
-    if os.path.exists(path):
-        os.remove(path)
-    projects = load_projects()
-    projects = [p for p in projects if p != project_name]
-    with open(PROJECTS_FILE, "w") as f:
-        f.write("\n".join(projects))
+    delete_file(get_file_path(project_name))
+    projects = [p for p in load_projects() if p != project_name]
+    write_projects_file(projects)
 
 
 def rename_project(old_name, new_name):
@@ -32,14 +31,7 @@ def rename_project(old_name, new_name):
     if old_name not in projects or not new_name.strip():
         return False
 
-    old_file = get_file_path(old_name)
-    new_file = get_file_path(new_name)
-
-    if os.path.exists(old_file):
-        os.rename(old_file, new_file)
-
+    rename_file(get_file_path(old_name), get_file_path(new_name))
     updated_projects = [new_name if p == old_name else p for p in projects]
-    with open(PROJECTS_FILE, "w") as f:
-        f.write("\n".join(updated_projects))
-
+    write_projects_file(updated_projects)
     return True
