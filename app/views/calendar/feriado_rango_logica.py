@@ -1,8 +1,7 @@
 import pandas as pd
-from app.core.holiday.holiday_service import (
-    agregar_rango_feriados,
-    eliminar_feriado,
-)
+from app.core.holiday.holiday_add import agregar_rango_feriados
+from app.core.holiday.holiday_delete import eliminar_feriado
+
 
 def procesar_agregado(pais, rango, nombre_rango):
     if isinstance(rango, tuple) and len(rango) == 2 and nombre_rango.strip():

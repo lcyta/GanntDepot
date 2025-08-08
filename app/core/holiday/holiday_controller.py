@@ -1,9 +1,6 @@
-# app/core/holiday/holiday_controller.py
-from app.core.holiday.holiday_service import (
-    obtener_feriados,
-    agregar_feriado,
-    eliminar_feriado,
-)
+from app.core.holiday.holiday_service import obtener_feriados
+from app.core.holiday.holiday_add import agregar_feriado
+from app.core.holiday.holiday_delete import eliminar_feriado
 
 class HolidayController:
     def __init__(self, pais):
