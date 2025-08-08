@@ -21,7 +21,7 @@ lista de scrtips con mas lineas
 
 Get-ChildItem -Recurse -Include *.py -Path app | ForEach-Object {
     $lineCount = (Get-Content $_.FullName).Count
-    if ($lineCount -gt 45) {
+    if ($lineCount -gt 40) {
         [PSCustomObject]@{
             File       = $_.FullName
             LineCount  = $lineCount
