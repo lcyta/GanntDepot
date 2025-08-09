@@ -3,8 +3,8 @@ from app.core.responsibles_manager import (
     load_responsibles,
     save_responsible,
     delete_responsible_by_name,
-    update_responsible
 )
+from app.core.responsibles_update import update_responsible
 
 
 def get_responsibles():
