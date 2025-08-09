@@ -1,25 +1,17 @@
 import streamlit as st
 from app.core.scheduler import adjust_task_schedule
 from app.core.task.task_manager import save_all_tasks
-from app.views.task_views_operations.modificar_tarea_ui import mostrar_formulario_tarea
 from app.views.task_views_operations.modificar_tarea_confirmacion import confirmar_eliminacion_tarea
+from app.views.task_views_operations.task_selection_ui import seleccionar_tarea
+from app.views.task_views_operations.task_form_ui import formulario_modificacion
 
 def modificar_tarea(tasks, project_name, responsibles_list):
     with st.expander("🔧 Modificar tarea", expanded=False):
-        if not tasks:
-            st.info("No hay tareas para modificar.")
+        selected_index, selected_task = seleccionar_tarea(tasks)
+        if selected_task is None:
             return
-
-        task_options = [f"{t.title} ({t.owner})" for t in tasks]
-        selected_index = st.selectbox(
-            "Seleccioná una tarea",
-            range(len(task_options)),
-            format_func=lambda i: task_options[i],
-            key="select_task_to_edit",
-        )
-        selected_task = tasks[selected_index]
-
-        modificar_clicked, eliminar_clicked, new_title, new_owner, new_days = mostrar_formulario_tarea(
+        
+        modificar_clicked, eliminar_clicked, new_title, new_owner, new_days = formulario_modificacion(
             selected_task, responsibles_list, selected_index
         )
 
