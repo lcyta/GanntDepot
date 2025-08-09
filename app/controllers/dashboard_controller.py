@@ -5,14 +5,8 @@ Encargado de manejar el estado de sesión y las acciones del usuario sobre proye
 from app.core.state.session_state_handler import SessionStateHandler
 from app.services.project_service import ProjectService
 from app.services.task_service import TaskService
-from app.core.project_manager import (
-    load_projects, rename_project, delete_project
-)
 from app.core.task.task_manager import load_tasks
 from app.core.scheduler import adjust_task_schedule
-from app.views.project_utils.project_actions import (
-    handle_project_creation,
-)
 
 
 class DashboardController:
