@@ -1,7 +1,7 @@
 from app.core.responsibles_manager import load_responsibles
 from app.core.task.recalculo.task_filters import filtrar_responsables_por_pais
 from app.core.task.recalculo.task_file_service import obtener_archivos_tasks
-from app.core.task.recalculo.task_processing_service import procesar_archivos_por_responsables
+from app.core.task.recalculo.batch_task_processing import procesar_archivos_por_responsables
 from app.core.data_manager import DATA_DIR
 
 
