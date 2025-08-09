@@ -3,8 +3,11 @@ from app.core.scheduler import adjust_task_schedule
 def validar_indices(mover_idx, destino_idx, total_tareas):
     if mover_idx == destino_idx:
         return False, "❌ No se puede mover una tarea debajo de sí misma."
-    if mover_idx < 0 or mover_idx >= total_tareas or destino_idx < 0 or destino_idx >= total_tareas:
+    
+    fuera_rango = not (0 <= mover_idx < total_tareas and 0 <= destino_idx < total_tareas)
+    if fuera_rango:
         return False, "❌ Índices fuera de rango."
+    
     return True, None
 
 def reorder_tasks(tasks, mover_idx, destino_idx):
