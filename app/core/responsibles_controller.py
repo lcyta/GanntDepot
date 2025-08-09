@@ -4,7 +4,7 @@ from app.core.responsibles_manager import (
     save_responsible,
     delete_responsible_by_name,
 )
-from app.core.responsibles_update import update_responsible
+from app.core.responsibles_update import update_responsible_name , update_responsible
 
 
 def get_responsibles():
@@ -32,7 +32,6 @@ def handle_update_responsible(name: str, new_location: str, new_factory: str):
     st.rerun()
 
 def handle_update_responsible_full(old_name: str, new_name: str, new_location: str, new_factory: str):
-    from app.core.responsibles_manager import update_responsible_name
     update_responsible_name(old_name, new_name, new_location, new_factory)
     st.success(f"Responsable actualizado: {new_name}")
     st.rerun()
