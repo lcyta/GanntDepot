@@ -2,9 +2,9 @@ import streamlit as st
 from app.controllers.dashboard_controller import DashboardController
 from app.views.dashboard_utils.dashboard_sidebar import (
     sidebar_project_management,
-    sidebar_general_views,
     sidebar_project_navigation,
 )
+from app.views.dashboard_utils.sidebar_general_views import sidebar_general_views
 from app.views.dashboard_utils.dashboard_pages import (
     page_gestor_tareas,
     page_diagrama_gantt,
