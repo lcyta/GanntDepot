@@ -1,6 +1,6 @@
 import streamlit as st
 from app.views.calendar.delete_country_form import render_delete_country_form
-from app.views.calendar.eliminar_pais import obtener_paises_disponibles, eliminar_pais_y_actualizar_estado
+from app.views.calendar.data_manager import obtener_paises_disponibles, eliminar_pais_y_actualizar_estado
 
 def vista_eliminar_pais(_):
     with st.expander("⚠️ Eliminar país y sus feriados"):

@@ -50,3 +50,21 @@ Get-ChildItem -Recurse -Include *.py | Select-String 'st\.experimental_rerun\(\)
 git reset --hard HEAD
 git clean -fd
 
+////////////////////////como saber cuantos scrytips hay/////////////
+
+Get-ChildItem -Path .\app\ -Recurse -Filter *.py | Measure-Object | Select-Object -ExpandProperty Count
+
+
+
+////////////////////////////////////////////
+
+Get-ChildItem -Path .\app\ -Recurse -Filter *tarea*.py | Measure-Object | Select-Object -ExpandProperty Count
+
+Get-ChildItem -Path .\app\ -Recurse -Filter *task*.py
+
+
+///////////////////////////////////////
+
+duplicado
+
+pylint --disable=all --enable=duplicate-code .
