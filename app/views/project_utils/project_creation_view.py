@@ -12,7 +12,11 @@ def render_project_form(datos):
         metros = st.number_input("📏 Metros²", min_value=0, value=datos.get("Metros²", 0), step=1, key="metros")
         fecha_inicio_val = pd.to_datetime(datos.get("Inicio", str(pd.Timestamp.today().date()))).date()
         fecha_inicio = st.date_input("📅 Fecha de inicio", value=fecha_inicio_val, key="fecha_inicio")
-        duracion = st.number_input("⏱️ Duración estimada (días)", min_value=0, value=datos.get("Duración estimada (días)", 0), step=1, key="duracion")
+        duracion_valor = datos.get("Duración estimada (días)", 1)
+        if duracion_valor < 1:
+            duracion_valor = 1
+        duracion = st.number_input("⏱️ Duración estimada (días)", min_value=1, value=duracion_valor, step=1, key="duracion")
+        
     
     return {
         "Cliente": cliente,

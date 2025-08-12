@@ -1,10 +1,10 @@
 import streamlit as st
-from app.views.project_utils.project_creation_logic import save_project, crear_datos_iniciales_proyecto
+from app.views.project_utils.project_creation_logic import save_project #, crear_datos_iniciales_proyecto
 from app.views.project_utils.project_creation_handlers import handle_project_name_input
 from app.views.project_utils.project_creation_view import render_project_form
 
 def view_project_creation():
-    st.title("🎨 Crear/Editar Proyecto")
+    st.title("🎨 Crear Proyecto")
 
     if not st.session_state.get("current_project"):
         handle_project_name_input()

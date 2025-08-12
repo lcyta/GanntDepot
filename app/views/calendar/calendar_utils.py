@@ -7,5 +7,6 @@ def cargar_nombres_paises(path='data/feriados_predefinidos.json'):
             data = json.load(f)
         return list(data.keys())
     except Exception as e:
-        st.error(f"No se pudieron cargar los países: {e}")
+        st.error("No hay países disponibles para mostrar.")
+        print(f"[Error cargar_nombres_paises]: {type(e).__name__}: {e}")  
         return []

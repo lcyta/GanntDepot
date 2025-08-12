@@ -2,6 +2,10 @@ import streamlit as st
 
 def sidebar_project_management(controller, projects):
     with st.sidebar.expander("📝 Gestor de proyectos", expanded=True):
+
+        if controller.state.view_fake_project:
+            return 
+    
         if st.button("Crear proyecto"):
             controller.state.view_fake_project = True
             st.session_state.current_project = ""
