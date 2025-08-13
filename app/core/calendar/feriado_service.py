@@ -1,5 +1,5 @@
 from app.core.calendar.calendar_repository import cargar_calendarios_responsables
-from app.core.calendar.calendar_logic import cargar_feriados_predefinidos
+from app.core.holiday.manager_holiday_controller import cargar_feriados_predefinidos
 from app.core.calendar.feriado_parser import get_base_dates, parse_extra_dates
 
 def get_feriados_for_owner(nombre):

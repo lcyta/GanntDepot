@@ -28,7 +28,7 @@ def show_dashboard():
 
     # Si está creando un nuevo proyecto
     if controller.state.view_fake_project:
-        view_project_creation()
+        view_project_creation(controller)
         return
 
     sync_project_selection(controller, selected_project)
