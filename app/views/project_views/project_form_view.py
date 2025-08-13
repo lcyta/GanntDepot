@@ -12,7 +12,7 @@ from app.views.project_views.project_edit_helpers import (
 
 def editar_eliminar_proyectos(projects):
     with st.expander("### 🔧 Editar o eliminar proyectos", expanded=False):
-        st.markdown("### ✏️ Editar o eliminar proyectos")
+        st.markdown("### 🔧 Editar o eliminar proyectos")
 
         if not hay_proyectos(projects):
             st.info("No hay proyectos disponibles.")
