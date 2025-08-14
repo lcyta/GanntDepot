@@ -33,3 +33,4 @@ def crear_nueva_tarea(project_name, responsibles_list):
                 )
                 save_task(task, project_name)
                 st.session_state.task_changed = True
+                st.rerun()
