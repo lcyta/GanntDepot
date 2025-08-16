@@ -21,7 +21,8 @@ def mostrar_formulario_alta():
                 )
                 location = st.selectbox("🌍 Elegí un país", nombres_paises, index=index_predeterminado)
 
-            factory = st.selectbox("🏭 Fábrica o sede", ["Depot", "Grandsoo", "Otra"])
+            # 🔹 Campo libre para fábrica o sede
+            factory = st.text_input("🏭 Fábrica o sede", placeholder="Escriba el nombre de la sede o fábrica")
 
             if st.form_submit_button("Agregar responsable") and location:
                 handle_add_responsible(name, location, factory)

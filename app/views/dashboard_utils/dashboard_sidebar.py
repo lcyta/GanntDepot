@@ -22,6 +22,6 @@ def sidebar_project_navigation(selected_project, projects, creating_project):
     opciones_nav = []
     if selected_project:
         opciones_nav.extend(["Gestor de tareas", "Diagrama Gantt"])
-    opciones_nav.append("Diagrama Gantt global de proyectos")
+        opciones_nav.append("Diagrama Gantt global de proyectos")
 
     return st.sidebar.radio("Ir a:", opciones_nav)
