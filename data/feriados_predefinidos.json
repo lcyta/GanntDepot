@@ -1,16 +1,19 @@
 {
   "China": [
-    [
-      "2025-02-01",
-      "Año Nuevo Chino (aproximado)"
-    ],
-    [
-      "2025-05-01",
-      "Día del Trabajo"
-    ],
-    [
-      "2025-10-01",
-      "Día Nacional de China"
-    ]
+    ["2025-02-01", "Año Nuevo Chino (aproximado)"],
+    ["2025-05-01", "Día del Trabajo"],
+    ["2025-10-01", "Día Nacional de China"]
+  ],
+  "USA": [
+    ["2025-01-01", "Año Nuevo"],
+    ["2025-07-04", "Día de la Independencia"],
+    ["2025-11-27", "Día de Acción de Gracias"],
+    ["2025-12-25", "Navidad"]
+  ],
+  "Argentina": [
+    ["2025-01-01", "Año Nuevo"],
+    ["2025-05-25", "Día de la Revolución de Mayo"],
+    ["2025-07-09", "Día de la Independencia"],
+    ["2025-12-25", "Navidad"]
   ]
 }

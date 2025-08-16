@@ -12,10 +12,10 @@ def crear_nueva_tarea(project_name, responsibles_list):
 
         days = st.number_input("Duración estimada (días)", min_value=1, step=1)
 
-        # Nuevos campos con selección
+        # Nuevos campos
         tipo = st.text_input("Tipo de Tarea")
         riesgo = st.selectbox("Riesgo", options=["Bajo", "Medio", "Alto"])
-        estado = st.selectbox("Estado", options=[ "En curso" , "Terminado" , "En Espera" ])
+        estado = st.selectbox("Estado", options=["En curso", "Terminado", "En Espera"])
 
         if st.button("Agregar tarea"):
             if not title:
@@ -32,5 +32,6 @@ def crear_nueva_tarea(project_name, responsibles_list):
                     estado=estado,
                 )
                 save_task(task, project_name)
+                st.success(f"Tarea creada: {title}")  # ✅ Mensaje de éxito igual que modificar
                 st.session_state.task_changed = True
                 st.rerun()
