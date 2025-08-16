@@ -1,6 +1,7 @@
 import streamlit as st
 from app.core.responsibles_manager import load_responsibles
 from app.core.task.task_service import load_tasks
+from app.core.task.calcular_totales_tareas import actualizar_info_proyecto_con_totales
 from app.views.task_views_operations.crear_tarea import crear_nueva_tarea
 from app.views.task_views_operations.modificar_tarea import modificar_tarea
 from app.views.task_views_operations.task_ui import mostrar_tareas_existentes
@@ -32,6 +33,6 @@ def gestionar_tareas(tasks, project_name, responsibles_list):
         df_tareas = mostrar_tareas_existentes(tasks)
         reordenar_tareas(tasks, project_name)
         acciones_en_lote(tasks, project_name, responsibles_list)
-
+        actualizar_info_proyecto_con_totales(tasks,project_name)
         #if df_tareas is not None and not df_tareas.empty:
           #  view_hover_main(df_tareas)
