@@ -1,4 +1,5 @@
 from datetime import date
+import pandas as pd
 
 def _parsear_metros(raw):
     return int(raw.split()[0]) if isinstance(raw, str) else int(raw)
@@ -18,8 +19,8 @@ def build_edit_project_form(datos):
 
     nuevo_nombre = st.text_input("📁 Nombre del proyecto", value=datos.get("Proyecto", ""))
     cliente = st.text_input("👥 Cliente", value=datos.get("Cliente", ""))
-    responsable = st.text_input("🏭 Fábrica Responsable", value=datos.get("Responsable", ""))
     localidad = st.text_input("🌍 Localidad", value=datos.get("Localidad", ""))
+    responsable = st.text_input("🏭 Fábrica Responsable", value=datos.get("Responsable", ""))
 
     metros = _parsear_metros(datos.get("Metros²", "0 m²"))
     metros = st.number_input("📏 Metros²", min_value=0, value=metros)

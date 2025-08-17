@@ -36,8 +36,8 @@ def render_project_editor(project, data, controller: object):
                     st.error("⚠️ Falló el renombrado.")
             else:
                 controller.save_project(nombre, nuevo)
-                st.success("✅ Proyecto actualizado.")
                 st.rerun()
+                st.success("✅ Proyecto actualizado.")
 
         if eliminar:
             controller.remove_project(project)
