@@ -17,8 +17,8 @@ def build_edit_project_form(datos):
     from datetime import date
 
     nuevo_nombre = st.text_input("📁 Nombre del proyecto", value=datos.get("Proyecto", ""))
-    responsable = st.text_input("👤 Responsable", value=datos.get("Responsable", ""))
     cliente = st.text_input("👥 Cliente", value=datos.get("Cliente", ""))
+    responsable = st.text_input("🏭 Fábrica Responsable", value=datos.get("Responsable", ""))
     localidad = st.text_input("🌍 Localidad", value=datos.get("Localidad", ""))
 
     metros = _parsear_metros(datos.get("Metros²", "0 m²"))
