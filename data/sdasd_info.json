@@ -1,13 +1,13 @@
 {
-    "Cliente": "sasd",
+    "Proyecto": "sdasd",
     "Responsable": "dsa",
-    "Estado": "Pendiente",
+    "Cliente": "sasd",
     "Localidad": "dsa",
     "Metros²": 0,
-    "Inicio": "2025-08-15",
+    "Inicio": "2025-08-16",
     "Duración estimada (días)": 1,
-    "Proyecto": "sdasd",
-    "Duración estimada total": 0,
-    "Duración real total": 187,
+    "Estado": "Finalizado",
+    "Duración estimada total": 140,
+    "Duración real total": 196,
     "Duración transcurrida total": 3
 }

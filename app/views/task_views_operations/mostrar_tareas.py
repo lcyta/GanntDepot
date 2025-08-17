@@ -5,20 +5,14 @@ def format_duracion(duracion):
     return f"{duracion} días" if duracion is not None else "Inválido"
 
 def preparar_una_tarea(task):
-    """
-    Convierte un objeto Task a diccionario para DataFrame.
-    """
     duracion_real = calcular_duracion_real(getattr(task, "start", None), getattr(task, "end", None))
     duracion_transcurrida = calcular_duracion_transcurrida(getattr(task, "start", None))
 
     return {
         "Responsable": getattr(task, "owner", "Desconocido"),
-        "Cliente": getattr(task, "cliente", "N/A"),            # Si no existe, poner "N/A"
         "Estado": getattr(task, "estado", "Pendiente"),
-        "Localidad": getattr(task, "localidad", "N/A"),
-        "Metros²": getattr(task, "metros", 0),
         "Inicio": getattr(task, "start", None),
-        "Duración estimada": getattr(task, "duracion_estimada", 0),
+        "Duración estimada": getattr(task, "days", 0),  # <--- Aquí tomamos la duración de la tarea
         "Duración real": f"{duracion_real} días" if duracion_real is not None else "Inválido",
         "Duración transcurrida": f"{duracion_transcurrida} días" if duracion_transcurrida is not None else "Inválido"
     }
