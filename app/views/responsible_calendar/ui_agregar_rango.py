@@ -15,6 +15,6 @@ def ui_agregar_rango(nombre):
         exito, mensaje = procesar_agregado(nombre, rango, descripcion)
         if exito:
             st.success(mensaje)
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.warning(mensaje)

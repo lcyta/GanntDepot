@@ -23,7 +23,7 @@ def save_project_changes(proyecto_original, actualizado):
         st.session_state.datos_proyectos[nuevo_nombre] = actualizado
         guardar_datos_proyecto(nuevo_nombre, actualizado)
         st.success("✅ Proyecto actualizado correctamente.")
-    st.rerun()
+    #st.rerun()
 
 
 def delete_existing_project(nombre_proyecto):
@@ -31,7 +31,7 @@ def delete_existing_project(nombre_proyecto):
     st.session_state.datos_proyectos.pop(nombre_proyecto, None)
     #st.session_state.imagenes_proyectos.pop(nombre_proyecto, None)
     st.warning(f"🚫 Proyecto eliminado: **{nombre_proyecto}**")
-    st.rerun()
+    #st.rerun()
 
 
 def _actualizar_estado_proyecto(original, nuevo, datos):

@@ -15,6 +15,6 @@ def ui_eliminar_rango(pais):
         exito, mensaje = procesar_eliminado(pais, rango)
         if exito:
             st.success(mensaje)
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.warning(mensaje)

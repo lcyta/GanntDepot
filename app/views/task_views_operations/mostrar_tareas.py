@@ -5,56 +5,31 @@ def format_duracion(duracion):
     return f"{duracion} días" if duracion is not None else "Inválido"
 
 def preparar_una_tarea(task):
-    duracion_real = calcular_duracion_real(getattr(task, "start", None), getattr(task, "end", None))
-    duracion_transcurrida = calcular_duracion_transcurrida(getattr(task, "start", None))
+    inicio = getattr(task, "start", None)
+    duracion_real = calcular_duracion_real(inicio, getattr(task, "end", None))
+    duracion_transcurrida = calcular_duracion_transcurrida(inicio)
+
+    # Calcular fecha de fin real
+    fin = inicio + pd.Timedelta(days=duracion_real) if inicio is not None and duracion_real is not None else None
 
     return {
         "Responsable": getattr(task, "owner", "Desconocido"),
         "Estado": getattr(task, "estado", "Pendiente"),
-        "Inicio": getattr(task, "start", None),
-        "Duración estimada": getattr(task, "days", 0),  # <--- Aquí tomamos la duración de la tarea
-        "Duración real": f"{duracion_real} días" if duracion_real is not None else "Inválido",
-        "Duración transcurrida": f"{duracion_transcurrida} días" if duracion_transcurrida is not None else "Inválido"
+        "Inicio": inicio,
+        "Fin": fin,
+        "Duración estimada": getattr(task, "days", 0),
+        "Duración real": duracion_real,
+        "Duración transcurrida": duracion_transcurrida
     }
 
 def preparar_dataframe_tareas(tasks):
     if not tasks:
         return None
     data = [preparar_una_tarea(task) for task in tasks]
-    return pd.DataFrame(data)
+    df = pd.DataFrame(data)
 
-def calcular_totales_tareas(tasks):
-    df = preparar_dataframe_tareas(tasks)
-    if df is None or df.empty:
-        return None
+    # Opcional: formatear las columnas para mostrar en Streamlit
+    df["Duración real"] = df["Duración real"].apply(format_duracion)
+    df["Duración transcurrida"] = df["Duración transcurrida"].apply(format_duracion)
 
-    # Pasar duraciones a número
-    df["Duración estimada"] = df["Duración estimada"].astype(int)
-    df["Duración real"] = df["Duración real"].str.replace(" días", "").astype(int)
-    df["Duración transcurrida"] = df["Duración transcurrida"].str.replace(" días", "").astype(int)
-
-    resumen = {
-        "Duración estimada total": df["Duración estimada"].sum(),
-        "Duración real total": df["Duración real"].sum(),
-        "Duración transcurrida total": df["Duración transcurrida"].sum()
-    }
-
-    resumen_df = pd.DataFrame([resumen])
-    print("\n📊 Resumen de Duraciones")
-    print(resumen_df)
-    return resumen_df
-
-def actualizar_info_proyecto_con_totales(tasks, project_name, cargar_datos_guardados_proyectos, guardar_datos_proyecto):
-    totales_df = calcular_totales_tareas(tasks)
-    if totales_df is None:
-        print(f"No hay tareas para el proyecto {project_name}")
-        return
-
-    info_guardada = cargar_datos_guardados_proyectos([project_name])
-    info = info_guardada.get(project_name, {})
-
-    for col in totales_df.columns:
-        info[col] = int(totales_df.at[0, col])
-
-    guardar_datos_proyecto(project_name, info)
-    print(f"✅ Info del proyecto '{project_name}' actualizada con totales")
+    return df

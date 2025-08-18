@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import timedelta
 from app.core.init_data import generar_datos_iniciales
 
+
 def obtener_dataframe_proyectos(project_list):
     """
     Convierte los datos de proyectos a un DataFrame listo para Gantt.
@@ -32,3 +33,5 @@ def obtener_dataframe_proyectos(project_list):
         })
 
     return pd.DataFrame(registros)
+
+    
