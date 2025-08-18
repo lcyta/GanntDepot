@@ -5,7 +5,7 @@ from app.views.calendar.calendar_utils import cargar_nombres_paises
 def mostrar_formulario_alta():
     with st.expander("➕ Agregar Responsables", expanded=False):
         with st.form("form_responsable"):
-            name = st.text_input("📛 Nombre del responsable")
+            name = st.text_input("👤 Nombre del responsable")
             
             # 🔹 Cargar lista dinámica de países
             nombres_paises = cargar_nombres_paises()

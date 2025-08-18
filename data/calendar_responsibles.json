@@ -1,13 +1,4 @@
 {
-  "dsadsassa": {
-    "base": "China",
-    "extras": [
-      [
-        "2025-08-26",
-        "fdsa"
-      ]
-    ]
-  },
   "Fernando": {
     "base": "Argentina",
     "extras": []
@@ -27,6 +18,10 @@
   },
   "fdsa": {
     "base": "China",
+    "extras": []
+  },
+  "Alejandro Schmeil": {
+    "base": "Argentina",
     "extras": []
   }
 }
