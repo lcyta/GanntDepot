@@ -1,27 +1,59 @@
+import streamlit as st
 import pandas as pd
 import os
 from app.models.task import Task
 from app.core.scheduler import adjust_task_schedule
-from app.views.task_views_operations.mostrar_tareas import preparar_una_tarea
 from app.core.init_data import cargar_lista_proyectos
+from app.core.data_access.responsible_repository import ResponsibleRepository  # 👈 tu clase
 
-# Carpeta donde están los CSV
-DATA_DIR = os.path.join(os.getcwd(), "data")  # usa cwd para Streamlit
-print("Buscando CSV en:", DATA_DIR)
+# -------------------------------
+# 🔹 Cargar responsables desde CSV
+# -------------------------------
+responsible_repo = ResponsibleRepository()
+df_responsibles = responsible_repo.load_all()
 
+def obtener_factory_de_responsable(responsable: str) -> str:
+    """
+    Busca la fábrica/sede de un responsable desde el CSV.
+    """
+    if df_responsibles.empty:
+        return "No asignada"
 
+    row = df_responsibles[df_responsibles["name"].str.strip().str.lower() == responsable.strip().lower()]
+    if not row.empty:
+        return row.iloc[0]["factory"]
+    return "No asignada"
+
+# -------------------------------
+# 🔹 Preparar una tarea en formato dict
+# -------------------------------
+def preparar_una_tarea(task):
+    start = pd.to_datetime(task.start)
+    end = pd.to_datetime(task.end)
+
+    return {
+        "Responsable": task.owner,
+        "Fábrica/Sede": obtener_factory_de_responsable(task.owner),
+        "Tarea": task.title,
+        "Estado": task.estado,
+        "Inicio": start.date(),
+        "Fin": end.date(),
+        "Duración estimada": f"{task.days} días",
+        "Duración real": (end.date() - start.date()).days + 1 if start and end else "Inválido",
+        "Duración transcurrida": (pd.to_datetime("today").date() - start.date()).days + 1 if start else "Inválido",
+    }
+
+# -------------------------------
+# 🔹 Preparar DataFrame de tareas
+# -------------------------------
 def preparar_dataframe_tareas(tasks):
     if not tasks:
         return None
 
-    # Ajustar tareas según scheduler
     tasks = adjust_task_schedule(tasks)
-
-    # Preparar DataFrame
     data = [preparar_una_tarea(t) for t in tasks]
     df = pd.DataFrame(data)
 
-    # Formatear duraciones
     df["Duración real"] = df["Duración real"].apply(
         lambda x: f"{x} días" if x is not None else "Inválido"
     )
@@ -30,12 +62,12 @@ def preparar_dataframe_tareas(tasks):
     )
     return df
 
+# -------------------------------
+# 🔹 Mostrar todas las tareas
+# -------------------------------
+DATA_DIR = os.path.join(os.getcwd(), "data")
 
 def mostrar_todas_las_tareas():
-    """
-    Devuelve un único DataFrame con todas las tareas de todos los proyectos.
-    Agrega la columna 'Proyecto' para identificar de dónde viene cada tarea.
-    """
     proyectos = cargar_lista_proyectos()
     lista_df = []
 
@@ -46,10 +78,8 @@ def mostrar_todas_las_tareas():
         if not os.path.exists(file_path):
             continue
 
-        # Leer CSV
         df_csv = pd.read_csv(file_path)
 
-        # Convertir filas a Task
         tasks = []
         for _, row in df_csv.iterrows():
             task_obj = Task(
@@ -64,29 +94,14 @@ def mostrar_todas_las_tareas():
             )
             tasks.append(task_obj)
 
-        # Preparar DataFrame final
         df_final = preparar_dataframe_tareas(tasks)
 
-        # Agregar columna de proyecto
         if df_final is not None and not df_final.empty:
-            columnas = [
-                "Responsable",
-                "Tarea",
-                "Estado",
-                "Inicio",
-                "Fin",
-                "Duración estimada",
-                "Duración real",
-                "Duración transcurrida",
-            ]
-            df_final = df_final[columnas]
-            df_final["Proyecto"] = proyecto  # 👈 columna nueva
-
+            df_final["Proyecto"] = proyecto
             lista_df.append(df_final)
 
-    # Concatenar todos los DataFrames en uno solo
     if lista_df:
         df_total = pd.concat(lista_df, ignore_index=True)
         return df_total
 
-    return pd.DataFrame()  # DataFrame vacío si no hay tareas
+    return pd.DataFrame()

@@ -3,3 +3,5 @@ id,title,owner,start,end,days,estado,riesgo,tipo
 032cb7a8-3937-4853-8dff-6d97a8f92f8d,SAcar La basura,Fabian,2025-08-18,2025-08-22,5,En curso,Bajo,Otras
 21eddc34-1fc4-4bf3-905d-29d92a003698,Atarrse Los cordones,Fabian,2025-08-18,2025-08-20,3,En curso,Alto,Otras
 c93e7d76-8392-4114-b812-191b239cb458,Atarrse Los cordones,Fabian,2025-08-18,2025-08-20,3,En curso,Alto,Otras
+5c2dbe9c-8b3a-4a14-b2b6-5d6bdb07b320,Pasar PO3054,Tyler,2025-08-19,2025-08-21,3,En Espera,Medio,Ordenes
+c09608c4-bc9f-4b2f-9280-75d99b983886,Pasar PO3059,Tyler,2025-08-19,2025-08-19,1,En curso,Bajo,Envios

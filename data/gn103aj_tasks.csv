@@ -2,3 +2,5 @@ id,title,owner,start,end,days,estado,riesgo,tipo
 b953460a-d0dd-4aa3-876d-dc7679ce124f,gfds,Fabian,2025-08-18,2025-08-26,7,En curso,Bajo,gfds
 50ba716b-5c71-481b-b324-f74da20d5221,sxaD,Fabian,2025-08-17,2025-08-21,5,En curso,Bajo,dsa
 842810cc-2d5d-42d5-a680-0da55e05a32b,dsa,Fabian,2025-08-17,2025-08-28,12,En curso,Bajo,fdsasdf
+aaed422f-4cbd-4329-a3b9-aa18b8e1bb50,Hablar Produccion,Tyler,2025-08-19,2025-08-20,2,En curso,Bajo,Consulta
+50dd7ad8-2158-4d6f-8695-515e4af2eeac,Confirmar Fotos,Tyler,2025-08-19,2025-08-21,3,En curso,Alto,Fotos
