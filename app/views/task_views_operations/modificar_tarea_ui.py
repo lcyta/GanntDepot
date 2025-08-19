@@ -4,12 +4,20 @@ def mostrar_formulario_tarea(selected_task, responsibles_list, selected_index):
     new_title = st.text_input(
         "Nuevo título", value=selected_task.title, key=f"edit_title_{selected_index}"
     )
+
+    # ✅ Evitar error si selected_task.owner no está en responsibles_list
+    if selected_task.owner in responsibles_list:
+        index_owner = responsibles_list.index(selected_task.owner)
+    else:
+        index_owner = 0  # fallback seguro, selecciona el primer responsable
+
     new_owner = st.selectbox(
         "Nuevo responsable",
         responsibles_list,
-        index=responsibles_list.index(selected_task.owner),
+        index=index_owner,
         key=f"edit_owner_{selected_index}",
     )
+
     new_days = st.number_input(
         "Nueva duración estimada (días)",
         value=selected_task.days,

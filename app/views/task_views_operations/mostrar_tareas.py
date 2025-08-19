@@ -14,6 +14,7 @@ def preparar_una_tarea(task):
 
     return {
         "Responsable": getattr(task, "owner", "Desconocido"),
+        "Tarea": getattr(task, "title", "Desconocido"),
         "Estado": getattr(task, "estado", "Pendiente"),
         "Inicio": inicio,
         "Fin": fin,

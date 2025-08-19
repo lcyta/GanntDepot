@@ -14,7 +14,12 @@ def mostrar_tareas_existentes(tasks, project_name):
             st.info("No hay tareas todavía.")
             return
 
+        # Mostrar en Streamlit
         st.dataframe(df, use_container_width=True)
+
+        # Imprimir en consola
+        print(f"\n--- Tareas del proyecto '{project_name}' ---")
+        print(df)
 
         # --- Usar el helper para calcular duración total ---
         inicio, fin, rango_dias = calcular_duracion_proyecto(tasks)
