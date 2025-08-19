@@ -1,10 +1,6 @@
 import streamlit as st
 from app.views.task_views_operations.mostrar_tareas import preparar_dataframe_tareas
-#from app.core.task.calcular_totales_tareas import calcular_totales_tareas
-from app.core.data_manager import cargar_datos_guardados_proyectos 
 import pandas as pd
-
-
 from app.core.task.project_duration import calcular_duracion_proyecto
 
 def mostrar_tareas_existentes(tasks, project_name):
