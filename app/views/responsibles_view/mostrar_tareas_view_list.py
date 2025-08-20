@@ -79,7 +79,7 @@ def mostrar_tareas_view_list():
                         "Estado": True,
                         "Duración estimada": True,
                         "Duración real": True,
-                        "Duración transcurrida": True,
+                        #"Duración transcurrida": True,
                     },
                 )
                 fig.update_yaxes(autorange="reversed")

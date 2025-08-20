@@ -40,7 +40,7 @@ def preparar_una_tarea(task):
         "Fin": end.date(),
         "Duración estimada": f"{task.days} días",
         "Duración real": (end.date() - start.date()).days + 1 if start and end else "Inválido",
-        "Duración transcurrida": (pd.to_datetime("today").date() - start.date()).days + 1 if start else "Inválido",
+        #"Duración transcurrida": (pd.to_datetime("today").date() - start.date()).days + 1 if start else "Inválido",
     }
 
 # -------------------------------
@@ -57,9 +57,10 @@ def preparar_dataframe_tareas(tasks):
     df["Duración real"] = df["Duración real"].apply(
         lambda x: f"{x} días" if x is not None else "Inválido"
     )
-    df["Duración transcurrida"] = df["Duración transcurrida"].apply(
+    '''df["Duración transcurrida"] = df["Duración transcurrida"].apply(
         lambda x: f"{x} días" if x is not None else "Inválido"
     )
+    '''
     return df
 
 # -------------------------------
