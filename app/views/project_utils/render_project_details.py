@@ -5,7 +5,7 @@ from app.views.project_utils.extras.extras_view import render_extras_view
 
 def render_project_extras(selected_project):
     """Muestra extras del proyecto."""
-    with st.expander("📦 Extras", expanded=False):
+    with st.expander("📦 Accesorios y Extras", expanded=False):
         render_extras_view(selected_project)
 
 def render_project_details(selected_project): 

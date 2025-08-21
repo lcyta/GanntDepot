@@ -28,3 +28,15 @@ def delete_accessory(project_name, accesorio_nombre):
     accesorios = load_accessories(project_name)
     accesorios = [a for a in accesorios if a["Nombre"] != accesorio_nombre]
     save_accessories(project_name, accesorios)
+
+def update_accessory(project_name, nombre_original, accesorio_actualizado):
+    """
+    Actualiza un accesorio existente identificado por nombre_original
+    con los datos de accesorio_actualizado.
+    """
+    accesorios = load_accessories(project_name)
+    for i, a in enumerate(accesorios):
+        if a["Nombre"] == nombre_original:
+            accesorios[i] = accesorio_actualizado
+            break
+    save_accessories(project_name, accesorios)
