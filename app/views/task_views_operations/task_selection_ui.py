@@ -7,7 +7,7 @@ def seleccionar_tarea(tasks):
     
     task_options = [f"{t.title} ({t.owner})" for t in tasks]
     selected_index = st.selectbox(
-        "Seleccioná una tarea",
+        "📌 Seleccioná una tarea",
         range(len(task_options)),
         format_func=lambda i: task_options[i],
         key="select_task_to_edit",

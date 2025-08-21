@@ -2,7 +2,7 @@ import streamlit as st
 
 def mostrar_formulario_tarea(selected_task, responsibles_list, selected_index):
     new_title = st.text_input(
-        "Nuevo título", value=selected_task.title, key=f"edit_title_{selected_index}"
+        "📌 Nuevo título para Tarea", value=selected_task.title, key=f"edit_title_{selected_index}"
     )
 
     # ✅ Evitar error si selected_task.owner no está en responsibles_list
@@ -12,14 +12,14 @@ def mostrar_formulario_tarea(selected_task, responsibles_list, selected_index):
         index_owner = 0  # fallback seguro, selecciona el primer responsable
 
     new_owner = st.selectbox(
-        "Nuevo responsable",
+        "👤 Nuevo responsable",
         responsibles_list,
         index=index_owner,
         key=f"edit_owner_{selected_index}",
     )
 
     new_days = st.number_input(
-        "Nueva duración estimada (días)",
+        "⏱️ Nueva duración estimada (días)",
         value=selected_task.days,
         min_value=1,
         step=1,

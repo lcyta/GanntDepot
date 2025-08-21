@@ -2,7 +2,7 @@ import streamlit as st
 from app.views.project_utils.extras.data_shipment import add_shipment
 
 def render_add_shipment_form(project_name):
-    with st.expander("➕ Agregar nuevo accesorio", expanded=False):
+    with st.expander("➕ Agregar nuevo shipment", expanded=False):
         with st.form("form_nuevo_shipment"):
             nombre = st.text_input("📋 Referencia de Envio")
             tipo = st.text_input("👤 Tipo")
