@@ -2,6 +2,7 @@ import streamlit as st
 from app.views.project_utils.project_info_view import render_project_info
 from app.views.project_utils.project_images_view import render_project_images
 from app.views.project_utils.extras.extras_view import render_extras_view
+from app.views.project_utils.extras.render_project_shipment import render_project_shipment
 
 def render_project_extras(selected_project):
     """Muestra extras del proyecto."""
@@ -16,6 +17,7 @@ def render_project_details(selected_project):
         with st.container():
             render_project_info(detalle)
             render_project_extras(selected_project)
+            render_project_shipment(selected_project)
             # Podés decidir si querés mostrar imágenes aquí también
             # render_project_images(detalle.get("imagenes", []))
     else:

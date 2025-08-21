@@ -1,14 +1,26 @@
 [
   {
-    "Nombre": "cxz<",
-    "Responsable": "cxz<",
-    "Fábrica": "cxz<",
-    "Notas": "cxz<"
+    "Nombre": "Blowers",
+    "Responsable": "Analia",
+    "Fábrica": "Huwei",
+    "Notas": "22 blowers 220v 60 Hz Plug tipo F"
   },
   {
-    "Nombre": "sssa",
-    "Responsable": "sasa",
-    "Fábrica": "sasas",
-    "Notas": "sasas"
+    "Nombre": "DJBooth",
+    "Responsable": "Analia",
+    "Fábrica": "TrussCompany",
+    "Notas": "2 x 3 x 5 mts.Pedir Fotos "
+  },
+  {
+    "Nombre": "Foam Cubes",
+    "Responsable": "Alejandro",
+    "Fábrica": "Funladia",
+    "Notas": " 1200 pcs Black. 1200 pcs Green"
+  },
+  {
+    "Nombre": "d",
+    "Responsable": "d",
+    "Fábrica": "d",
+    "Notas": "d"
   }
 ]
