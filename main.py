@@ -6,19 +6,21 @@ from app.core.init_data import generar_datos_iniciales
 from dashboard import show_dashboard
 
 def main():
-    # Inicializar sesión usando cookies si existen
+    # Inicializar sesión usando cookies
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = cookies.get("logged_in") == "true"
     if "username" not in st.session_state:
         st.session_state["username"] = cookies.get("username", None)
+    if "role" not in st.session_state:
+        st.session_state["role"] = cookies.get("role", None)
 
     if not st.session_state["logged_in"]:
         login()
     else:
-        st.sidebar.write(f"👤 Usuario: {st.session_state['username']}")
+        st.sidebar.write(f"👤 Usuario: {st.session_state['username']} ({st.session_state['role']})")
         logout()
 
-        # Inicializar datos de proyectos solo si no existen
+        # Inicializar datos de proyectos
         if "datos_proyectos" not in st.session_state:
             st.session_state.datos_proyectos = generar_datos_iniciales()
         if "current_project" not in st.session_state:
