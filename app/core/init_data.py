@@ -11,6 +11,7 @@ def cargar_lista_proyectos():
         proyectos = [line.strip() for line in f if line.strip()]
     return proyectos
 
+
 def generar_datos_iniciales(project_list=None):
     """
     Carga los datos guardados de los proyectos.

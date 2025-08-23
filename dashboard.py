@@ -38,11 +38,12 @@ def show_dashboard():
         render_general_view(controller)
         return
 
-    # Si no es vista general, es navegación de proyecto
+    # Navegación de proyecto
     page_dispatch = {
         "Gestor de tareas": lambda: page_gestor_tareas(controller, selected_project),
         "Diagrama Gantt": lambda: page_diagrama_gantt(controller, selected_project),
         "Diagrama Gantt global de proyectos": lambda: page_diagrama_gantt_global(projects),
+  
     }
 
     # Ejecuta la página elegida o muestra mensaje por defecto
@@ -50,3 +51,9 @@ def show_dashboard():
         page,
         lambda: st.info("No hay proyectos creados. Usá el formulario en la barra lateral."),
     )()
+
+   # st.sidebar.markdown("---")  # Línea divisoria
+   # from auth import logout  # Import local si no está global
+    #logout()  # Se muestra siempre al final
+    # 🔹 Botón de cerrar sesión al final del sidebar
+
