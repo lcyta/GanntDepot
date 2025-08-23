@@ -1,20 +1,25 @@
 import streamlit as st
-from auth import login, logout
+from auth import login, logout, cookies
 from app.core.init_events import register_event_handlers
 from app.core.project_manager import load_projects
 from app.core.init_data import generar_datos_iniciales
 from dashboard import show_dashboard
 
 def main():
-    # Inicialización de sesión
+    # Inicializar sesión usando cookies si existen
     if "logged_in" not in st.session_state:
-        st.session_state["logged_in"] = False
+        st.session_state["logged_in"] = cookies.get("logged_in") == "true"
+    if "username" not in st.session_state:
+        st.session_state["username"] = cookies.get("username", None)
 
     if not st.session_state["logged_in"]:
         login()
     else:
+        st.sidebar.write(f"👤 Usuario: {st.session_state['username']}")
+        logout()
+
+        # Inicializar datos de proyectos solo si no existen
         if "datos_proyectos" not in st.session_state:
-            # Al iniciar cargamos todos los proyectos guardados
             st.session_state.datos_proyectos = generar_datos_iniciales()
         if "current_project" not in st.session_state:
             st.session_state.current_project = None

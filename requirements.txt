@@ -6,3 +6,4 @@ seaborn
 pylint
 pytest
 pydeps
+streamlit-cookies-manager
