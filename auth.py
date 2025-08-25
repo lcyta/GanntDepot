@@ -18,14 +18,14 @@ def check_password(password: str, hashed: str) -> bool:
 plain_users = {
     "pro@depot": ("123", "admin"),
     "fer@depot": ("123", "veedor"),
-    "juanconte@inflatabledepot.com": ("juan123", "veedor"),
-    "sergiogaldo@inflatabledepot.com": ("sergio123", "veedor"),
-    "ubaldoacuna@inflatabledepot.com": ("ubaldo123", "veedor"),
-    "fabiankurz@inflatabledepot.com": ("fabian123", "veedor"),
-    "martinswimmer@inflatabledepot.com": ("martin123", "veedor"),
-    "daylingrodriguez@inflatabledepot.com": ("dayling123", "veedor"),
-    "analia@inflatabledepot.com": ("analia123", "veedor"),
-    "paula@inflatabledepot.com": ("paula123", "veedor"),
+    "juanconte@inflatabledepot.com": ("123", "veedor"),
+    "sergiogaldo@inflatabledepot.com": ("123", "veedor"),
+    "ubaldoacuna@inflatabledepot.com": ("123", "veedor"),
+    "fabiankurz@inflatabledepot.com": ("123", "veedor"),
+    "martinswimmer@inflatabledepot.com": ("123", "veedor"),
+    "daylingrodriguez@inflatabledepot.com": ("123", "veedor"),
+    "analia@inflatabledepot": ("123", "veedor"),
+    "paula@inflatabledepot": ("123", "veedor"),
 }
 
 # Diccionarios de hash y roles
