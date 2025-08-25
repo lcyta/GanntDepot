@@ -56,7 +56,7 @@ def login():
             st.error("❌ Usuario o contraseña incorrectos")
 
 def logout():
-    if st.button("Cerrar sesión"):
+    if st.sidebar.button("Cerrar sesión"):
         st.session_state["logged_in"] = False
         st.session_state["username"] = None
         st.session_state["role"] = None

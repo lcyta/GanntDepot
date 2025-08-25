@@ -13,12 +13,13 @@ from app.views.dashboard_utils.dashboard_pages import (
 from app.views.dashboard_utils.dashboard_utils import sync_project_selection
 from app.views.project_utils.project_edit_view import view_project_creation
 from app.views.dashboard_utils.dashboard_router import render_general_view
-
+from auth import logout  # Import local si no está global
 
 def show_dashboard():
     controller = DashboardController(st.session_state)
-    st.sidebar.title("📁 Proyectos")
+    #st.sidebar.markdown("---")  # Línea divisoria
 
+    st.sidebar.title("📁 Proyectos")
     projects = controller.get_projects()
     selected_project = sidebar_project_management(controller, projects)
     sidebar_general_views(controller)
@@ -52,8 +53,5 @@ def show_dashboard():
         lambda: st.info("No hay proyectos creados. Usá el formulario en la barra lateral."),
     )()
 
-   # st.sidebar.markdown("---")  # Línea divisoria
-   # from auth import logout  # Import local si no está global
-    #logout()  # Se muestra siempre al final
+    logout()  # Se muestra siempre al final
     # 🔹 Botón de cerrar sesión al final del sidebar
-
