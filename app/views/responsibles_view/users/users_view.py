@@ -55,18 +55,26 @@ def view_users_add():
         username = st.text_input("👤 Nombre de usuario (login)", key=f"user_{new_name}")
         password = st.text_input("🔑 Password", key=f"pass_{new_name}")
 
+        view_users_permissions() 
+
+
         if st.button("💾 Guardar cambios", key=f"save_add_{new_name}"):
             usuarios = load_usuarios()
 
-            # Validar duplicado por nombre
+            # Validar duplicado
             if any(u["name"] == new_name for u in usuarios):
                 st.error(f"Error: El responsable '{new_name}' ya tiene un usuario asignado.")
                 return
 
+            user_permissions = view_users_permissions()  # <-- Captura los permisos
+
             usuario_data = {
                 "name": new_name,
                 "factory": new_factory,
-                "user_type": user_type,
+                "user_type": {
+                    "role": user_type,
+                    "permissions": user_permissions
+                },
                 "username": username,
                 "password": password
             }
@@ -119,3 +127,36 @@ def view_main_users():
         view_users_add()
         view_users_table()
         view_users_edit()
+
+def view_users_permissions():
+    permisos = []
+
+    gestionar_tareas = st.checkbox("📑 Gestionar Tareas")
+    if gestionar_tareas:
+        permisos.append("gestionar_tareas")  # Permiso general
+
+        st.markdown("##### ➝ Subpermisos de Gestión de Tareas")
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown("**Acción**")
+        with col2:
+            st.markdown("**Ver**")
+
+        acciones = [
+            ("crear_tarea", "➕ Crear nueva tarea"),
+            ("modificar_tarea", "🔧 Modificar tarea"),
+            ("reordenar_tareas", "🔀 Reordenar tareas"),
+            ("acciones_lote", "📦 Acciones en lote"),
+            ("ver_tareas", "📑 Tareas existentes"),
+        ]
+
+        for key, label in acciones:
+            col1, col2 = st.columns([2, 1])
+            with col1:
+                st.markdown(label)
+            with col2:
+                checked = st.checkbox(" ", key=f"{key}_ver", label_visibility="collapsed")
+                if checked:
+                    permisos.append(key)
+
+    return permisos
