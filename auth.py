@@ -1,41 +1,45 @@
 import streamlit as st
 import hashlib
+import json
+from pathlib import Path
 from streamlit_cookies_manager import EncryptedCookieManager
 
-# Inicializar cookies
+# --- Archivo de usuarios ---
+DATA_DIR = Path("data")
+USUARIOS_FILE = DATA_DIR / "usuarios_gestion.json"
+if not USUARIOS_FILE.exists():
+    with open(USUARIOS_FILE, "w", encoding="utf-8") as f:
+        json.dump([], f, indent=4, ensure_ascii=False)
+
+# --- Manejo de usuarios ---
+def load_usuarios():
+    try:
+        with open(USUARIOS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        return []
+
+# --- Cookies ---
 cookies = EncryptedCookieManager(prefix="my_app", password="una_clave_segura")
 if not cookies.ready():
     st.stop()
 
-# Funciones de seguridad
+# --- Seguridad ---
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
 
 def check_password(password: str, hashed: str) -> bool:
     return hash_password(password) == hashed
 
-# Usuarios con roles
-plain_users = {
-    "pro@depot": ("123", "admin"),
-    "fer@depot": ("123", "veedor"),
-    "juanconte@inflatabledepot.com": ("123", "veedor"),
-    "sergiogaldo@inflatabledepot.com": ("123", "veedor"),
-    "ubaldoacuna@inflatabledepot.com": ("123", "veedor"),
-    "fabiankurz@inflatabledepot.com": ("123", "veedor"),
-    "martinswimmer@inflatabledepot.com": ("123", "veedor"),
-    "daylingrodriguez@inflatabledepot.com": ("123", "veedor"),
-    "analia@inflatabledepot": ("123", "veedor"),
-    "paula@inflatabledepot": ("123", "veedor"),
-}
+# --- Cargar usuarios y roles desde JSON ---
+usuarios_json = load_usuarios()
+USERS = {u["username"]: hash_password(u["password"]) for u in usuarios_json}
+ROLES = {u["username"]: u["user_type"] for u in usuarios_json}
 
-# Diccionarios de hash y roles
-USERS = {user: hash_password(pwd) for user, (pwd, _) in plain_users.items()}
-ROLES = {user: role for user, (_, role) in plain_users.items()}
-
-# Funciones de login/logout
+# --- Funciones de login/logout ---
 def login():
     st.title("🔐 Login")
-    username = st.text_input("Usuario (email)")
+    username = st.text_input("Usuario (login)")
     password = st.text_input("Contraseña", type="password")
     login_button = st.button("Ingresar")
 

@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Alejandro Schmeil",
+        "factory": "BWA",
+        "user_type": "Admin",
+        "username": "ale",
+        "password": "123"
+    },
+    {
+        "name": "Fernando",
+        "factory": "Depot",
+        "user_type": "Admin",
+        "username": "fer",
+        "password": "123"
+    }
+]
