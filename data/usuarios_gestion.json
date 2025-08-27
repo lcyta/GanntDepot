@@ -3,14 +3,35 @@
         "name": "Alejandro Schmeil",
         "factory": "BWA",
         "user_type": "Admin",
+        "permissions": [
+            "gestionar_tareas",
+            "crear_tarea",
+            "modificar_tarea",
+            "reordenar_tareas",
+            "acciones_lote",
+            "ver_tareas"
+        ],
         "username": "ale",
-        "password": "123"
+        "password": "ale"
     },
     {
         "name": "Fernando",
         "factory": "Depot",
         "user_type": "Admin",
+        "permissions": [
+            "gestionar_tareas",
+            "crear_tarea",
+            "ver_tareas"
+        ],
         "username": "fer",
+        "password": "123"
+    },
+    {
+        "name": "Tyler",
+        "factory": "Cheer",
+        "user_type": "Admin",
+        "permissions": [],
+        "username": "ty",
         "password": "123"
     }
 ]
