@@ -14,6 +14,8 @@ from app.views.dashboard_utils.dashboard_utils import sync_project_selection
 from app.views.project_utils.project_edit_view import view_project_creation
 from app.views.dashboard_utils.dashboard_router import render_general_view
 from auth import logout  # Import local si no está global
+from app.views.dashboard_utils.sidebar_messages import sidebar_messages
+from app.views.messages.messages_view import render_messages_view
 
 def show_dashboard():
     controller = DashboardController(st.session_state)
@@ -23,7 +25,7 @@ def show_dashboard():
     projects = controller.get_projects()
     selected_project = sidebar_project_management(controller, projects)
     sidebar_general_views(controller)
-
+    sidebar_messages(controller)
     # Paso el estado de creación para controlar la navegación
     page = sidebar_project_navigation(selected_project, projects, controller.state.view_fake_project)
 
@@ -39,6 +41,10 @@ def show_dashboard():
         render_general_view(controller)
         return
 
+    if getattr(controller.state, "selected_chat_user", None):
+        render_messages_view(controller, controller.state.selected_chat_user)
+        return
+    
     # Navegación de proyecto
     page_dispatch = {
         "Gestor de tareas": lambda: page_gestor_tareas(controller, selected_project),
