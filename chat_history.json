@@ -12,5 +12,59 @@
         "project": "GN103AJ",
         "texto": "dfsa",
         "timestamp": "2025-08-27 20:22:00"
+    },
+    {
+        "from": "Yo",
+        "to": "ty",
+        "project": "GN103AJ",
+        "texto": "hola",
+        "timestamp": "2025-08-27 21:42:22"
+    },
+    {
+        "from": "Yo",
+        "to": "ty",
+        "project": "GN103AJ",
+        "texto": "Hola Tyler, tenes que resolver eso para dar check a la tarea cuando lo hagas",
+        "timestamp": "2025-08-27 21:44:41"
+    },
+    {
+        "from": "ale",
+        "to": "ty",
+        "project": "GN103AJ",
+        "texto": "hola Tyle",
+        "timestamp": "2025-08-27 21:49:24",
+        "read": true
+    },
+    {
+        "from": "ty",
+        "to": "fer",
+        "project": "GN103AJ",
+        "texto": "Hola Fer, Sabes algo sobre esto?",
+        "timestamp": "2025-08-27 21:52:47",
+        "read": true
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN103AJ",
+        "texto": "Fer , ponete las pilas",
+        "timestamp": "2025-08-27 22:01:36",
+        "read": true
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN103AJ",
+        "texto": "Fer , ponete las pilas   2 veces te lo dije",
+        "timestamp": "2025-08-27 22:07:03",
+        "read": true
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GN103AJ",
+        "texto": "you're fired",
+        "timestamp": "2025-08-27 22:10:15",
+        "read": true
     }
 ]

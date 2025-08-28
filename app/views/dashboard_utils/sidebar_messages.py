@@ -1,27 +1,37 @@
 import streamlit as st
 from auth import load_usuarios
+from app.views.messages.messages_view import load_chat
 
 def sidebar_messages(controller):
-    """Sidebar para mostrar la sección de Mensajes y lista de usuarios"""
     usuarios = load_usuarios()
+    current_user = st.session_state.get("username", None)
+    if not current_user:
+        return
 
     with st.sidebar.expander("💬 Mensajes", expanded=False):
         if not usuarios:
             st.info("No hay usuarios registrados todavía.")
             return
 
-        # Usuario actual logueado
-        current_user = st.session_state.get("username", None)
-
-        # Filtrar: no mostrarme a mí mismo en la lista
+        # Filtrar: no mostrarme a mí mismo
         other_users = [u for u in usuarios if u["username"] != current_user]
 
-        if not other_users:
-            st.info("No hay otros usuarios disponibles para chatear.")
-            return
+        # Cargar historial de chats
+        chat_history = load_chat()
 
-        # Lista de usuarios como botones de radio
-        nombres = [f"{u['name']} ({u['factory']})" for u in other_users]
+        # Armar lista con contador de no leídos
+        nombres = []
+        for u in other_users:
+            unread = sum(
+                1
+                for msg in chat_history
+                if msg["to"] == current_user and msg["from"] == u["username"] and not msg.get("read", False)
+            )
+            label = f"{u['name']} ({u['factory']})"
+            if unread > 0:
+                label += f" ({unread})"  # 👈 mostrar contador
+            nombres.append(label)
+
         seleccion = st.radio(
             "Seleccioná un usuario para chatear",
             options=["Volver"] + nombres,

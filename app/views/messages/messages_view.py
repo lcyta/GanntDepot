@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import json
 from datetime import datetime
 from pathlib import Path
@@ -18,8 +18,11 @@ def save_chat(chat):
     with open(CHAT_FILE, "w", encoding="utf-8") as f:
         json.dump(chat, f, indent=4, ensure_ascii=False)
 
-def render_messages_view(controller, selected_user, current_user="Yo"):
+def render_messages_view(controller, selected_user):
     st.header(f"💬 Chat con {selected_user}")
+
+    # 🔹 Usuario actual (logueado en la sesión)
+    current_user = st.session_state.get("username", "desconocido")
 
     # 🔹 Obtener proyectos
     proyectos = controller.get_projects()
@@ -32,6 +35,19 @@ def render_messages_view(controller, selected_user, current_user="Yo"):
 
     # 🔹 Cargar historial y filtrarlo
     chat_history = load_chat()
+
+    # 👇 Marcar mensajes recibidos como leídos
+    for msg in chat_history:
+        if (
+            msg["project"] == selected_project
+            and msg["to"] == current_user
+            and msg["from"] == selected_user
+            and not msg.get("read", False)
+        ):
+            msg["read"] = True
+    save_chat(chat_history)
+
+    # 🔹 Filtrar mensajes de este chat/proyecto
     filtered_msgs = [
         msg for msg in chat_history
         if msg["project"] == selected_project and (
@@ -61,6 +77,7 @@ def render_messages_view(controller, selected_user, current_user="Yo"):
                 "project": selected_project,
                 "texto": mensaje.strip(),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "read": False  # 👈 nuevo campo para controlar si fue leído
             }
             chat_history.append(nuevo_msg)
             save_chat(chat_history)
