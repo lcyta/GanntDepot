@@ -26,8 +26,23 @@ def mostrar_formulario_tarea(selected_task, responsibles_list, selected_index):
         key=f"edit_days_{selected_index}",
     )
 
+    # 🔄 Nuevo campo: estado de la tarea con tus opciones
+    estados = ["En curso", "Terminado", "En Espera"]
+
+    if hasattr(selected_task, "estado") and selected_task.estado in estados:
+        index_estado = estados.index(selected_task.estado)
+    else:
+        index_estado = 0  # por defecto "En curso"
+
+    new_status = st.selectbox(
+        "⏳ Estado",
+        options=estados,
+        index=index_estado,
+        key=f"edit_status_{selected_index}",
+    )
+
     col_mod, col_del = st.columns([1, 1])
     modificar_clicked = col_mod.button("Modificar tarea", key=f"modificar_{selected_index}")
     eliminar_clicked = col_del.button("Eliminar tarea", key=f"eliminar_{selected_index}")
 
-    return modificar_clicked, eliminar_clicked, new_title, new_owner, new_days
+    return modificar_clicked, eliminar_clicked, new_title, new_owner, new_days, new_status
