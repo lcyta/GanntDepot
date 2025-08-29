@@ -1,70 +1,191 @@
 [
     {
-        "from": "Yo",
+        "from": "fer",
         "to": "ale",
         "project": "GN103AJ",
-        "texto": "raul",
-        "timestamp": "2025-08-27 20:21:56"
-    },
-    {
-        "from": "Yo",
-        "to": "ale",
-        "project": "GN103AJ",
-        "texto": "dfsa",
-        "timestamp": "2025-08-27 20:22:00"
-    },
-    {
-        "from": "Yo",
-        "to": "ty",
-        "project": "GN103AJ",
-        "texto": "hola",
-        "timestamp": "2025-08-27 21:42:22"
-    },
-    {
-        "from": "Yo",
-        "to": "ty",
-        "project": "GN103AJ",
-        "texto": "Hola Tyler, tenes que resolver eso para dar check a la tarea cuando lo hagas",
-        "timestamp": "2025-08-27 21:44:41"
-    },
-    {
-        "from": "ale",
-        "to": "ty",
-        "project": "GN103AJ",
-        "texto": "hola Tyle",
-        "timestamp": "2025-08-27 21:49:24",
-        "read": true
-    },
-    {
-        "from": "ty",
-        "to": "fer",
-        "project": "GN103AJ",
-        "texto": "Hola Fer, Sabes algo sobre esto?",
-        "timestamp": "2025-08-27 21:52:47",
-        "read": true
-    },
-    {
-        "from": "ale",
-        "to": "fer",
-        "project": "GN103AJ",
-        "texto": "Fer , ponete las pilas",
-        "timestamp": "2025-08-27 22:01:36",
-        "read": true
-    },
-    {
-        "from": "ale",
-        "to": "fer",
-        "project": "GN103AJ",
-        "texto": "Fer , ponete las pilas   2 veces te lo dije",
-        "timestamp": "2025-08-27 22:07:03",
-        "read": true
+        "subject": "d",
+        "texto": "f",
+        "timestamp": "2025-08-27 22:38:29",
+        "read": false
     },
     {
         "from": "fer",
         "to": "ale",
+        "project": "GNMP97ZF",
+        "subject": "sa",
+        "texto": "dsa",
+        "timestamp": "2025-08-27 22:52:24",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GN099OZ",
+        "subject": "sa",
+        "texto": "sa",
+        "timestamp": "2025-08-27 22:52:51",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GN099OZ",
+        "subject": "sa",
+        "texto": "sa",
+        "timestamp": "2025-08-27 22:52:58",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GN099OZ",
+        "subject": "sa",
+        "texto": "sa",
+        "timestamp": "2025-08-27 22:53:01",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GN099OZ",
+        "subject": "sa",
+        "texto": "sa",
+        "timestamp": "2025-08-27 22:53:13",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GNMP97ZF",
+        "subject": "sa",
+        "texto": "GNMP97ZF",
+        "timestamp": "2025-08-27 22:53:41",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ale",
+        "project": "GNMP97ZF",
+        "subject": "sa",
+        "texto": "GNMP97Z",
+        "timestamp": "2025-08-27 22:53:50",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ty",
         "project": "GN103AJ",
-        "texto": "you're fired",
-        "timestamp": "2025-08-27 22:10:15",
-        "read": true
+        "subject": "Sin asunto",
+        "texto": "ds",
+        "timestamp": "2025-08-27 22:56:24",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ty",
+        "project": "GN103AJ",
+        "subject": "Sin asunto",
+        "texto": "d",
+        "timestamp": "2025-08-27 22:56:27",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ty",
+        "project": "GN100OZ",
+        "subject": "ds",
+        "texto": "ds",
+        "timestamp": "2025-08-27 22:56:38",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ty",
+        "project": "GNMP97ZF",
+        "subject": "dsa",
+        "texto": "dsa",
+        "timestamp": "2025-08-27 22:56:46",
+        "read": false
+    },
+    {
+        "from": "fer",
+        "to": "ty",
+        "project": "GNMP97ZF",
+        "subject": "dsa",
+        "texto": "dsa",
+        "timestamp": "2025-08-27 22:56:49",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN103AJ",
+        "subject": "fdsa",
+        "texto": "fdsa",
+        "timestamp": "2025-08-28 19:28:44",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN099OZ",
+        "subject": "dsa",
+        "texto": "fds",
+        "timestamp": "2025-08-28 19:28:59",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN099OZ",
+        "subject": "sa",
+        "texto": "afaf",
+        "timestamp": "2025-08-28 19:29:04",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GNMP97ZF",
+        "subject": "sa",
+        "texto": "dsa",
+        "timestamp": "2025-08-28 19:29:26",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN103AJ",
+        "subject": "Viaje Orlando",
+        "texto": "hola",
+        "timestamp": "2025-08-28 19:38:06",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GN103AJ",
+        "subject": "Viaje Orlando",
+        "texto": "te escribo por el viaje a orlando",
+        "timestamp": "2025-08-28 19:38:16",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GNMP97ZF",
+        "subject": "call",
+        "texto": "call me",
+        "timestamp": "2025-08-28 19:40:38",
+        "read": false
+    },
+    {
+        "from": "ale",
+        "to": "fer",
+        "project": "GNMP97ZF",
+        "subject": "call",
+        "texto": "s",
+        "timestamp": "2025-08-28 19:40:48",
+        "read": false
     }
 ]

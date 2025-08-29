@@ -1,85 +1,119 @@
-import streamlit as st 
+import streamlit as st
 import json
 from datetime import datetime
 from pathlib import Path
 
-# Ruta donde guardaremos los mensajes
 CHAT_FILE = Path("chat_history.json")
 
 def load_chat():
-    """Carga historial desde JSON."""
     if CHAT_FILE.exists():
-        with open(CHAT_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(CHAT_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, ValueError):
+            return []
     return []
 
 def save_chat(chat):
-    """Guarda historial en JSON."""
     with open(CHAT_FILE, "w", encoding="utf-8") as f:
         json.dump(chat, f, indent=4, ensure_ascii=False)
 
 def render_messages_view(controller, selected_user):
     st.header(f"💬 Chat con {selected_user}")
-
-    # 🔹 Usuario actual (logueado en la sesión)
     current_user = st.session_state.get("username", "desconocido")
 
-    # 🔹 Obtener proyectos
     proyectos = controller.get_projects()
     if not proyectos:
         st.warning("⚠️ No hay proyectos creados. Creá uno antes de enviar mensajes.")
         return
 
-    # Selector de proyecto
-    selected_project = st.selectbox("📁 Seleccioná un proyecto para este chat", proyectos)
+    # Inicializar conversaciones desde JSON si no están en session_state
+    if "conversations" not in st.session_state:
+        chat_history = load_chat()
+        convs = {}
+        for msg in chat_history:
+            key = (msg["project"], msg.get("subject", "Sin asunto"))
+            convs[key] = {"project": msg["project"], "subject": msg.get("subject", "Sin asunto")}
+        st.session_state.conversations = list(convs.values())
 
-    # 🔹 Cargar historial y filtrarlo
-    chat_history = load_chat()
+    # Botón para agregar nueva conversación
+    if st.button("➕ Nueva conversación"):
+        st.session_state.conversations.append(None)
+        st.rerun()
 
-    # 👇 Marcar mensajes recibidos como leídos
-    for msg in chat_history:
-        if (
-            msg["project"] == selected_project
-            and msg["to"] == current_user
-            and msg["from"] == selected_user
-            and not msg.get("read", False)
-        ):
-            msg["read"] = True
-    save_chat(chat_history)
+    # Recorrer conversaciones
+    for idx, conv in enumerate(st.session_state.conversations):
+        proyecto_label = conv.get("project") if isinstance(conv, dict) and conv else f"Conversación {idx+1}"
 
-    # 🔹 Filtrar mensajes de este chat/proyecto
-    filtered_msgs = [
-        msg for msg in chat_history
-        if msg["project"] == selected_project and (
-            (msg["from"] == current_user and msg["to"] == selected_user) or
-            (msg["from"] == selected_user and msg["to"] == current_user)
-        )
-    ]
+        with st.expander(f"💬 {proyecto_label}", expanded=True):
+            # Si aún no está creada la conversación → mostrar formulario inicial
+            if not conv:
+                selected_project = st.selectbox("📁 Seleccioná el proyecto", proyectos, key=f"project_{idx}")
+                with st.form(f"crear_conversacion_form_{idx}"):
+                    asunto = st.text_input("Asunto de la conversación")
+                    crear = st.form_submit_button("Crear conversación")
+                    if crear and asunto.strip():
+                        chat_history = load_chat()
+                        # Guardar la conversación vacía en JSON
+                        nueva_conv = {
+                            "from": current_user,
+                            "to": selected_user,
+                            "project": selected_project,
+                            "subject": asunto.strip(),
+                            "texto": None,  # no hay mensaje todavía
+                            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "read": True
+                        }
+                        chat_history.append(nueva_conv)
+                        save_chat(chat_history)
 
-    # Mostrar historial
-    st.subheader(f"📜 Historial de mensajes en {selected_project}")
-    if filtered_msgs:
-        for msg in filtered_msgs:
-            sender = "🟢 Tú" if msg["from"] == current_user else f"🔵 {msg['from']}"
-            st.markdown(f"**{sender}** ({msg['timestamp']}): {msg['texto']}")
-    else:
-        st.info("No hay mensajes en este proyecto todavía.")
+                        # Guardar en session_state
+                        st.session_state.conversations[idx] = {
+                            "project": selected_project,
+                            "subject": asunto.strip()
+                        }
+                        st.success(f"Conversación creada sobre {selected_project}")
+                        st.rerun()
+            else:
+                selected_project = conv["project"]
+                subject = conv.get("subject", "Sin asunto")
 
-    # Caja de entrada de mensaje
-    with st.form("send_message_form", clear_on_submit=True):
-        mensaje = st.text_area("Escribí tu mensaje:")
-        enviar = st.form_submit_button("Enviar")
+                # Mostrar historial
+                chat_history = load_chat()
+                filtered_msgs = [
+                    msg for msg in chat_history
+                    if msg["project"] == selected_project
+                    and (
+                        (msg["from"] == current_user and msg["to"] == selected_user)
+                        or (msg["from"] == selected_user and msg["to"] == current_user)
+                    )
+                    and msg["texto"] is not None  # descartar las "conversaciones vacías"
+                ]
 
-        if enviar and mensaje.strip():
-            nuevo_msg = {
-                "from": current_user,
-                "to": selected_user,
-                "project": selected_project,
-                "texto": mensaje.strip(),
-                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "read": False  # 👈 nuevo campo para controlar si fue leído
-            }
-            chat_history.append(nuevo_msg)
-            save_chat(chat_history)
-            st.success(f"Mensaje enviado a {selected_user} en {selected_project}")
-            st.rerun()  # 🔄 recargar para mostrar el nuevo mensaje
+                st.subheader(f"📜 Historial en {selected_project}")
+                if filtered_msgs:
+                    for msg in filtered_msgs:
+                        sender = "🟢 Tú" if msg["from"] == current_user else f"🔵 {msg['from']}"
+                        st.markdown(f"📝 **{msg.get('subject', subject)}**")
+                        st.markdown(f"**{sender}** ({msg['timestamp']}): {msg['texto']}")
+                else:
+                    st.info("No hay mensajes en esta conversación todavía.")
+
+                # Formulario para enviar mensajes
+                with st.form(f"continuar_conversacion_form_{idx}", clear_on_submit=True):
+                    mensaje = st.text_area("Escribí tu mensaje")
+                    enviar = st.form_submit_button("Enviar")
+                    if enviar and mensaje.strip():
+                        nuevo_msg = {
+                            "from": current_user,
+                            "to": selected_user,
+                            "project": selected_project,
+                            "subject": subject,
+                            "texto": mensaje.strip(),
+                            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "read": False
+                        }
+                        chat_history.append(nuevo_msg)
+                        save_chat(chat_history)
+                        st.success("Mensaje enviado")
+                        st.rerun()
