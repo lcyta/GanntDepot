@@ -11,7 +11,8 @@ def mostrar_tareas_existentes(tasks, project_name):
             return
 
         # Mostrar en Streamlit
-        st.dataframe(df, use_container_width=True)
+        df_styled = df.style.apply(resaltar_estado, axis=1)
+        st.dataframe(df_styled, use_container_width=True)
 
         # Imprimir en consola
         print(f"\n--- Tareas del proyecto '{project_name}' ---")
@@ -30,3 +31,13 @@ def mostrar_tareas_existentes(tasks, project_name):
             st.session_state["duracion_proyectos"][project_name] = (inicio, fin, rango_dias)
 
         return df
+    
+def resaltar_estado(row):
+    color = ""
+    if row["Estado"] == "Terminado":
+        color = "background-color: #d4edda; color: #155724;"
+    elif row["Estado"] == "En curso":
+        color = "background-color: #fff3cd; color: #856404;"
+    elif row["Estado"] == "En Espera":
+        color = "background-color: #f8d7da; color: #721c24;"
+    return [color] * len(row)
