@@ -14,7 +14,7 @@ def view_tasks_gantt(tasks, project_name):
     estados_unicos = df["Estado"].unique().tolist()
     tipos_unicos = df["Tipo"].unique().tolist()
 
-    with st.expander("🎛️ Filtros y opciones de visualización", expanded=True):
+    with st.expander(" Filtros y opciones de visualización", expanded=False):
         estados = st.multiselect("Filtrar por estado", options=["Todos"] + estados_unicos, default=["Todos"])
         tipos = st.multiselect("Filtrar por tipo", options=["Todos"] + tipos_unicos, default=["Todos"])
         color_opcion = st.selectbox("🎨 Colorear por", ["Tipo", "Riesgo", "Estado"])

@@ -72,38 +72,28 @@ def _render_new_conversation_form(idx, current_user, selected_user, proyectos):
             st.rerun()
 
 
-def _render_conversation(idx, conv, current_user, selected_user):
-    selected_project = conv["project"]
-    subject = conv.get("subject", "Sin asunto")
-
-    chat_history = load_chat()
-    filtered_msgs = [
+def filtrar_mensajes(chat_history, current_user, selected_user, project):
+    return [
         msg for msg in chat_history
-        if msg["project"] == selected_project
-        and (
-            (msg["from"] == current_user and msg["to"] == selected_user)
-            or (msg["from"] == selected_user and msg["to"] == current_user)
-        )
+        if msg["project"] == project
+        and ((msg["from"] == current_user and msg["to"] == selected_user)
+             or (msg["from"] == selected_user and msg["to"] == current_user))
         and msg["texto"] is not None
     ]
 
-    st.subheader(f"📜 Historial en {selected_project} : {subject}")
-    if filtered_msgs:
-        for msg in filtered_msgs:
-            sender = "🟢 Tú" if msg["from"] == current_user else f"🔵 {msg['from']}"
-            st.markdown(f"📝 **{msg.get('subject', subject)}**")
-            st.markdown(f"**{sender}** ({msg['timestamp']}): {msg['texto']}")
-    else:
-        st.info("No hay mensajes en esta conversación todavía.")
+def render_mensaje(msg, current_user):
+    sender = "🟢 Tú" if msg["from"] == current_user else f"🔵 {msg['from']}"
+    st.markdown(f"**{sender}** ({msg['timestamp']}): {msg['texto']}")
 
-    with st.form(f"continuar_conversacion_form_{idx}", clear_on_submit=True):
+def enviar_mensaje(form_idx, current_user, selected_user, project, subject, chat_history):
+    with st.form(f"continuar_conversacion_form_{form_idx}", clear_on_submit=True):
         mensaje = st.text_area("Escribí tu mensaje")
         enviar = st.form_submit_button("Enviar")
         if enviar and mensaje.strip():
             nuevo_msg = {
                 "from": current_user,
                 "to": selected_user,
-                "project": selected_project,
+                "project": project,
                 "subject": subject,
                 "texto": mensaje.strip(),
                 "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -113,3 +103,18 @@ def _render_conversation(idx, conv, current_user, selected_user):
             save_chat(chat_history)
             st.success("Mensaje enviado")
             st.rerun()
+
+def _render_conversation(idx, conv, current_user, selected_user):
+    selected_project = conv["project"]
+    subject = conv.get("subject", "Sin asunto")
+    chat_history = load_chat()
+    filtered_msgs = filtrar_mensajes(chat_history, current_user, selected_user, selected_project)
+
+    st.subheader(f"📜 Historial en {selected_project} : {subject}")
+    if filtered_msgs:
+        for msg in filtered_msgs:
+            render_mensaje(msg, current_user)
+    else:
+        st.info("No hay mensajes en esta conversación todavía.")
+
+    enviar_mensaje(idx, current_user, selected_user, selected_project, subject, chat_history)

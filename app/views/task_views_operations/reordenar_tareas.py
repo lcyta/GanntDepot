@@ -26,4 +26,4 @@ def reordenar_tareas(tasks, project_name):
                 st.session_state["tasks"] = load_tasks(project_name)
                 st.session_state.task_changed = True
                 st.success(mensaje)
-                st.rerun()
+               # st.rerun()
