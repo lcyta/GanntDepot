@@ -4,32 +4,58 @@ from app.views.messages.chat_storage import load_chat, save_chat
 
 
 def render_messages_view(controller, selected_user):
+    """Vista principal de mensajes entre usuarios."""
     st.header(f"💬 Chat con {selected_user}")
     current_user = st.session_state.get("username", "desconocido")
 
     proyectos = controller.get_projects()
-    if not proyectos:
-        st.warning("⚠️ No hay proyectos creados. Creá uno antes de enviar mensajes.")
+    if not _validar_proyectos(proyectos):
         return
 
-    # Inicializar conversaciones desde JSON si no están en session_state
-    if "conversations" not in st.session_state:
-        chat_history = load_chat()
-        convs = {}
-        for msg in chat_history:
-            key = (msg["project"], msg.get("subject", "Sin asunto"))
-            convs[key] = {
-                "project": msg["project"],
-                "subject": msg.get("subject", "Sin asunto")
-            }
-        st.session_state.conversations = list(convs.values())
+    _init_conversations()
 
-    # Botón para nueva conversación
+    _render_new_conversation_button()
+
+    _render_conversations_list(current_user, selected_user, proyectos)
+
+
+# --------------------------
+# Helpers privados
+# --------------------------
+
+def _validar_proyectos(proyectos):
+    """Valida si existen proyectos y muestra warning si no hay."""
+    if not proyectos:
+        st.warning("⚠️ No hay proyectos creados. Creá uno antes de enviar mensajes.")
+        return False
+    return True
+
+
+def _init_conversations():
+    """Inicializa el estado de conversaciones desde JSON si no existe."""
+    if "conversations" in st.session_state:
+        return
+
+    chat_history = load_chat()
+    convs = {}
+    for msg in chat_history:
+        key = (msg["project"], msg.get("subject", "Sin asunto"))
+        convs[key] = {
+            "project": msg["project"],
+            "subject": msg.get("subject", "Sin asunto")
+        }
+    st.session_state.conversations = list(convs.values())
+
+
+def _render_new_conversation_button():
+    """Botón para crear una nueva conversación vacía."""
     if st.button("➕ Nueva conversación"):
         st.session_state.conversations.insert(0, None)  # 🔹 va al inicio
         st.rerun()
 
-    # Recorrer conversaciones
+
+def _render_conversations_list(current_user, selected_user, proyectos):
+    """Renderiza todas las conversaciones activas."""
     for idx, conv in enumerate(st.session_state.conversations):
         proyecto_label = (
             f"{conv['project']} : {conv.get('subject', 'Sin asunto')}"
