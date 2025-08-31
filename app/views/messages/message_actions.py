@@ -3,13 +3,25 @@ from datetime import datetime
 from app.views.messages.chat_storage import save_chat
 
 
+def es_mensaje_del_proyecto(msg, project):
+    return msg["project"] == project
+
+def es_entre_usuarios(msg, user_a, user_b):
+    return (
+        (msg["from"] == user_a and msg["to"] == user_b) or
+        (msg["from"] == user_b and msg["to"] == user_a)
+    )
+
+def tiene_texto(msg):
+    return msg["texto"] is not None
+
+
 def filtrar_mensajes(chat_history, current_user, selected_user, project):
     return [
         msg for msg in chat_history
-        if msg["project"] == project
-        and ((msg["from"] == current_user and msg["to"] == selected_user)
-             or (msg["from"] == selected_user and msg["to"] == current_user))
-        and msg["texto"] is not None
+        if es_mensaje_del_proyecto(msg, project)
+        and es_entre_usuarios(msg, current_user, selected_user)
+        and tiene_texto(msg)
     ]
 
 
