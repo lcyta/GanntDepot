@@ -8,10 +8,9 @@ radon cc app/ --min A -s | ForEach-Object {
             Score    = $score
         }
     }
-} | Sort-Object -Property Score -Descending | Select-Object -First 20 | ForEach-Object {
+} | Sort-Object -Property Score -Descending | Select-Object -First 30 | ForEach-Object {
     $_.Line
 }
-
 
 
 ////////////////////////////////
