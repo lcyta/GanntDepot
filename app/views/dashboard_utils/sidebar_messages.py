@@ -1,6 +1,6 @@
 import streamlit as st
 from auth import load_usuarios
-from app.views.messages.messages_view import load_chat
+from app.views.messages.chat_storage import load_chat
 
 def contar_no_leidos(chat_history, current_user, from_user):
     return sum(
