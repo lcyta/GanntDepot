@@ -1,45 +1,13 @@
-import plotly.express as px
-from app.views.gantt.gantt_controller import obtener_dataframe_proyectos
-from app.core.task.task_service import load_tasks
-from app.views.task_views_operations.mostrar_tareas import preparar_dataframe_tareas
 import pandas as pd
-from app.core.task.project_duration import calcular_duracion_proyecto
+import plotly.express as px
 import streamlit as st
-
-
-def inicializar_duracion_proyectos():
-    """Asegura que session_state tenga la clave de duraciones."""
-    if "duracion_proyectos" not in st.session_state:
-        st.session_state["duracion_proyectos"] = {}
-
-
-def precalcular_duracion_proyecto_unico(project_name):
-    """Calcula y guarda la duración de un solo proyecto en session_state."""
-    if project_name in st.session_state["duracion_proyectos"]:
-        return  # Ya está calculado
-
-    tasks = load_tasks(project_name)
-    if not tasks:
-        return
-
-    inicio, fin, rango_dias = calcular_duracion_proyecto(tasks)
-    if inicio and fin:
-        st.session_state["duracion_proyectos"][project_name] = (inicio, fin, rango_dias)
-
-
-def precalcular_duraciones_proyectos(project_list):
-    """Orquesta el cálculo de duraciones para múltiples proyectos."""
-    inicializar_duracion_proyectos()
-    for project_name in project_list:
-        precalcular_duracion_proyecto_unico(project_name)
-
+from app.views.gantt.project_duration_manager import obtener_duracion_proyecto
 
 def obtener_grafico_gantt_proyectos(project_list):
     registros = []
 
     for project_name in project_list:
-        # Tomar la duración previamente calculada
-        duracion_info = st.session_state.get("duracion_proyectos", {}).get(project_name)
+        duracion_info = obtener_duracion_proyecto(project_name)
         if duracion_info is None:
             continue
 
@@ -56,6 +24,7 @@ def obtener_grafico_gantt_proyectos(project_list):
         })
 
     if not registros:
+        st.warning("⚠️ No hay proyectos para mostrar en el Gantt.")
         return None
 
     df_proyectos = pd.DataFrame(registros)
@@ -66,11 +35,7 @@ def obtener_grafico_gantt_proyectos(project_list):
         x_end="Fin",
         y="Proyecto",
         color="Proyecto",
-        hover_data={
-            "Duración real": True,
-            "Inicio": True,
-            "Fin": True
-        }
+        hover_data={"Duración real": True, "Inicio": True, "Fin": True}
     )
 
     fig.update_yaxes(autorange="reversed")

@@ -1,5 +1,6 @@
 import streamlit as st
-from app.views.gantt.gantt_projects_controller import obtener_grafico_gantt_proyectos, precalcular_duraciones_proyectos
+from app.views.gantt.gantt_projects_controller import obtener_grafico_gantt_proyectos
+from app.views.gantt.project_duration_manager import precalcular_duraciones_proyectos
 from app.utils.date_utils import calcular_duracion_real, calcular_duracion_transcurrida
 
 
