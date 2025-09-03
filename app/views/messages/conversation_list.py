@@ -1,5 +1,6 @@
 import streamlit as st
-from app.views.messages.conversation_detail import render_conversation, render_new_conversation_form
+from app.views.messages.conversation_view import render_conversation
+from app.views.messages.new_conversation_view import render_new_conversation_form
 
 
 def render_new_conversation_button():
