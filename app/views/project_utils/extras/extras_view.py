@@ -1,6 +1,6 @@
 import streamlit as st
 from app.views.project_utils.extras.data_accessories import load_accessories
-from app.views.project_utils.extras.accessories_list import render_accessories_list
+from app.views.project_utils.extras.accessories_list_view import render_accessories_list
 from app.views.project_utils.extras.accessory_form import render_add_accessory_form
 from app.views.project_utils.extras.render_accessories_table import render_accessories_table
 
