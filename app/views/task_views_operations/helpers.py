@@ -6,6 +6,7 @@ from app.views.task_views_operations.modificar_tarea import modificar_tarea
 from app.views.task_views_operations.task_ui import mostrar_tareas_existentes
 from app.views.task_views_operations.reordenar_tareas import reordenar_tareas
 from app.views.task_views_operations.acciones_en_lote import acciones_en_lote
+from app.utils.actions_registry import ACTIONS
 #from app.views.gantt.view_hover import view_hover_main
 
 # =========================
@@ -32,15 +33,11 @@ def mostrar_mensaje_sin_responsables():
 
 
 def ejecutar_acciones_permitidas(tasks, project_name, responsibles_list, permissions):
-    """Ejecuta las funciones correspondientes según los permisos del usuario"""
-    if "crear_tarea" in permissions:
-        crear_nueva_tarea(project_name, responsibles_list)
-    if "modificar_tarea" in permissions:
-        modificar_tarea(tasks, project_name, responsibles_list)
-    if "reordenar_tareas" in permissions:
-        reordenar_tareas(tasks, project_name)
-    if "acciones_lote" in permissions:
-        acciones_en_lote(tasks, project_name, responsibles_list)
+    for grupo_cfg in ACTIONS.values():
+        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
+            if sub_key in permissions:
+                # Ejecuta la lambda con los tres parámetros
+                sub_cfg["action"](tasks, project_name, responsibles_list)
 
 
 # =========================
@@ -52,6 +49,4 @@ def gestionar_tareas(tasks, project_name, responsibles_list):
     with st.expander("📑 Gestionar Tareas", expanded=True):
         ejecutar_acciones_permitidas(tasks, project_name, responsibles_list, permissions)
 
-        # Todos los usuarios con permiso 'gestionar_tareas' pueden ver las tareas
-        if "ver_tareas" in permissions or "gestionar_tareas" in permissions:
-            mostrar_tareas_existentes(tasks, project_name)
+        
