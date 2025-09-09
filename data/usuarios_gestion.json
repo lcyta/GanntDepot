@@ -5,9 +5,15 @@
         "user_type": "Admin",
         "permissions": [
             "gestionar_tareas",
-            
+            "crear_tarea",
+            "modificar_tarea",
+            "reordenar_tareas",
             "acciones_lote",
-            "ver_tareas"
+            "ver_tareas",
+            "informacion_proyecto",
+            "detalles_proyecto",
+            "extras_proyecto",
+            "envio_proyecto"
         ],
         "username": "ale",
         "password": "ale"

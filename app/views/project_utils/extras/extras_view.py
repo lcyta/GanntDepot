@@ -5,8 +5,9 @@ from app.views.project_utils.extras.accessory_form import render_add_accessory_f
 from app.views.project_utils.extras.render_accessories_table import render_accessories_table
 
 def render_extras_view(project_name):
-    st.markdown("### 🎪 Accesorios y Extras del Proyecto")
-    accesorios = load_accessories(project_name)
-    render_add_accessory_form(project_name)  
-    render_accessories_table(project_name)
-    render_accessories_list(project_name, accesorios)
+    with st.expander("📦 Accesorios y Extras", expanded=False):
+        st.markdown("### 🎪 Accesorios y Extras del Proyecto")
+        accesorios = load_accessories(project_name)
+        render_add_accessory_form(project_name)  
+        render_accessories_table(project_name)
+        render_accessories_list(project_name, accesorios)

@@ -5,7 +5,7 @@ from app.views.project_utils.extras.data_shipment import delete_shipment, update
 # Función principal
 # =========================
 def render_shipment_list(project_name, shipments):
-    with st.expander("🚚 Detalles Envio ", expanded=True):
+    with st.expander("🚚 Detalles Envio ", expanded=False):
         """Muestra un selector de shipment dentro de un expander."""
         if not shipments:
             st.info("No hay shipments para este proyecto aún.")
@@ -27,7 +27,7 @@ def seleccionar_shipment(shipments):
 # Render formulario edición
 # =========================
 def render_edit_shipment_form(project_name, shipment):
-    with st.expander(f"🔧 Editar {shipment.get('Nombre', '')}", expanded=True):
+    with st.expander(f"🔧 Editar {shipment.get('Nombre', '')}", expanded=False):
         with st.form(f"form_editar_{shipment.get('Nombre', '')}"):
             nombre, responsable, fabrica, notas = render_shipment_fields(shipment)
             submit, eliminar = render_form_buttons(shipment)

@@ -1,20 +1,13 @@
 import streamlit as st
-from app.utils.actions_registry import ACTIONS  
+from app.utils.actions_registry import ACTIONS_TAREAS, ACTIONS_PROYECTO
 
 def view_users_permissions(user_key: str, section_key: str = ""):
-    """
-    Renderiza los checkboxes de permisos de usuario basados en ACTIONS.
-
-    Args:
-        user_key: nombre o ID del usuario (para keys únicas en Streamlit).
-        section_key: sufijo opcional (add/edit) para evitar duplicados.
-
-    Returns:
-        List[str]: lista de permisos seleccionados.
-    """
     permisos = []
 
-    for grupo_key, grupo_cfg in ACTIONS.items():
+    # Combinar ambos diccionarios
+    combined_actions = {**ACTIONS_TAREAS, **ACTIONS_PROYECTO}
+
+    for grupo_key, grupo_cfg in combined_actions.items():
         # Checkbox del grupo principal
         grupo_checked = st.checkbox(
             grupo_cfg["label"],
