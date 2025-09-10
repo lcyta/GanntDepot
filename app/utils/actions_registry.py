@@ -10,6 +10,13 @@ from app.views.project_utils.extras.render_project_shipment import render_projec
 
 import streamlit as st
 
+from app.views.project_views.project_table_view import mostrar_tabla_proyectos
+from app.views.project_views.project_detail_view import mostrar_detalles_proyecto
+from app.views.project_views.project_form_view import editar_eliminar_proyectos
+from app.views.project_views.project_image_uploader import render_project_image_uploader
+from app.views.responsibles_view.mostrar_tareas_view import mostrar_tareas_view
+from app.views.responsibles_view.mostrar_shipment_view import render_all_shipments
+
 # 🔹 Acciones relacionadas a tareas
 ACTIONS_TAREAS = {
     "gestionar_tareas": {
@@ -58,6 +65,34 @@ ACTIONS_PROYECTO = {
                 "label": "🚚 Información de Envío",
                 "action": render_project_shipment
             }
+        }
+    }
+}
+
+ACTIONS_PROJECT_LIST = {
+    "gestion_proyectos": {
+        "label": "📝 Gestión de Proyectos",
+        "subacciones": {
+            "tabla_proyectos": {
+                "label": "📊 Tabla de proyectos",
+                "action": lambda projects: mostrar_tabla_proyectos(projects)
+            },
+            "detalle_proyecto": {
+                "label": "📑 Detalles del proyecto",
+                "action": lambda projects: mostrar_detalles_proyecto(projects)
+            },
+            "editar_proyectos": {
+                "label": "✏️ Editar/Eliminar proyectos",
+                "action": lambda projects: editar_eliminar_proyectos(projects)
+            },
+            "tareas_proyectos": {
+                "label": "📂 Tareas de todos los proyectos",
+                "action": lambda _: mostrar_tareas_view()
+            },
+            "envios_proyectos": {
+                "label": "🚚 Envíos de todos los proyectos",
+                "action": lambda _: render_all_shipments()
+            },
         }
     }
 }

@@ -13,7 +13,13 @@
             "informacion_proyecto",
             "detalles_proyecto",
             "extras_proyecto",
-            "envio_proyecto"
+            "envio_proyecto",
+            "gestion_proyectos",
+            "tabla_proyectos",
+            "detalle_proyecto",
+            "editar_proyectos",
+            "tareas_proyectos",
+            "envios_proyectos"
         ],
         "username": "ale",
         "password": "ale"
