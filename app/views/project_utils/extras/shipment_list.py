@@ -5,7 +5,7 @@ from app.views.project_utils.extras.data_shipment import delete_shipment, update
 # Función principal
 # =========================
 def render_shipment_list(project_name, shipments):
-    with st.expander("🚚 Detalles Envio ", expanded=False):
+    with st.expander("🔧 Modificar Envio ", expanded=False):
         """Muestra un selector de shipment dentro de un expander."""
         if not shipments:
             st.info("No hay shipments para este proyecto aún.")

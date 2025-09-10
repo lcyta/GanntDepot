@@ -28,7 +28,11 @@ def editar_datos_usuario(selected_name, selected_user):
     )
     username = st.text_input("👤 Nombre de usuario (login)", value=selected_user["username"], key=f"edit_user_{selected_name}")
     password = st.text_input("🔑 Password", value=selected_user["password"], key=f"edit_pass_{selected_name}")
-    permissions = view_users_permissions(user_key=selected_name, section_key="edit")
+    permissions = view_users_permissions(
+        user_key=selected_name,
+        section_key="edit",
+        current_permissions=selected_user.get("permissions", [])
+    )
     return username, password, user_type, permissions
 
 def guardar_usuario_editado(usuarios, selected_name, username, password, user_type, permissions):
@@ -48,7 +52,7 @@ def guardar_usuario_editado(usuarios, selected_name, username, password, user_ty
 # ------------------------
 def view_users_edit():
     """Vista para editar usuarios existentes"""
-    with st.expander("✏️ Editar Usuario", expanded=False):
+    with st.expander("🔧 Editar Usuario", expanded=False):
         usuarios = cargar_usuarios()
         if not usuarios:
             return
