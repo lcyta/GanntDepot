@@ -96,3 +96,8 @@ ACTIONS_PROJECT_LIST = {
         }
     }
 }
+ACTIONS_PROJECT_CREATION = {
+    "crear_proyecto": {
+        "label": "Crear proyecto",
+    }
+}

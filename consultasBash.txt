@@ -67,3 +67,8 @@ Get-ChildItem -Path .\app\ -Recurse -Filter *task*.py
 duplicado
 
 pylint --disable=all --enable=duplicate-code .
+
+
+///////////////////////////////////
+
+python3 -m streamlit run main.py

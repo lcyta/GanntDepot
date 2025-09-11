@@ -1,12 +1,12 @@
 import streamlit as st
-from app.utils.actions_registry import ACTIONS_TAREAS, ACTIONS_PROYECTO , ACTIONS_PROJECT_LIST
+from app.utils.actions_registry import ACTIONS_TAREAS, ACTIONS_PROYECTO , ACTIONS_PROJECT_LIST, ACTIONS_PROJECT_CREATION
 
 def view_users_permissions(user_key: str, section_key: str = "", current_permissions=None):
     if current_permissions is None:
         current_permissions = []  # evita NameError
 
     permisos = []
-    combined_actions = {**ACTIONS_TAREAS, **ACTIONS_PROYECTO, **ACTIONS_PROJECT_LIST}
+    combined_actions = {**ACTIONS_TAREAS, **ACTIONS_PROYECTO, **ACTIONS_PROJECT_LIST, **ACTIONS_PROJECT_CREATION}
 
     for grupo_key, grupo_cfg in combined_actions.items():
         # Checkbox del grupo principal SOLO en editar
