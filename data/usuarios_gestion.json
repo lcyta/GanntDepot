@@ -19,7 +19,13 @@
             "detalle_proyecto",
             "editar_proyectos",
             "tareas_proyectos",
-            "envios_proyectos"
+            "envios_proyectos",
+            "crear_proyecto",
+            "gestionar_responsables",
+            "alta_responsable",
+            "lista_responsables",
+            "editar_responsable",
+            "tareas_responsables"
         ],
         "username": "ale",
         "password": "ale"

@@ -17,6 +17,11 @@ from app.views.project_views.project_image_uploader import render_project_image_
 from app.views.responsibles_view.mostrar_tareas_view import mostrar_tareas_view
 from app.views.responsibles_view.mostrar_shipment_view import render_all_shipments
 
+from app.views.responsibles_view.responsibles_form import mostrar_formulario_alta
+from app.views.responsibles_view.responsibles_list import mostrar_lista_responsables
+from app.views.responsibles_view.editar_responsables_view import editar_responsable_view
+from app.views.responsibles_view.mostrar_tareas_view_list import mostrar_tareas_view_list
+
 # 🔹 Acciones relacionadas a tareas
 ACTIONS_TAREAS = {
     "gestionar_tareas": {
@@ -99,5 +104,28 @@ ACTIONS_PROJECT_LIST = {
 ACTIONS_PROJECT_CREATION = {
     "crear_proyecto": {
         "label": "Crear proyecto",
+    }
+}
+ACTIONS_RESPONSIBLES = {
+    "gestionar_responsables": {
+        "label": "👥 Gestionar Responsables",
+        "subacciones": {
+            "alta_responsable": {
+                "label": "➕ Crear responsable",
+                "action": lambda: mostrar_formulario_alta()
+            },
+            "lista_responsables": {
+                "label": "📋 Lista de responsables",
+                "action": lambda: mostrar_lista_responsables()
+            },
+            "editar_responsable": {
+                "label": "✏️ Editar responsable",
+                "action": lambda: editar_responsable_view()
+            },
+            "tareas_responsables": {
+                "label": "📑 Tareas por responsable",
+                "action": lambda: mostrar_tareas_view_list()
+            },
+        }
     }
 }

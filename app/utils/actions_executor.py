@@ -25,3 +25,12 @@ def ejecutar_acciones_project_list(projects, permissions, actions):
             if sub_key in permissions and "action" in sub_cfg:
                 sub_cfg["action"](projects)
 
+def ejecutar_acciones_responsables(permissions, actions):
+    """
+    Ejecuta las acciones relacionadas a responsables según los permisos
+    """
+    for grupo_cfg in actions.values():
+        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
+            if sub_key in permissions and "action" in sub_cfg:
+                sub_cfg["action"]()
+

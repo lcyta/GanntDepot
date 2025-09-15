@@ -1,12 +1,10 @@
 import streamlit as st
-from app.views.responsibles_view.responsibles_form import mostrar_formulario_alta
-from app.views.responsibles_view.responsibles_list import mostrar_lista_responsables
-from app.views.responsibles_view.editar_responsables_view import editar_responsable_view
-from app.views.responsibles_view.mostrar_tareas_view_list import mostrar_tareas_view_list
+from app.utils.actions_registry import ACTIONS_RESPONSIBLES
+from app.utils.actions_executor import ejecutar_acciones_responsables
 
 def view_responsibles():
-    mostrar_formulario_alta()
-    mostrar_lista_responsables()
-    editar_responsable_view()
-    mostrar_tareas_view_list()
+    permissions = st.session_state.get("permissions", [])
+    
+    with st.expander("👥 Gestionar Responsables", expanded=True):
+        ejecutar_acciones_responsables(permissions, ACTIONS_RESPONSIBLES)
 
