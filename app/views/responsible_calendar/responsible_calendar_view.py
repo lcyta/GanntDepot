@@ -1,9 +1,8 @@
 import streamlit as st 
 from app.core.responsibles_manager import load_responsibles
 from app.core.calendar.feriado_service import get_feriados_for_owner
-from app.views.responsible_calendar.feriados_table import mostrar_feriados_responsable
-from app.views.responsible_calendar.feriado_individual import manejar_feriado_individual
-from app.views.responsible_calendar.manejar_rango_feriados import manejar_rango_feriados
+from app.utils.actions_registry import ACTIONS_RESPONSIBLE_CALENDAR
+from app.utils.actions_executor import ejecutar_acciones_calendar
 
 def view_responsible_calendar():
     with st.expander("📅 Calendario de feriados por responsable", expanded=False):
@@ -19,6 +18,9 @@ def view_responsible_calendar():
             return
 
         feriados = get_feriados_for_owner(selected_name)
-        mostrar_feriados_responsable(selected_name, feriados)
-        manejar_feriado_individual(selected_name, feriados)
-        manejar_rango_feriados(selected_name)
+
+        # ⚡ Obtener permisos desde session_state
+        permissions = st.session_state.get("permissions", [])
+
+        # Ejecutar acciones según permisos
+        ejecutar_acciones_calendar(selected_name, feriados, permissions, ACTIONS_RESPONSIBLE_CALENDAR)

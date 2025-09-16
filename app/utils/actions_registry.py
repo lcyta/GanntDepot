@@ -22,6 +22,10 @@ from app.views.responsibles_view.responsibles_list import mostrar_lista_responsa
 from app.views.responsibles_view.editar_responsables_view import editar_responsable_view
 from app.views.responsibles_view.mostrar_tareas_view_list import mostrar_tareas_view_list
 
+from app.views.responsible_calendar.feriados_table import mostrar_feriados_responsable
+from app.views.responsible_calendar.feriado_individual import manejar_feriado_individual
+from app.views.responsible_calendar.manejar_rango_feriados import manejar_rango_feriados
+
 # 🔹 Acciones relacionadas a tareas
 ACTIONS_TAREAS = {
     "gestionar_tareas": {
@@ -125,6 +129,25 @@ ACTIONS_RESPONSIBLES = {
             "tareas_responsables": {
                 "label": "📑 Tareas por responsable",
                 "action": lambda: mostrar_tareas_view_list()
+            },
+        }
+    }
+}
+ACTIONS_RESPONSIBLE_CALENDAR = {
+    "gestionar_calendario": {
+        "label": "📅 Gestionar calendario",
+        "subacciones": {
+            "ver_feriados": {
+                "label": "📑 Ver feriados",
+                "action": lambda selected_name, feriados: mostrar_feriados_responsable(selected_name, feriados)
+            },
+            "feriado_individual": {
+                "label": "✏️ Manejar feriado individual",
+                "action": lambda selected_name, feriados: manejar_feriado_individual(selected_name, feriados)
+            },
+            "rango_feriados": {
+                "label": "📆 Manejar rango de feriados",
+                "action": lambda selected_name: manejar_rango_feriados(selected_name)
             },
         }
     }

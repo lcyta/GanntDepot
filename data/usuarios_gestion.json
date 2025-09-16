@@ -25,7 +25,11 @@
             "alta_responsable",
             "lista_responsables",
             "editar_responsable",
-            "tareas_responsables"
+            "tareas_responsables",
+            "gestionar_calendario",
+            "ver_feriados",
+            "feriado_individual",
+            "rango_feriados"
         ],
         "username": "ale",
         "password": "ale"
