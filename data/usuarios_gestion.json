@@ -27,9 +27,11 @@
             "editar_responsable",
             "tareas_responsables",
             "gestionar_calendario",
-            "ver_feriados",
+            "tabla_feriados",
             "feriado_individual",
-            "rango_feriados"
+            "rango_feriados",
+            "agregar_pais",
+            "eliminar_pais"
         ],
         "username": "ale",
         "password": "ale"

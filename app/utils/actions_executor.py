@@ -47,3 +47,12 @@ def ejecutar_acciones_calendar(selected_name, feriados, permissions, actions):
                 else:
                     sub_cfg["action"](selected_name, feriados)
 
+def ejecutar_acciones_calendar_permitidas(pais, permissions, actions):
+    for grupo_cfg in actions.values():
+        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
+            if sub_key in permissions and "action" in sub_cfg:
+                # Dependiendo de la acción, pasamos parámetros
+                if sub_key in ["tabla_feriados", "feriado_individual", "rango_feriados", "eliminar_pais"]:
+                    sub_cfg["action"](pais)
+                else:
+                    sub_cfg["action"]()

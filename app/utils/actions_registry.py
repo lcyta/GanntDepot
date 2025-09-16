@@ -26,6 +26,12 @@ from app.views.responsible_calendar.feriados_table import mostrar_feriados_respo
 from app.views.responsible_calendar.feriado_individual import manejar_feriado_individual
 from app.views.responsible_calendar.manejar_rango_feriados import manejar_rango_feriados
 
+from app.views.calendar.tabla_feriados import mostrar_tabla_feriados
+from app.views.calendar.feriado_individual import gestionar_feriado_individual
+from app.views.calendar.feriado_rango import gestionar_rango_feriados
+from app.views.calendar.agregar_pais_calendario import vista_agregar_pais
+from app.views.calendar.vista_eliminar_pais import vista_eliminar_pais
+
 # 🔹 Acciones relacionadas a tareas
 ACTIONS_TAREAS = {
     "gestionar_tareas": {
@@ -149,6 +155,33 @@ ACTIONS_RESPONSIBLE_CALENDAR = {
                 "label": "📆 Manejar rango de feriados",
                 "action": lambda selected_name: manejar_rango_feriados(selected_name)
             },
+        }
+    }
+}
+ACTIONS_CALENDAR = {
+    "gestionar_calendario": {
+        "label": "📅 Gestionar calendario",
+        "subacciones": {
+            "tabla_feriados": {
+                "label": "📑 Tabla de feriados",
+                "action": lambda pais: mostrar_tabla_feriados(pais)
+            },
+            "feriado_individual": {
+                "label": "✏️ Manejar feriado individual",
+                "action": lambda pais: gestionar_feriado_individual(pais)
+            },
+            "rango_feriados": {
+                "label": "📆 Manejar rango de feriados",
+                "action": lambda pais: gestionar_rango_feriados(pais)
+            },
+            "agregar_pais": {
+                "label": "➕ Agregar país",
+                "action": vista_agregar_pais
+            },
+            "eliminar_pais": {
+                "label": "❌ Eliminar país",
+                "action": lambda pais: vista_eliminar_pais(pais)
+            }
         }
     }
 }
