@@ -185,3 +185,9 @@ ACTIONS_CALENDAR = {
         }
     }
 }
+
+ACTIONS_USERS_CREATION = {
+    "crear_usuario": {
+        "label": "Usuarios",
+    }
+}

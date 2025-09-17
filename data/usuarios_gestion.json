@@ -31,7 +31,8 @@
             "feriado_individual",
             "rango_feriados",
             "agregar_pais",
-            "eliminar_pais"
+            "eliminar_pais",
+            "crear_usuario"
         ],
         "username": "ale",
         "password": "ale"
