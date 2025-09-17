@@ -3,12 +3,14 @@ from app.views.task_views_operations.modificar_tarea import modificar_tarea
 from app.views.task_views_operations.reordenar_tareas import reordenar_tareas
 from app.views.task_views_operations.acciones_en_lote import acciones_en_lote
 from app.views.task_views_operations.task_ui import mostrar_tareas_existentes
+from app.views.gantt.view_hover import view_hover_main
 
 from app.views.project_utils.project_info_view import render_project_info
 from app.views.project_utils.extras.extras_view import render_extras_view
 from app.views.project_utils.extras.render_project_shipment import render_project_shipment
 
 import streamlit as st
+import pandas as pd
 
 from app.views.project_views.project_table_view import mostrar_tabla_proyectos
 from app.views.project_views.project_detail_view import mostrar_detalles_proyecto

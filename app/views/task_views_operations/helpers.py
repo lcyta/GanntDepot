@@ -8,7 +8,7 @@ from app.views.task_views_operations.reordenar_tareas import reordenar_tareas
 from app.views.task_views_operations.acciones_en_lote import acciones_en_lote
 from app.utils.actions_registry import ACTIONS_TAREAS
 from app.utils.actions_executor import ejecutar_acciones_permitidas
-#from app.views.gantt.view_hover import view_hover_main
+from app.views.gantt.view_hover import view_hover_main
 
 # =========================
 # Funciones auxiliares
@@ -48,5 +48,6 @@ def gestionar_tareas(tasks, project_name, responsibles_list):
     permissions = st.session_state.get("permissions", [])
     with st.expander("📑 Gestionar Tareas", expanded=True):
         ejecutar_acciones_permitidas(tasks, project_name, responsibles_list, permissions, ACTIONS_TAREAS)
+    view_hover_main(tasks , project_name)
 
         

@@ -6,6 +6,7 @@
         "permissions": [
             "gestionar_tareas",
             "crear_tarea",
+            "analisis",
             "modificar_tarea",
             "reordenar_tareas",
             "acciones_lote",
