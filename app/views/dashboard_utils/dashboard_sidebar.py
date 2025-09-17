@@ -1,18 +1,9 @@
 import streamlit as st
-from app.utils.actions_registry import ACTIONS_PROJECT_CREATION
-import json
+
 
 def sidebar_project_management(controller, projects):
-    # Obtener el username logueado
-    username = st.session_state.get("username")
-    
-    # Cargar usuarios desde archivo (o desde session_state si ya lo cargaste antes)
-    with open("data/usuarios_gestion.json", "r") as f:
-        usuarios = json.load(f)
-    
-    # Obtener permisos del usuario logueado
-    usuario = next((u for u in usuarios if u["username"] == username), None)
-    permisos = usuario.get("permissions", []) if usuario else []
+    # Obtener permisos desde session_state
+    permisos = st.session_state.get("permissions", [])
 
     with st.sidebar.expander("📝 Gestor de proyectos", expanded=True):
 
