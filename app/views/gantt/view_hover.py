@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from app.views.task_views_operations.mostrar_tareas import preparar_dataframe_tareas
-from app.views.gantt.gantt_hover import view_hover  
 from app.views.gantt.curva.curva_rendimiento import view_curva_rendimiento
 from app.views.gantt.gantt_correlacion import view_correlacion
 from app.views.gantt.ranking_problemas import view_ranking_problemas
@@ -26,7 +25,7 @@ def view_hover_main(tasks, project_name=None):
             if df_tareas is not None and not df_tareas.empty:
                 view_curva_rendimiento(df_tareas)
 
-        '''
+        
         with st.expander("🔄 Correlacion"):
             if df_tareas is not None and not df_tareas.empty:
                 view_correlacion(df_tareas)
@@ -34,4 +33,4 @@ def view_hover_main(tasks, project_name=None):
         with st.expander("❗ Ranking de tareas más problemáticas"):
             if df_tareas is not None and not df_tareas.empty:
                 view_ranking_problemas(df_tareas)
-                '''
+                
