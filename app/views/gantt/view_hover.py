@@ -25,11 +25,11 @@ def view_hover_main(tasks, project_name=None):
             if df_tareas is not None and not df_tareas.empty:
                 view_curva_rendimiento(df_tareas)
 
-        
+        '''
         with st.expander("🔄 Correlacion"):
             if df_tareas is not None and not df_tareas.empty:
                 view_correlacion(df_tareas)
-
+'''
         with st.expander("❗ Ranking de tareas más problemáticas"):
             if df_tareas is not None and not df_tareas.empty:
                 view_ranking_problemas(df_tareas)
