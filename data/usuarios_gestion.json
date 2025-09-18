@@ -6,7 +6,6 @@
         "permissions": [
             "gestionar_tareas",
             "crear_tarea",
-            "analisis",
             "modificar_tarea",
             "reordenar_tareas",
             "acciones_lote",
@@ -33,7 +32,8 @@
             "rango_feriados",
             "agregar_pais",
             "eliminar_pais",
-            "crear_usuario"
+            "crear_usuario",
+            "analisis"
         ],
         "username": "ale",
         "password": "ale"

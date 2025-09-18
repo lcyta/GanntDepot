@@ -48,6 +48,7 @@ def gestionar_tareas(tasks, project_name, responsibles_list):
     permissions = st.session_state.get("permissions", [])
     with st.expander("📑 Gestionar Tareas", expanded=True):
         ejecutar_acciones_permitidas(tasks, project_name, responsibles_list, permissions, ACTIONS_TAREAS)
-    view_hover_main(tasks , project_name)
+    if "analisis" in permissions:
+        view_hover_main(tasks , project_name)
 
         

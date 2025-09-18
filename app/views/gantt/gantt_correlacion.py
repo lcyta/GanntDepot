@@ -2,19 +2,21 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from app.utils.preparar_dataframe_tareas_analisis import preparar_dataframe_tareas
 
 def view_correlacion(df_tareas):
     st.subheader("🔄 Análisis de Correlación entre Tareas")
 
-    # Codificar variables categóricas para análisis numérico
-    df_encoded = df_tareas.copy()
-    df_encoded["Estado"] = df_encoded["Estado"].astype("category").cat.codes
-    df_encoded["Tipo"] = df_encoded["Tipo"].astype("category").cat.codes
-    df_encoded["Responsable"] = df_encoded["Responsable"].astype("category").cat.codes
-    df_encoded["Riesgo"] = df_encoded["Riesgo"].astype("category").cat.codes
-    df_encoded["Causa"] = df_encoded["Causa"].astype("category").cat.codes
+    # 🔹 Prepara el DataFrame para asegurarnos que todas las columnas existan
+    df_tareas = preparar_dataframe_tareas(df_tareas)
 
-    # Selección de columnas relevantes
+    # 🔹 Codificar variables categóricas para análisis numérico
+    df_encoded = df_tareas.copy()
+    for col in ["Estado", "Tipo", "Responsable", "Riesgo", "Causa"]:
+        # Esto asegura que no lance error aunque la columna esté vacía
+        df_encoded[col] = df_encoded[col].astype("category").cat.codes
+
+    # 🔹 Selección de columnas relevantes
     columnas_relevantes = [
         "Duración Estimada",
         "Duración Real",
@@ -26,11 +28,15 @@ def view_correlacion(df_tareas):
         "Causa"
     ]
 
+    # 🔹 Calcular correlación
     corr = df_encoded[columnas_relevantes].corr()
 
-    # Mostrar matriz de correlación con seaborn
+    # 🔹 Mostrar matriz de correlación con seaborn
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
     st.pyplot(fig)
 
-    st.markdown("🧠 Observá las variables que tienen alta correlación (positiva o negativa) para detectar dependencias o patrones ocultos.")
+    st.markdown(
+        "🧠 Observá las variables que tienen alta correlación (positiva o negativa) "
+        "para detectar dependencias o patrones ocultos."
+    )

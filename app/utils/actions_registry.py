@@ -190,6 +190,12 @@ ACTIONS_CALENDAR = {
 
 ACTIONS_USERS_CREATION = {
     "crear_usuario": {
-        "label": "Usuarios",
+        "label": "💻 Usuarios",
+    }
+}
+
+ACTIONS_ANALISIS = {
+    "analisis": {
+        "label": "💡 Analisis",
     }
 }
