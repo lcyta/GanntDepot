@@ -54,7 +54,16 @@
         "name": "Tyler",
         "factory": "Cheer",
         "user_type": "Admin",
-        "permissions": [],
+        "permissions": [
+            "gestionar_tareas",
+            "informacion_proyecto",
+            "gestion_proyectos",
+            "gestionar_responsables",
+            "gestionar_calendario",
+            "tabla_feriados",
+            "feriado_individual",
+            "analisis"
+        ],
         "username": "ty",
         "password": "123"
     }
