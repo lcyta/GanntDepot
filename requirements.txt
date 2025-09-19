@@ -8,3 +8,4 @@ pytest
 pydeps
 streamlit-cookies-manager
 streamlit-option-menu
+radon

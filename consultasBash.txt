@@ -72,3 +72,20 @@ pylint --disable=all --enable=duplicate-code .
 ///////////////////////////////////
 
 python3 -m streamlit run main.py
+
+
+
+
+////////////////////Codespace/////////////
+
+lista las 20 con peor puntaje en radon 
+
+radon cc app/ -s -a | sort -t '(' -k2 -nr | head -n 20
+
+
+            /////////  contador scritps ///////
+            find app/ -name "*.py" | wc -l
+
+    ////////////////   contador lineas //////////////////
+
+    find app/ -name "*.py" -exec wc -l {} + | sort -nr | head -n 20
