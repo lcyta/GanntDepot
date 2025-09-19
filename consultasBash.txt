@@ -89,3 +89,13 @@ radon cc app/ -s -a | sort -t '(' -k2 -nr | head -n 20
     ////////////////   contador lineas //////////////////
 
     find app/ -name "*.py" -exec wc -l {} + | sort -nr | head -n 20
+
+
+    ///////////// para traer todas las funciones //////////
+
+    grep -RnP '^def\s+\w+' . --include="*.py" \
+  | sed -E 's|(.*):[0-9]+:def ([a-zA-Z0-9_]+).*|\2 \1|' \
+  | sort -k1,1
+
+    /////////////////// tree /////////////
+    tree -L 5 -I "__pycache__|*.pyc|.git|.venv"
