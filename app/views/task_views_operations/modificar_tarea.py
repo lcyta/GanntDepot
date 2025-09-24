@@ -11,7 +11,7 @@ def modificar_tarea(tasks, project_name, responsibles_list):
         if selected_task is None:
             return
         
-        modificar_clicked, eliminar_clicked, new_title, new_owner, new_days, new_status = formulario_modificacion(
+        modificar_clicked, eliminar_clicked, new_title, new_owner, new_days, new_status, new_tipo, new_riesgo = formulario_modificacion(
             selected_task, responsibles_list, selected_index
         )
 
@@ -20,6 +20,8 @@ def modificar_tarea(tasks, project_name, responsibles_list):
             selected_task.owner = new_owner
             selected_task.days = new_days
             selected_task.estado = new_status
+            selected_task.tipo = new_tipo
+            selected_task.riesgo = new_riesgo
             updated_tasks = adjust_task_schedule(tasks)
             save_all_tasks(project_name, updated_tasks)
 
