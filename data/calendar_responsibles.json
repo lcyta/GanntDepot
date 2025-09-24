@@ -22,6 +22,11 @@
   },
   "Alejandro Schmeil": {
     "base": "Argentina",
-    "extras": []
+    "extras": [
+      [
+        "2025-09-22",
+        "hoy"
+      ]
+    ]
   }
 }

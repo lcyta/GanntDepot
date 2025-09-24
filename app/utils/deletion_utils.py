@@ -1,23 +1,18 @@
 import streamlit as st
-import pandas as pd
-from app.core.data_manager import get_file_path
-
+from app.core.task import task_repository
 
 def mark_task_for_deletion(index):
     st.session_state.task_to_delete = index
     st.session_state.confirm_delete = True
 
-
 def cancel_deletion():
     st.session_state.task_to_delete = None
     st.session_state.confirm_delete = False
 
-
-def delete_task_by_index(project_name, index):
-    file_path = get_file_path(project_name)
-    df = pd.read_csv(file_path)
-    df = df.drop(index).reset_index(drop=True)
-    df.to_csv(file_path, index=False)
+def delete_task_by_index_ui(project_name: str, idx: int):
+    """Wrapper Streamlit para eliminar tarea y mostrar feedback."""
+    task_repository.delete_task_by_index_backend(project_name, idx)
     st.session_state.task_to_delete = None
     st.session_state.confirm_delete = False
     st.success("✅ Tarea eliminada correctamente.")
+    
