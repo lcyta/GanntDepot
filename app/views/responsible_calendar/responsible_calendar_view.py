@@ -1,4 +1,5 @@
-import streamlit as st 
+import streamlit as st
+import pandas as pd
 from app.core.responsibles_manager import load_responsibles
 from app.core.calendar.feriado_service import get_feriados_for_owner
 from app.utils.actions_registry import ACTIONS_RESPONSIBLE_CALENDAR
@@ -18,6 +19,16 @@ def view_responsible_calendar():
             return
 
         feriados = get_feriados_for_owner(selected_name)
+
+        # 🔎 Mostrar feriados
+        if feriados:
+            st.subheader("📌 Lista de feriados")
+            df = pd.DataFrame(feriados, columns=["Fecha", "Descripción"])
+            # Opcional: formatear la fecha
+            df["Fecha"] = df["Fecha"].apply(lambda d: d.strftime("%d/%m/%Y"))
+            st.table(df)
+        else:
+            st.info("No hay feriados cargados para este responsable.")
 
         # ⚡ Obtener permisos desde session_state
         permissions = st.session_state.get("permissions", [])
