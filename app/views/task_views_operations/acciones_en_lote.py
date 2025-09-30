@@ -1,7 +1,5 @@
 import streamlit as st
 from app.views.task_views_operations.task_selection import seleccionar_tareas
-from app.views.task_views_operations.acciones_helpers import reasignar_accion, eliminar_accion
-from app.views.task_views_operations.batch_actions_ui import render_checkboxes_modificacion
 from app.views.task_views_operations.batch_actions_handlers import manejar_botones_acciones
 
 def acciones_en_lote(tasks, project_name, responsibles_list):
@@ -18,28 +16,27 @@ def acciones_en_lote(tasks, project_name, responsibles_list):
             return
 
         st.markdown("### ✨ Campos a modificar")
-        # 👇 Ahora renderizamos también título, tipo y riesgo
         cambios = {}
 
-        # Reasignar responsable
+        # 👤 Cambiar responsable
         if st.checkbox("👤 Cambiar responsable"):
             cambios["owner"] = st.selectbox("Nuevo responsable", options=responsibles_list)
 
-        # Cambiar estado
+        # ⏳ Cambiar estado
         if st.checkbox("⏳ Cambiar estado"):
             cambios["estado"] = st.selectbox("Nuevo estado", options=estados_list)
 
-        # Cambiar riesgo
+        # ⚠️ Cambiar riesgo
         if st.checkbox("⚠️ Cambiar riesgo"):
             cambios["riesgo"] = st.selectbox("Nuevo riesgo", options=riesgos_list)
 
-        # Cambiar tipo de tarea
+        # 📝 Cambiar tipo de tarea
         if st.checkbox("📝 Cambiar tipo"):
             cambios["tipo"] = st.text_input("Nuevo tipo de tarea")
 
-        # Cambiar título
+        # 📌 Cambiar título
         if st.checkbox("📌 Cambiar título"):
             cambios["title"] = st.text_input("Nuevo título de tarea")
 
         # ✅ Handler para aplicar cambios o eliminar
-        manejar_botones_acciones(selected, cambios, tasks)
+        manejar_botones_acciones(selected, cambios, tasks, project_name)
