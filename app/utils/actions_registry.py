@@ -110,6 +110,10 @@ ACTIONS_PROJECT_LIST = {
                 "label": "🚚 Envíos de todos los proyectos",
                 "action": lambda _: render_all_shipments()
             },
+            "tareas_responsables": {
+                "label": "📑 Tareas por responsable",
+                "action": lambda _: mostrar_tareas_view_list()
+            }
         }
     }
 }
@@ -133,10 +137,6 @@ ACTIONS_RESPONSIBLES = {
             "editar_responsable": {
                 "label": "✏️ Editar responsable",
                 "action": lambda: editar_responsable_view()
-            },
-            "tareas_responsables": {
-                "label": "📑 Tareas por responsable",
-                "action": lambda: mostrar_tareas_view_list()
             },
         }
     }
