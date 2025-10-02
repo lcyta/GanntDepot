@@ -15,7 +15,6 @@ def handle_add_responsible(name: str, location: str, factory: str):
     if name and location and factory:
         save_responsible(name, location, factory)
         st.success(f"Responsable '{name}' agregado.")
-        st.rerun()
     else:
         st.warning("Todos los campos son obligatorios.")
 
