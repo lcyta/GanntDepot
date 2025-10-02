@@ -16,6 +16,7 @@ def cargar_responsables():
     return df
 
 def seleccionar_responsable(responsibles_df):
+    """Usamos la función original sin pasar key."""
     selected = seleccionar_responsable_ui(responsibles_df)
     if not selected:
         return None
@@ -43,7 +44,6 @@ def guardar_usuario(usuario_data):
     usuarios.append(usuario_data)
     save_usuarios(usuarios)
     st.success(f"Usuario '{usuario_data['username']}' agregado correctamente.")
-    st.rerun()
     return True
 
 # ------------------------
@@ -51,6 +51,12 @@ def guardar_usuario(usuario_data):
 # ------------------------
 def view_users_add():
     """Vista para agregar usuarios nuevos"""
+
+    # 🔹 Inicializamos contador en session_state
+    if "user_form_counter" not in st.session_state:
+        st.session_state.user_form_counter = 0
+    c = st.session_state.user_form_counter  # alias corto
+
     with st.expander("➕ Agregar Usuarios", expanded=False):
         responsibles_df = cargar_responsables()
         if responsibles_df is None:
@@ -60,17 +66,23 @@ def view_users_add():
         if not selected:
             return
 
-        # Inputs de usuario
+        # Inputs de usuario con keys únicas por contador
+        user_types_options = [""] + ["Admin", "Editor", "Solo lectura"]  # 🔹 agregado valor vacío al inicio
         user_type = st.selectbox(
             "🔐 Tipo de usuario",
-            ["Admin", "Editor", "Solo lectura"],
-            key=f"type_{selected['name']}_add"
+            user_types_options,
+            index=0,
+            key=f"type_{c}"
         )
-        username = st.text_input("👤 Nombre de usuario (login)", key=f"user_{selected['name']}_add")
-        password = st.text_input("🔑 Password", key=f"pass_{selected['name']}_add")
+
+        username = st.text_input("👤 Nombre de usuario (login)", key=f"user_{c}")
+        password = st.text_input("🔑 Password", key=f"pass_{c}")
 
         usuario_data = armar_datos_usuario(selected, user_type, username, password)
 
-        # Botón Guardar
-        if st.button("💾 Guardar cambios", key=f"save_add_{selected['name']}"):
-            guardar_usuario(usuario_data)
+        # Botón Guardar con key única
+        if st.button("💾 Guardar cambios", key=f"save_add_{c}"):
+            if guardar_usuario(usuario_data):
+                # 🔹 Incrementamos el contador y forzamos rerun para limpiar formulario
+                st.session_state.user_form_counter += 1
+                st.rerun()

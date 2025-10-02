@@ -66,5 +66,45 @@
         ],
         "username": "ty",
         "password": "123"
+    },
+    {
+        "name": "asdfasdfa",
+        "factory": "sdfasdfasdf",
+        "user_type": "Admin",
+        "permissions": [],
+        "username": "asdfdsa",
+        "password": "asdfdsa"
+    },
+    {
+        "name": "fdsasdfqwerzxcv",
+        "factory": "Hofner",
+        "user_type": "Editor",
+        "permissions": [],
+        "username": "asd",
+        "password": "asd"
+    },
+    {
+        "name": "LUcas",
+        "factory": "hoffner",
+        "user_type": "Admin",
+        "permissions": [],
+        "username": "asd",
+        "password": "123"
+    },
+    {
+        "name": "treqwgfds",
+        "factory": "gfdsgfds",
+        "user_type": "Solo lectura",
+        "permissions": [],
+        "username": "qwe",
+        "password": "123"
+    },
+    {
+        "name": "ffdsasdf",
+        "factory": "tgbtgbtgb",
+        "user_type": "Editor",
+        "permissions": [],
+        "username": "aaaa",
+        "password": "aaaa"
     }
 ]
