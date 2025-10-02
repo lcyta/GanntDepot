@@ -1,7 +1,4 @@
 id,title,owner,start,end,days,estado,riesgo,tipo
-91117d4c-736c-49b8-97f1-d2f678f6cfe3,Riverasdfasdf,Alejandro Schmeil,2025-10-02,2025-10-02,1,En curso,Bajo,boca
-1510fd11-df18-43e7-ba55-b11ed7a315f3,RiuverBocaRiver,Alejandro Schmeil,2025-10-03,2025-10-03,1,En curso,Bajo,kkkkkkk
-2566e3a8-60c7-4a88-9229-1dae4da62298,sanlorenzoAlmagro,Alejandro Schmeil,2025-10-06,2026-05-04,150,En curso,Bajo,sdsadf
-81f885bf-188e-4b3a-87bf-56fcd5296f35,fdsa,Fabian,2025-10-02,2025-10-15,10,En curso,Bajo,fffffff
-2769ef11-c4f1-47f7-95fc-9f8aafdd2596,arreglar maquina,Fabian,2025-10-16,2025-10-16,1,En curso,Bajo,Mantenimiento
-d231d3d7-58a9-4eeb-85ae-5e36fde7f8b7,fadsdf,Fabian,2025-10-17,2025-10-17,1,En curso,Alto,fasdfasdf
+91117d4c-736c-49b8-97f1-d2f678f6cfe3,Riverasdfasdf,Alejandro Schmeil,2025-10-03,2025-10-03,1,En curso,Bajo,boca
+1510fd11-df18-43e7-ba55-b11ed7a315f3,RiuverBocaRiver,Alejandro Schmeil,2025-10-06,2025-10-06,1,En curso,Bajo,kkkkkkk
+2566e3a8-60c7-4a88-9229-1dae4da62298,sanlorenzoAlmagro,Alejandro Schmeil,2025-10-07,2026-05-05,150,En curso,Bajo,sdsadf
