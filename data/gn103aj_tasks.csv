@@ -1,4 +1,4 @@
 id,title,owner,start,end,days,estado,riesgo,tipo
-91117d4c-736c-49b8-97f1-d2f678f6cfe3,Riverasdfasdf,Alejandro Schmeil,2025-10-03,2025-10-03,1,En curso,Bajo,boca
-1510fd11-df18-43e7-ba55-b11ed7a315f3,RiuverBocaRiver,Alejandro Schmeil,2025-10-06,2025-10-06,1,En curso,Bajo,kkkkkkk
-2566e3a8-60c7-4a88-9229-1dae4da62298,sanlorenzoAlmagro,Alejandro Schmeil,2025-10-07,2026-05-05,150,En curso,Bajo,sdsadf
+91117d4c-736c-49b8-97f1-d2f678f6cfe3,Riverasdfasdf,Tyler,2025-10-03,2025-10-03,1,Completada,Alto,desarrolloSoftware
+1510fd11-df18-43e7-ba55-b11ed7a315f3,RiuverBocaRiver,Tyler,2025-10-06,2025-10-06,1,Completada,Alto,desarrolloSoftware
+2566e3a8-60c7-4a88-9229-1dae4da62298,sanlorenzoAlmagro,Tyler,2025-10-07,2026-05-04,150,Completada,Alto,desarrolloSoftware
