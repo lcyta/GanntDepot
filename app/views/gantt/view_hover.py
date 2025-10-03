@@ -6,31 +6,37 @@ from app.views.gantt.gantt_correlacion import view_correlacion
 from app.views.gantt.ranking_problemas import view_ranking_problemas
 from app.views.gantt.desviacion_por_responsable import view_desviacion_por_responsable
 
+# ───── Función principal ─────
 def view_hover_main(tasks, project_name=None):
-    # 🔹 Convertir lista de objetos Task a DataFrame con tus columnas correctas
+    """
+    Muestra análisis y gráficos de tareas usando varios sub-expanders.
+    """
     df_tareas = preparar_dataframe_tareas(tasks)
 
     with st.expander("💡 Analisis"):
+        mostrar_expanders_condicional(df_tareas)
 
-        with st.expander("📊 Promedio de Desviación por Responsable"):
-            if df_tareas is not None and not df_tareas.empty:
+
+# ───── Función modular para manejar los sub-expanders ─────
+def mostrar_expanders_condicional(df_tareas):
+    """
+    Muestra cada sub-expander solo si hay datos disponibles.
+    """
+    expanders = [
+        ("📊 Promedio de Desviación por Responsable", view_desviacion_por_responsable),
+        ("📈 Curva de Rendimiento Acumulada", view_curva_rendimiento),
+        ("🔄 Correlacion", view_correlacion),
+        ("❗ Ranking de tareas más problemáticas", view_ranking_problemas)
+    ]
+
+    if df_tareas is None or df_tareas.empty:
+        st.info("No hay datos de tareas disponibles.")
+        return
+
+    for title, view_func in expanders:
+        with st.expander(title):
+            # Solo para el primer gráfico mostramos el dataframe en consola
+            if title == "📊 Promedio de Desviación por Responsable":
                 print("\n--- DF que recibe view_hover_main ---")
                 print(df_tareas)
-                view_desviacion_por_responsable(df_tareas)
-            else:
-                st.info("No hay datos de tareas disponibles.")
-
-        
-        with st.expander("📈 Curva de Rendimiento Acumulada"):
-            if df_tareas is not None and not df_tareas.empty:
-                view_curva_rendimiento(df_tareas)
-
-        
-        with st.expander("🔄 Correlacion"):
-            if df_tareas is not None and not df_tareas.empty:
-                view_correlacion(df_tareas)
-
-        with st.expander("❗ Ranking de tareas más problemáticas"):
-            if df_tareas is not None and not df_tareas.empty:
-                view_ranking_problemas(df_tareas)
-                
+            view_func(df_tareas)
