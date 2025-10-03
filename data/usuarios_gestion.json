@@ -111,5 +111,20 @@
         "permissions": [],
         "username": "aaaa",
         "password": "aaaa"
+    },
+    {
+        "name": "aaaaa",
+        "factory": "dddsa",
+        "user_type": "Solo lectura",
+        "permissions": [
+            "gestionar_tareas",
+            "crear_tarea",
+            "modificar_tarea",
+            "reordenar_tareas",
+            "acciones_lote",
+            "ver_tareas"
+        ],
+        "username": "ale",
+        "password": "123"
     }
 ]

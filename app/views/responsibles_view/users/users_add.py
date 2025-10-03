@@ -10,17 +10,11 @@ from .permissions import view_users_permissions
 def cargar_responsables():
     repo = ResponsibleRepository()
     df = repo.load_all()
-    if df.empty:
-        st.info("No hay responsables para agregar.")
-        return None
-    return df
+    return df if not df.empty else None
 
 def seleccionar_responsable(responsibles_df):
-    """Usamos la función original sin pasar key."""
     selected = seleccionar_responsable_ui(responsibles_df)
-    if not selected:
-        return None
-    return selected
+    return selected if selected else None
 
 def armar_datos_usuario(selected, user_type, username, password):
     permissions = view_users_permissions(user_key=selected["name"], section_key="add")
@@ -46,43 +40,56 @@ def guardar_usuario(usuario_data):
     st.success(f"Usuario '{usuario_data['username']}' agregado correctamente.")
     return True
 
+def inicializar_contador():
+    if "user_form_counter" not in st.session_state:
+        st.session_state.user_form_counter = 0
+    return st.session_state.user_form_counter
+
+def mostrar_formulario_usuario(c):
+    user_types_options = ["", "Admin", "Editor", "Solo lectura"]
+    user_type = st.selectbox("🔐 Tipo de usuario", user_types_options, index=0, key=f"type_{c}")
+    username = st.text_input("👤 Nombre de usuario (login)", key=f"user_{c}")
+    password = st.text_input("🔑 Password", key=f"pass_{c}")
+    return {"user_type": user_type, "username": username, "password": password}
+
+def procesar_guardado(usuario_data):
+    """Helper que maneja guardar usuario y retorna si se guardó con éxito."""
+    if guardar_usuario(usuario_data):
+        st.session_state.user_form_counter += 1
+        st.rerun()
+        return True
+    return False
+
+def preparar_formulario(responsibles_df, c):
+    selected = seleccionar_responsable(responsibles_df)
+    if not selected:
+        return None
+
+    user_inputs = mostrar_formulario_usuario(c)
+    return {**user_inputs, "selected": selected}
+
 # ------------------------
 # Función principal
 # ------------------------
 def view_users_add():
     """Vista para agregar usuarios nuevos"""
-
-    # 🔹 Inicializamos contador en session_state
-    if "user_form_counter" not in st.session_state:
-        st.session_state.user_form_counter = 0
-    c = st.session_state.user_form_counter  # alias corto
+    c = inicializar_contador()
+    responsibles_df = cargar_responsables()
+    if responsibles_df is None:
+        st.info("No hay responsables para agregar.")
+        return
 
     with st.expander("➕ Agregar Usuarios", expanded=False):
-        responsibles_df = cargar_responsables()
-        if responsibles_df is None:
+        form_data = preparar_formulario(responsibles_df, c)
+        if not form_data:
             return
 
-        selected = seleccionar_responsable(responsibles_df)
-        if not selected:
-            return
-
-        # Inputs de usuario con keys únicas por contador
-        user_types_options = [""] + ["Admin", "Editor", "Solo lectura"]  # 🔹 agregado valor vacío al inicio
-        user_type = st.selectbox(
-            "🔐 Tipo de usuario",
-            user_types_options,
-            index=0,
-            key=f"type_{c}"
+        usuario_data = armar_datos_usuario(
+            selected=form_data["selected"],
+            user_type=form_data["user_type"],
+            username=form_data["username"],
+            password=form_data["password"]
         )
 
-        username = st.text_input("👤 Nombre de usuario (login)", key=f"user_{c}")
-        password = st.text_input("🔑 Password", key=f"pass_{c}")
-
-        usuario_data = armar_datos_usuario(selected, user_type, username, password)
-
-        # Botón Guardar con key única
         if st.button("💾 Guardar cambios", key=f"save_add_{c}"):
-            if guardar_usuario(usuario_data):
-                # 🔹 Incrementamos el contador y forzamos rerun para limpiar formulario
-                st.session_state.user_form_counter += 1
-                st.rerun()
+            procesar_guardado(usuario_data)
