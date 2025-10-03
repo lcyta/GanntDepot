@@ -27,14 +27,20 @@ def armar_datos_usuario(selected, user_type, username, password):
         "password": password
     }
 
-def validar_duplicado(usuarios, new_name):
-    return any(u["name"] == new_name for u in usuarios)
-
 def guardar_usuario(usuario_data):
     usuarios = load_usuarios()
-    if validar_duplicado(usuarios, usuario_data["name"]):
+    
+    # Validar que el responsable no tenga ya un usuario
+    if any(u["name"] == usuario_data["name"] for u in usuarios):
         st.error(f"Error: El responsable '{usuario_data['name']}' ya tiene un usuario asignado.")
         return False
+
+    # Validar que no haya otro usuario con el mismo username
+    if any(u["username"] == usuario_data["username"] for u in usuarios):
+        st.error(f"Error: El username '{usuario_data['username']}' ya está en uso por otro usuario.")
+        return False
+
+    # Guardar usuario
     usuarios.append(usuario_data)
     save_usuarios(usuarios)
     st.success(f"Usuario '{usuario_data['username']}' agregado correctamente.")
