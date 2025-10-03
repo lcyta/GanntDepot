@@ -122,9 +122,19 @@
             "modificar_tarea",
             "reordenar_tareas",
             "acciones_lote",
-            "ver_tareas"
+            "ver_tareas",
+            "gestion_proyectos",
+            "tabla_proyectos",
+            "detalle_proyecto",
+            "editar_proyectos",
+            "tareas_proyectos",
+            "envios_proyectos",
+            "tareas_responsables",
+            "crear_proyecto",
+            "crear_usuario",
+            "analisis"
         ],
-        "username": "ale",
+        "username": "ale123",
         "password": "123"
     }
 ]

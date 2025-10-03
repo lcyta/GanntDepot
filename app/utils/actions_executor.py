@@ -1,58 +1,49 @@
 import streamlit as st
+import inspect
 
-def ejecutar_acciones_permitidas(tasks, project_name, responsibles_list, permissions, actions):
+# ───── Helpers ─────
+def accion_valida(sub_key, sub_cfg, permissions, filter_keys=None):
+    """Chequea si la acción debe ejecutarse según permisos y filter_keys"""
+    if sub_key not in permissions:
+        return False
+    if "action" not in sub_cfg:
+        return False
+    if filter_keys is not None and sub_key not in filter_keys:
+        return False
+    return True
+
+def ejecutar_accion(sub_cfg, args):
+    """Ejecuta la acción pasando solo los argumentos que acepta"""
+    action_func = sub_cfg["action"]
+    n_args = len(inspect.signature(action_func).parameters)
+    action_func(*args[:n_args])
+
+def iterar_subacciones(actions, permissions, *args, filter_keys=None):
+    """Itera sobre todas las subacciones y ejecuta las válidas"""
     for grupo_cfg in actions.values():
         for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
-            if sub_key in permissions and "action" in sub_cfg:
-                sub_cfg["action"](tasks, project_name, responsibles_list)
+            if accion_valida(sub_key, sub_cfg, permissions, filter_keys):
+                ejecutar_accion(sub_cfg, args)
 
+# ───── Funciones de ejecución modularizadas ─────
+def ejecutar_acciones_permitidas(tasks, project_name, responsibles_list, permissions, actions):
+    iterar_subacciones(actions, permissions, tasks, project_name, responsibles_list)
 
 def ejecutar_acciones_proyecto(detalle_proyecto, permissions, actions):
-    for grupo_cfg in actions.values():
-        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
-            if sub_key in permissions and "action" in sub_cfg:
-                sub_cfg["action"](detalle_proyecto)
+    iterar_subacciones(actions, permissions, detalle_proyecto)
 
 def ejecutar_acciones_project_list(projects, permissions, actions):
-    """
-    Ejecuta las acciones relacionadas a la lista de proyectos
-    projects: lista de proyectos cargados
-    permissions: lista de permisos habilitados
-    actions: diccionario con las acciones disponibles
-    """
-    for grupo_cfg in actions.values():
-        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
-            if sub_key in permissions and "action" in sub_cfg:
-                sub_cfg["action"](projects)
+    iterar_subacciones(actions, permissions, projects)
 
 def ejecutar_acciones_responsables(permissions, actions):
-    """
-    Ejecuta las acciones relacionadas a responsables según los permisos
-    """
-    for grupo_cfg in actions.values():
-        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
-            if sub_key in permissions and "action" in sub_cfg:
-                sub_cfg["action"]()
+    iterar_subacciones(actions, permissions)
 
 def ejecutar_acciones_calendar(selected_name, feriados, permissions, actions):
     """
-    Ejecuta las acciones del calendario de responsables según permisos
+    Pasamos *args con selected_name y feriados, y dejamos que ejecutar_accion
+    seleccione la cantidad correcta de argumentos según la función
     """
-    for grupo_cfg in actions.values():
-        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
-            if sub_key in permissions and "action" in sub_cfg:
-                # Dependiendo de la acción, pasamos parámetros
-                if sub_key == "rango_feriados":
-                    sub_cfg["action"](selected_name)
-                else:
-                    sub_cfg["action"](selected_name, feriados)
+    iterar_subacciones(actions, permissions, selected_name, feriados)
 
 def ejecutar_acciones_calendar_permitidas(pais, permissions, actions):
-    for grupo_cfg in actions.values():
-        for sub_key, sub_cfg in grupo_cfg.get("subacciones", {}).items():
-            if sub_key in permissions and "action" in sub_cfg:
-                # Dependiendo de la acción, pasamos parámetros
-                if sub_key in ["tabla_feriados", "feriado_individual", "rango_feriados", "eliminar_pais"]:
-                    sub_cfg["action"](pais)
-                else:
-                    sub_cfg["action"]()
+    iterar_subacciones(actions, permissions, pais)
