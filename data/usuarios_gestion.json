@@ -95,7 +95,12 @@
         "name": "treqwgfds",
         "factory": "gfdsgfds",
         "user_type": "Solo lectura",
-        "permissions": [],
+        "permissions": [
+            "gestionar_tareas",
+            "crear_proyecto",
+            "crear_usuario",
+            "analisis"
+        ],
         "username": "qwe",
         "password": "123"
     },
